@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LazzyBee.Main.HomePage"
+    Title="Lazzy Bee">
+	<ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+			<SearchBar x:Name="searchBox"
+				Placeholder="Dictionary"/>
+            <Image Source="images/logos/big_logo.png" 
+					HeightRequest="188" WidthRequest="188"
+					TranslationY="20"/>
+
+			<Button x:Name="btnStartLearning"
+				Text="Start learning"
+				TranslationY="20"
+				Margin="10"
+				BorderWidth="1"
+				BorderColor="Gray"
+				Clicked="btnStartLearningClicked"/>
+
+			<Grid Grid.Row="1" Grid.Column="2"
+				HorizontalOptions="Center"
+				Margin="10,0,10,10"
+				TranslationY="10">
+
+				<Button x:Name="btnIncomingList" Grid.Row="0" Grid.Column="0"
+					Text="Incoming list" Margin="0,5,5,5"
+					BorderWidth="1"
+					BorderColor="Gray"
+					Clicked="btnIncomingListClicked"/>
+					
+				<Button x:Name="btnMoreWords" Grid.Row="0" Grid.Column="1"
+					Text="More words" Margin="0,5,0,5"
+					BorderWidth="1"
+					BorderColor="Gray"
+					Clicked="btnMoreWordsClicked"/>
+			</Grid>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

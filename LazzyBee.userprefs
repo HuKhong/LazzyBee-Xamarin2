@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{318DCF57-43F8-440B-A457-D85E3A740024}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LazzyBee/Common/Algorithm.cs">
+    <Files>
+      <File FileName="LazzyBee/Common/Algorithm.cs" Line="108" Column="24" />
+      <File FileName="LazzyBee/Common/CommonDefine.cs" Line="8" Column="62" />
+      <File FileName="LazzyBee/Objects/WordInfo.cs" Line="26" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.LazzyBee.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.BDC29981-C380-4A08-9FFA-DDE63A889B3B" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
