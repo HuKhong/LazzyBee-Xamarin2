@@ -1,9 +1,14 @@
 ﻿<Properties StartupConfiguration="{318DCF57-43F8-440B-A457-D85E3A740024}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="LazzyBee/Common/Algorithm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LazzyBee/Common/SqliteHelper.cs">
     <Files>
-      <File FileName="LazzyBee/Common/Algorithm.cs" Line="108" Column="24" />
-      <File FileName="LazzyBee/Common/CommonDefine.cs" Line="8" Column="62" />
-      <File FileName="LazzyBee/Objects/WordInfo.cs" Line="26" Column="24" />
+      <File FileName="LazzyBee/Common/Algorithm.cs" Line="28" Column="2" />
+      <File FileName="LazzyBee/Common/CommonDefine.cs" Line="41" Column="39" />
+      <File FileName="LazzyBee/Objects/WordInfo.cs" Line="15" Column="21" />
+      <File FileName="LazzyBee/Common/HTMLHelper.cs" Line="149" Column="3" />
+      <File FileName="LazzyBee/Common/Common.cs" Line="40" Column="30" />
+      <File FileName="LazzyBee/Objects/MajorObject.cs" Line="31" Column="25" />
+      <File FileName="LazzyBee/App.xaml.cs" Line="138" Column="1" />
+      <File FileName="LazzyBee/Common/SqliteHelper.cs" Line="2" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.LazzyBee.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.BDC29981-C380-4A08-9FFA-DDE63A889B3B" />

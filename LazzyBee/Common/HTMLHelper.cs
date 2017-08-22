@@ -1,14 +1,37 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
+using LazzyBee;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class HTMLHelper {
-//	private static string SPEAKER_IMG_LINK = "https://firebasestorage.googleapis.com/v0/b/lazeebee-977.appspot.com/o/ic_speaker%403x.png?alt=media&token=2dd7f3ab-a695-4cca-a8b0-81ac6a8fdc96";
 	private static string SPEAKER_IMG_LINK = "https://firebasestorage.googleapis.com/v0/b/lazeebee-977.appspot.com/o/speaker.png?alt=media&token=be4d8dc7-b5c0-4f3d-b5e2-893c30ec18ee";
-	/*
-	public static string createHTMLForQuestion (WordInfo word) {
-		Debug.Log("createHTMLForQuestion");
+
+	public static string createHTMLForQuestion (WordInfo word, MajorObject major) {
+		Debug.WriteLine("createHTMLForQuestion");
+		string package = "";
+		string packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+
+		package = major.displayName();
+		packageLowcase = major.majorName.ToLower();
+		       
+		if (!packageLowcase.Equals(CommonDefine.DEFAULT_SUBJECT)) {
+
+	        //parse the answer to dictionary object
+			JObject answers = JObject.Parse(word.answers);
+
+			//A word may has many meanings corresponding to many fields (common, it, economic...)
+			//The meaning of each field is considered as a package
+			var dictPackages = answers["packages"];
+			var dictSinglePackage = dictPackages[packageLowcase];
+		        
+	        if (dictSinglePackage == null) {
+	            
+	            package = @"";
+	        }
+	    }
+
 		string htmlString = "<!DOCTYPE html>\n" +
 			"<html>\n" +
 			"<head>\n" +
@@ -55,43 +78,74 @@ public class HTMLHelper {
 			"</html>";
 
 		try {
-			float speed = TemporarilyStatus.getInstance().speaking_speed;
-			Debug.Log("createHTMLForQuestion speed :: " +speed.ToString());
+			float speed = float.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_TTS_SPEED_KEY));
+			Debug.WriteLine("createHTMLForQuestion speed :: " +speed.ToString());
 			string strWordIconTag = @"<div style='float:left;width:90%%;text-align: center;'>" +
 	                        "<strong style='font-size:18pt;'> {0} </strong>\n" +   //%@ will be replaced by word.question
 				"</div>\n" +
 				"<div style='float:right;width:10%%'>\n" +
 				"<a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/><p>\n" +
-				"</div>\n";
+				"</div>\n" +
+				"<div style='width:90%%'>\n" +
+                "<center>[%@]</center>" +
+                "</div>";
 
-			strWordIconTag = String.Format(strWordIconTag, word.word, word.word, speed, SPEAKER_IMG_LINK);
-			Debug.Log("createHTMLForQuestion 2 :: " +strWordIconTag);
-			Debug.Log("=======================");
-			Debug.Log("createHTMLForQuestion htmlString :: " +htmlString);
+			strWordIconTag = String.Format(strWordIconTag, word.question, word.question, speed, SPEAKER_IMG_LINK, package);
+			Debug.WriteLine("createHTMLForQuestion 2 :: " +strWordIconTag);
+			Debug.WriteLine("=======================");
+			Debug.WriteLine("createHTMLForQuestion htmlString :: " +htmlString);
 			htmlString = String.Format(htmlString, strWordIconTag);
-			Debug.Log("createHTMLForQuestion 3");
-			Debug.Log(htmlString);
+			Debug.WriteLine("createHTMLForQuestion 3");
+			Debug.WriteLine(htmlString);
 
 		} catch (Exception e) {
-			Debug.Log("createHTMLForQuestion :: Exception :; " +e.ToString());
+			Debug.WriteLine("createHTMLForQuestion :: Exception :; " +e.ToString());
 		}
 
 		return htmlString;
 	}
 
-	public static string createHTMLForAnswer (WordInfo word) {
-		Debug.Log("createHTMLForQuestion");
+	public static string createHTMLForAnswer (WordInfo word, MajorObject major) {
+		Debug.WriteLine("createHTMLForQuestion");
+		string htmlString = "";
+		string imageLink = "";
+		string strExplanation = "";
+		string strExample = "";
+		string strMeaning = "";
+		string package = "";
+		string packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+		string strPronounciation = "";
 
-		string htmlString 		= "";
-		string strExplanation 	= word.common.explain;
-		string strExample 		= word.common.example;
-		string strMeaning 		= word.common.meaning;
+		package = major.displayName();
+		packageLowcase = major.majorName.ToLower();
+
+		//parse the answer to dictionary object
+		JObject dictAnswer = JObject.Parse(word.answers);
+
+		//A word may has many meanings corresponding to many fields (common, it, economic...)
+		//The meaning of each field is considered as a package
+		var dictPackages = dictAnswer["packages"];
+		var dictSinglePackage = dictPackages[packageLowcase];
+		    
+		if (dictSinglePackage == null) {
+			dictSinglePackage = dictPackages[CommonDefine.DEFAULT_SUBJECT];
+		    package = "";
+		}
+
+		strPronounciation = (string)dictAnswer["pronoun"];
+    
+		if (strPronounciation.Equals("//") == true) {
+	        strPronounciation = "";
+	    }
+
+		//"common":{"meaning":"", "explain":"<p>The edge of something is the part of it that is farthest from the center.</p>", "example":"<p>He ran to the edge of the cliff.</p>"}}
+		strExplanation = (string)dictSinglePackage["explain"];
+		strExample = (string)dictSinglePackage["example"];
 
 		/*maybe must replace "&nbsp;" by "" */
-	/*
 		//remove html tag, use for playing speech
-		string plainExplanation = @"";
-		string plainExample = @"";
+		string plainExplanation = "";
+		string plainExample = "";
 
 		if (strExplanation != null) {
 			strExplanation = removeNBSP(strExplanation);
@@ -109,6 +163,10 @@ public class HTMLHelper {
 			strExample = "";
 		}
 
+		//meaning
+		strMeaning = (string)dictSinglePackage["meaning"];
+
+		//remove <p>, keep <br>
 		if (strMeaning != null) {
 			strMeaning = strMeaning.Replace("<p>", String.Empty);
 			strMeaning = strMeaning.Replace("</p>", String.Empty);
@@ -117,30 +175,25 @@ public class HTMLHelper {
 			strMeaning = "";
 		}
 
-		string strPronounciation = word.pronoun;
-
-		if (strPronounciation.Equals("//") == true) {
-			strPronounciation = "";
-		}
-
-		//check display meaning setting
-		if (TemporarilyStatus.getInstance().auto_play_sound == 0) {
+		bool displayMeaningFlag = bool.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_DISPLAY_MEANING_KEY));
+		if (displayMeaningFlag == false)
+		{
 			strMeaning = "";
 		}
 
-		float speed = TemporarilyStatus.getInstance().speaking_speed;
+		float speed = float.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_TTS_SPEED_KEY));
 
-		string strExplainIconTag 	= @"";
-		string strExampleIconTag 	= @"";
-		string strWordIconTag 		= @"";
-		string strNoteTag 			= @"";
+		string strExplainIconTag 	= "";
+		string strExampleIconTag 	= "";
+		string strWordIconTag 		= "";
+		string strNoteTag 			= "";
 
 		//create html
 		try {
 			strWordIconTag = "<div style='float:right;width:10%%'>" +
 				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100%% src='{2}'/></a>\n" +
 				"</div>\n";
-			strWordIconTag = String.Format(strWordIconTag, word.word, speed, SPEAKER_IMG_LINK);
+			strWordIconTag = String.Format(strWordIconTag, word.question, speed, SPEAKER_IMG_LINK);
 
 			if (strExplanation != null && strExplanation.Length > 0) {
 				strExplainIconTag = "<div style=\"float:left;width:90%%; font-size:14pt;\">" +
@@ -163,7 +216,7 @@ public class HTMLHelper {
 				strExampleIconTag = String.Format(strExampleIconTag, strExample, plainExample, speed, SPEAKER_IMG_LINK);
 			}
 
-			string userNote = word.usernote;
+			string userNote = word.userNote;
 
 			if (userNote != null && userNote.Length > 0) {			
 				userNote = userNote.Replace("\n", "<br>");
@@ -241,20 +294,20 @@ public class HTMLHelper {
 				"            {4} \n" +    //%@ will be replaced by strExampleIconTag
 
 				"       <div style='width:90%%'>" +
-				"           <br><br><br><br><center><font size='4' color='blue'><em style='margin-left: 10px'> {5} </em></font></center>" +    //%@ will be replaced by meaning
+				"           <br><br><br><br><center>{5}<font size='4' color='blue'><em style='margin-left: 10px'> {6} </em></font></center>" +    //%@ will be replaced by meaning
 				"       </div>" +
 				"   </div>" +
-				"   {6} " +     //%@ will be replaced by strNoteTag
+				"   {7} " +     //%@ will be replaced by strNoteTag
 
 				"   </body>" +
 				"</html>\n";
 
-			Debug.Log("createHTMLForQuestion 1 :: " + htmlString);
-			htmlString = String.Format(htmlString, word.word, strWordIconTag, strPronounciation, strExplainIconTag, strExampleIconTag, strMeaning, strNoteTag);
-			Debug.Log("createHTMLForQuestion 2 :: " + htmlString);
+			Debug.WriteLine("createHTMLForQuestion 1 :: " + htmlString);
+			htmlString = String.Format(htmlString, word.question, strWordIconTag, strPronounciation, strExplainIconTag, strExampleIconTag, package, strMeaning, strNoteTag);
+			Debug.WriteLine("createHTMLForQuestion 2 :: " + htmlString);
 
 		} catch (Exception e) {
-			Debug.Log("createHTMLForAnswer :: Exception :; " +e.ToString());
+			Debug.WriteLine("createHTMLForAnswer :: Exception :; " +e.ToString());
 		}
 
 		return htmlString;
@@ -266,5 +319,5 @@ public class HTMLHelper {
 
 	private static string removeNBSP(string input) {
 		return input.Replace("&nbsp;", " ");
-	}*/
+	}
 }

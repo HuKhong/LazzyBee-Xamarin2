@@ -49,6 +49,9 @@
       <DependentUpon>IncomingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Objects\WordInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\MajorObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SqliteHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />
