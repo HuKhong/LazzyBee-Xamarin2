@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 
@@ -6,6 +7,7 @@ namespace LazzyBee.Main
 {
     public partial class HomePage : ContentPage
     {
+		private SqliteHelper sqliteHelper = new SqliteHelper();
         public HomePage()
         {
 			InitializeComponent();
@@ -43,6 +45,10 @@ namespace LazzyBee.Main
 		void btnMoreWordsClicked(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("btnMoreWordsClicked");
+List<WordDAO> words = sqliteHelper.getAllWords();
+
+Debug.WriteLine("test");
+			DisplayAlert("Alert", words.Count.ToString(), "OK");
 		}
     }
 }
