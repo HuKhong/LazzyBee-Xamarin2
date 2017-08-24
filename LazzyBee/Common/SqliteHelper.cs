@@ -290,6 +290,7 @@ namespace LazzyBee
 
 			string value = JsonConvert.SerializeObject(dict);
 			string strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = 'inreview'", value);
+			database.Execute
 
 		}
 
