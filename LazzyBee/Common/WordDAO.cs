@@ -37,7 +37,6 @@ namespace LazzyBee
 		}
 
 		private string _answers;
-		[NotNull]
 		public string answers
 		{
 			get
@@ -52,7 +51,6 @@ namespace LazzyBee
 		}
 
 		private string _category;
-		[NotNull]
 		public string category
 		{
 			get
@@ -67,7 +65,6 @@ namespace LazzyBee
 		}
 
 		private string _subcats;
-		[NotNull]
 		public string subcats
 		{
 			get
@@ -82,7 +79,6 @@ namespace LazzyBee
 		}
 
 		private string _tags;
-		[NotNull]
 		public string tags
 		{
 			get
@@ -96,7 +92,6 @@ namespace LazzyBee
 			}
 		}
 		private string _related;
-		[NotNull]
 		public string related
 		{
 			get
@@ -111,7 +106,6 @@ namespace LazzyBee
 		}
 
 		private Int64 _gid;
-		[PrimaryKey, AutoIncrement]
 		public Int64 gid
 		{
 			get
@@ -126,7 +120,6 @@ namespace LazzyBee
 		}
 
 		private int _status;
-		[PrimaryKey, AutoIncrement]
 		public int status
 		{
 			get
@@ -141,7 +134,6 @@ namespace LazzyBee
 		}
 
 		private int _queue;
-		[PrimaryKey, AutoIncrement]
 		public int queue
 		{
 			get
@@ -171,7 +163,6 @@ namespace LazzyBee
 		}
 
 		private int _level;
-		[PrimaryKey, AutoIncrement]
 		public int level
 		{
 			get
@@ -186,7 +177,6 @@ namespace LazzyBee
 		}
 
 		private int _due;
-		[PrimaryKey, AutoIncrement]
 		public int due
 		{
 			get
@@ -201,7 +191,6 @@ namespace LazzyBee
 		}
 
 		private int _rev_count;
-		[PrimaryKey, AutoIncrement]
 		public int rev_count
 		{
 			get
@@ -230,7 +219,6 @@ namespace LazzyBee
 		}
 
 		private int _last_ivl;
-		[PrimaryKey, AutoIncrement]
 		public int last_ivl
 		{
 			get
@@ -245,7 +233,6 @@ namespace LazzyBee
 		}
 
 		private int _e_factor;
-		[PrimaryKey, AutoIncrement]
 		public int e_factor
 		{
 			get
@@ -284,6 +271,20 @@ namespace LazzyBee
 			{
 				this._l_en = value;
 				OnPropertyChanged(nameof(l_en));
+			}
+		}
+
+		private int _priority;
+		public int priority
+		{
+			get
+			{
+				return _priority;
+			}
+			set
+			{
+				this._priority = value;
+				OnPropertyChanged(nameof(priority));
 			}
 		}
 

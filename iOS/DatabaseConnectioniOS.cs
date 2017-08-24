@@ -9,11 +9,21 @@ namespace LazzyBee.iOS
 	{
 		public SQLiteConnection DbConnection()
 		{
-			var dbName = "DB/english.db";
-			string personalFolder =	System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			string libraryFolder = Path.Combine(personalFolder, "..", "Library");
-			var path = Path.Combine(libraryFolder, dbName);
-			return new SQLiteConnection(dbName);
+			copyDatabaseToDataFolder();
+			string dataPath = Path.Combine(FileHelper.dataFolder, CommonDefine.DATABASENAME);
+			return new SQLiteConnection(dataPath);
 		}
+
+		private void copyDatabaseToDataFolder()
+		{
+			string dbName = Path.Combine("DB", CommonDefine.DATABASENAME);
+			string dataPath = Path.Combine(FileHelper.dataFolder, CommonDefine.DATABASENAME);
+
+			if (!File.Exists(dataPath))
+			{
+				File.Copy(dbName, dataPath);
+			}
+		}
+    
 	}
 }

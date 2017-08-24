@@ -2,6 +2,8 @@
 using System.Diagnostics;
 
 public class DateTimeHelper {
+	public const int SECONDS_OF_DAY = (24 * 3600);
+	public const int SECONDS_OF_HALFDAY = (12 * 3600);
 
 	public static int convertDateTimeToSec (System.DateTime dateTime) {
 		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);

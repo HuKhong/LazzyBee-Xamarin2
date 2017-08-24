@@ -54,6 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SqliteHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IDatabaseConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WordDAO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />
