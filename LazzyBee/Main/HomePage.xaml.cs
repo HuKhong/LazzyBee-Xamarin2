@@ -45,10 +45,10 @@ namespace LazzyBee.Main
 		void btnMoreWordsClicked(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("btnMoreWordsClicked");
-List<WordDAO> words = sqliteHelper.getAllWords();
+//List<WordDAO> words = sqliteHelper.getAllWords();
 
-Debug.WriteLine("test");
-			DisplayAlert("Alert", words.Count.ToString(), "OK");
+//Debug.WriteLine("test");
+//			DisplayAlert("Alert", words.Count.ToString(), "OK");
 		}
     }
 }

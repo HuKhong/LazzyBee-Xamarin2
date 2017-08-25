@@ -51,46 +51,25 @@ namespace LazzyBee
 
 	public class SqliteHelper
 	{
+		private static SqliteHelper instance;
+
+		public static SqliteHelper Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = new SqliteHelper();
+				}
+				return instance;
+			}
+		}
+
 		private SQLiteConnection database;
 		private static object collisionLock = new object();
-		public SqliteHelper()
+		private SqliteHelper()
 		{
 			database = DependencyService.Get<IDatabaseConnection>().DbConnection();
-		}
-
-		private WordInfo convertWordDAOToWordInfo(WordDAO wordDAO)
-		{
-			WordInfo wordInfo = new WordInfo();
-			wordInfo.answers = wordDAO.answers;
-			wordInfo.due = wordDAO.due.ToString();
-			wordInfo.eFactor = wordDAO.e_factor.ToString();
-			wordInfo.gid = wordDAO.gid.ToString();
-			wordInfo.langEN = wordDAO.l_en;
-			wordInfo.langVN = wordDAO.l_vn;
-			wordInfo.lastInterval = wordDAO.last_ivl.ToString();
-			wordInfo.level = wordDAO.level.ToString();
-			wordInfo.package = wordDAO.package;
-			wordInfo.priority = wordDAO.priority;
-			wordInfo.question = wordDAO.question;
-			wordInfo.queue = wordDAO.queue.ToString();
-			wordInfo.revCount = wordDAO.rev_count.ToString();
-			wordInfo.status = wordDAO.status.ToString();
-			wordInfo.subcats = wordDAO.subcats;
-			wordInfo.userNote = wordDAO.user_note;
-			wordInfo.wordid = wordDAO.id.ToString();
-
-			return wordInfo;
-		}
-
-		private List<WordInfo> convertListWordDAOToListWordInfo(List<WordDAO> listWordDAO)
-		{
-			List<WordInfo> listWordInfo = new List<WordInfo>();
-			foreach (WordDAO wordDAO in listWordDAO)
-			{
-				listWordInfo.Add(convertWordDAOToWordInfo(wordDAO));
-			}
-
-			return listWordInfo;
 		}
 
 		public List<WordInfo> getAllWords()
@@ -99,7 +78,7 @@ namespace LazzyBee
 			{
 				string strQuery = "SELECT * FROM 'vocabulary'";
 				List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
-				return convertListWordDAOToListWordInfo(wordDAOs);
+				return _convertListWordDAOToListWordInfo(wordDAOs);
 			}
 		}
 
@@ -114,7 +93,7 @@ namespace LazzyBee
 
 				if (wordDAOs.Count > 0)
 				{
-					wd = convertWordDAOToWordInfo(wordDAOs.ElementAt(0));
+					wd = _convertWordDAOToWordInfo(wordDAOs.ElementAt(0));
 				}
 
 				return wd;
@@ -130,7 +109,7 @@ namespace LazzyBee
 
 				List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 
-				return convertListWordDAOToListWordInfo(wordDAOs);
+				return _convertListWordDAOToListWordInfo(wordDAOs);
 			}
 		}
 
@@ -173,7 +152,7 @@ namespace LazzyBee
 					}
 				}
 
-				return convertListWordDAOToListWordInfo(wordDAOs);
+				return _convertListWordDAOToListWordInfo(wordDAOs);
 			}
 		}
 
@@ -197,7 +176,7 @@ namespace LazzyBee
 
 			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 
-			return convertListWordDAOToListWordInfo(wordDAOs);
+			return _convertListWordDAOToListWordInfo(wordDAOs);
 		}
 
 		public List<WordInfo> getReviewList()
@@ -210,10 +189,256 @@ namespace LazzyBee
 				res = _getReviewListFromVocabulary();
 
 				//save list to db (only word-id)
-				createInreivewListForADay (res);
+				_createInreivewListForADay(res);
+			}
+
+			return res;
+		}
+
+		public List<WordInfo> getSearchHintList(string searchText)
+		{
+			string strQuery = string.Format("SELECT * FROM 'vocabulary'" +
+											" WHERE question like '{0}%%' OR question like '%% {1}%%'" +
+											" ORDER BY level LIMIT 20", searchText, searchText);
+
+			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
+
+			return _convertListWordDAOToListWordInfo(wordDAOs);
+		}
+
+		public List<WordInfo> getSearchResultList(string searchText)
+		{
+			string strQuery = string.Format("SELECT * FROM 'vocabulary'" +
+											" WHERE question like '{0}%%' OR question like '%% {1}%%'" +
+											" ORDER BY level", searchText, searchText);
+
+			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
+
+			return _convertListWordDAOToListWordInfo(wordDAOs);
+		}
+
+		public void updateWord(WordInfo word)
+		{
+			string formattedAnswer = word.answers.Replace("\'", "\'\'");
+			string formattedVN = word.langVN.Replace("\'", "\'\'");
+			string formattedEN = word.langEN.Replace("\'", "\'\'");
+
+			string strQuery = string.Format("UPDATE 'vocabulary' SET" +
+											" queue = {0}, due = {1}, rev_count = {2}, last_ivl = {3}, e_factor = {4}, answers = '{5}'," +
+											" l_vn = '{6}', l_en = '{7}'" +
+											" where question = '{8}'",
+											int.Parse(word.queue), int.Parse(word.due), int.Parse(word.revCount), int.Parse(word.lastInterval),
+											int.Parse(word.eFactor), formattedAnswer, formattedVN, formattedEN, word.question);
+			database.Execute(strQuery);
+		}
+
+		public void saveNoteForWord(WordInfo word, string note)
+		{
+			string formattedNote = note.Replace("\'", "\'\'");
+			string strQuery = string.Format("UPDATE 'vocabulary' SET user_note = '{0}' where question = '{1}'", formattedNote, word.question);
+
+			database.Execute(strQuery);
+		}
+
+		public void insertWordToDatabase(WordInfo word)
+		{
+			string strQuery = string.Format("SELECT COUNT(*) FROM 'vocabulary' WHERE gid = {0}", word.gid);
+
+			int count = database.Execute(strQuery);
+			string formattedAnswer = word.answers.Replace("\'", "\'\'");
+			string formattedVN = word.langVN.Replace("\'", "\'\'");
+			string formattedEN = word.langEN.Replace("\'", "\'\'");
+
+			if (count == 0)
+			{
+				strQuery = string.Format("INSERT INTO 'vocabulary' " +
+										 "(question, answers, subcats, status, package, level, queue, due, rev_count," +
+										 " last_ivl, e_factor, l_vn, l_en, gid, priority)" +
+										 " VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}', {14})",
+										 word.question, formattedAnswer, word.subcats, word.status, word.package,
+										 word.level, word.queue, word.due, word.revCount, word.lastInterval, word.eFactor,
+										 formattedVN, formattedEN, word.gid, word.priority);
+
+				database.Execute(strQuery);
+			}
+			else
+			{
+				strQuery = string.Format("UPDATE 'vocabulary' SET" +
+											" queue = {0}, due = {1}, rev_count = {2}, last_ivl = {3}, e_factor = {4}, answers = '{5}'," +
+											" l_vn = '{6}', l_en = '{7}'" +
+											" where question = '{8}'",
+											int.Parse(word.queue), int.Parse(word.due), int.Parse(word.revCount), int.Parse(word.lastInterval),
+											int.Parse(word.eFactor), formattedAnswer, formattedVN, formattedEN, word.question);
+				database.Execute(strQuery);
 			}
 		}
 
+		public int getCountOfStudyAgain()
+		{
+			string strQuery = "SELECT COUNT(*) FROM 'vocabulary' where queue = 1";
+
+			int count = database.Execute(strQuery);
+
+			return count;
+		}
+
+		public int getCountOfStudiedWord()
+		{
+			string strQuery = string.Format("SELECT COUNT(*) FROM 'vocabulary'" +
+											" WHERE queue = {0} OR queue = {1}", WordInfo.QUEUE_REVIEW, WordInfo.QUEUE_DONE);
+
+			int count = database.Execute(strQuery);
+			return count;
+		}
+
+		/* pick up "amount" news word-ids from vocabulary, then add to buffer 
+		   this list is shown in incoming list
+		*/
+		public void prepareWordsToStudyingQueue(int amount, string package)
+		{
+			//pick up "amount" news word-ids from vocabulary that not included the old words
+			List<WordDAO> resList = new List<WordDAO>();
+
+			string lowestLevel = Common.loadSettingValueByKey(CommonDefine.SETTINGS_MY_LEVEL_KEY);
+			string igniredLevel = "7";
+
+			if (!package.Equals(CommonDefine.DEFAULT_SUBJECT))
+			{
+				igniredLevel = "0";
+			}
+
+			string strQuery = string.Format("SELECT * from 'vocabulary' " +
+											"WHERE package LIKE '%%,{0},%%' " +
+											"AND queue = {1} AND level >= {2} AND level <> {3} " +
+											"ORDER BY priority desc, level LIMIT {4}",
+											package, WordInfo.QUEUE_UNKNOWN, lowestLevel, igniredLevel, amount);
+			resList.AddRange(database.Query<WordDAO>(strQuery));
+
+			//if the selected package is not enough, get more from common
+			if (resList.Count() < amount)
+			{
+				strQuery = string.Format("SELECT * from 'vocabulary' " +
+										 "WHERE package LIKE '%%,{0},%%' AND package NOT LIKE '%%,{1},%%' " +
+										 "AND queue = {2} AND level >= {3} AND level <> {4} " +
+										 "ORDER BY priority desc, level LIMIT %ld",
+										 CommonDefine.DEFAULT_SUBJECT, package, WordInfo.QUEUE_UNKNOWN, lowestLevel, igniredLevel, (amount - resList.Count()));
+
+				resList.AddRange(database.Query<WordDAO>(strQuery));
+			}
+
+			//if there is no word with queue = QUEUE_UNKNOWN, reset all words with queue = NEW_WORD to UNKNOWN
+			if (resList.Count() < amount)
+			{
+				strQuery = string.Format("UPDATE 'vocabulary' SET queue = {0} where queue = {1}", WordInfo.QUEUE_UNKNOWN, WordInfo.QUEUE_NEW_WORD);
+				database.Execute(strQuery);
+			}
+
+			List<string> listID = new List<string>();
+			foreach (WordDAO wordDAO in resList)
+			{
+				listID.Add(wordDAO.id.ToString());
+			}
+
+			string strListID = _convertListStringToAString(listID);
+			Dictionary<string, string> dict = new Dictionary<string, string>();
+
+			dict.Add("card", strListID);
+			dict.Add("count", resList.Count().ToString());
+
+			string value = JsonConvert.SerializeObject(dict);
+			strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", value, CommonDefine.PROGRESS_BUFFER_KEY);
+
+			database.Execute(strQuery);
+		}
+
+		/* pick up "amount" word-ids from buffer, then add to pickedword (this list is to study)
+		forceFlag: YES: dont need to check date
+		*/
+		public void pickUpRandom10WordsToStudyingQueue(int amount, bool force)
+		{
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", CommonDefine.PROGRESS_PICKEDWORD_KEY);
+			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
+			string value = "";
+
+			if (systemDAOs.Count > 0)
+			{
+				value = systemDAOs.ElementAt(0).value;
+			}
+
+			//parse the result to get old date
+			JObject valueJsonObj = JObject.Parse(value);
+			int oldDate = int.Parse(valueJsonObj["date"].ToString());
+
+			//compare current date
+			int curDate = DateTimeHelper.getBeginOfDayInSec();   //just get time at the begin of day
+			int offset = 0;
+
+			if (curDate >= oldDate)
+			{
+				offset = curDate - oldDate;
+			}
+			else
+			{
+				offset = oldDate - curDate;
+			}
+
+			if (force == true ||
+				(oldDate == 0 || offset > CommonDefine.SECONDS_OF_HALFDAY))
+			{
+
+				//reset flag if it's new day
+				if (oldDate == 0 ||
+					offset > CommonDefine.SECONDS_OF_HALFDAY)
+				{
+					Common.saveSettingValue(CommonDefine.COMPLETED_FLAG_KEY, "0");
+        		}
+
+				strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", CommonDefine.PROGRESS_BUFFER_KEY);
+				systemDAOs = database.Query<SystemDAO>(strQuery);
+
+				if (systemDAOs.Count > 0)
+				{
+					value = systemDAOs.ElementAt(0).value;
+				}
+
+				//parse the result to get word-id list
+				valueJsonObj = JObject.Parse(value);
+				var cards = valueJsonObj["cards"];
+				string strWordIDList = cards.ToString();
+
+				List<string> pickedIDList = new List<string>();
+				int count = 0;
+				List<string> buffer = new List<string>();
+
+				foreach (var card in cards)
+				{
+					buffer.Add((string)card);
+				}
+
+				while (pickedIDList.Count() < amount && count < cards.Count())
+				{
+
+					pickedIDList.Add((string)cards.ElementAt(count));
+					buffer.RemoveAt(count);
+					count++;
+				}
+
+				//update "pickedword" field in system
+				string strListID = _convertListStringToAString(pickedIDList);
+				Dictionary<string, string> dict = new Dictionary<string, string>();
+
+				dict.Add("card", strListID);
+				dict.Add("count", pickedIDList.Count().ToString());
+
+				value = JsonConvert.SerializeObject(dict);
+				strQuery = string.Format("UPDATE 'system' SET value = '{0}' " +
+				                         "where key = '{1}'", value, CommonDefine.PROGRESS_PICKEDWORD_KEY);
+
+				database.Execute(strQuery);
+			}
+		}
+		/******************** PRIVATE FUNCTIONS AREA ********************/
+		/* get list of words from vocabulary by list of ids from system with key "inreview" */
 		private List<WordInfo> _getReviewListFromSystem()
 		{
 			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", CommonDefine.PROGRESS_INREVIEW_KEY);
@@ -254,12 +479,13 @@ namespace LazzyBee
 
 				wordDAOs = database.Query<WordDAO>(strQuery);
 
-				return convertListWordDAOToListWordInfo(wordDAOs);
+				return _convertListWordDAOToListWordInfo(wordDAOs);
 			}
 
 			return null;
 		}
 
+		/* if list id in "inreview" is obsoleted, get new list from vocabulary */
 		private List<WordInfo> _getReviewListFromVocabulary()
 		{
 			string totalWordADayInSetting = Common.loadSettingValueByKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY);
@@ -269,9 +495,44 @@ namespace LazzyBee
 
 			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 
-			return convertListWordDAOToListWordInfo(wordDAOs);
+			return _convertListWordDAOToListWordInfo(wordDAOs);
 		}
 
+		/* update "inreview" key in system table */
+		private WordInfo _convertWordDAOToWordInfo(WordDAO wordDAO)
+		{
+			WordInfo wordInfo = new WordInfo();
+			wordInfo.answers = wordDAO.answers;
+			wordInfo.due = wordDAO.due.ToString();
+			wordInfo.eFactor = wordDAO.e_factor.ToString();
+			wordInfo.gid = wordDAO.gid.ToString();
+			wordInfo.langEN = wordDAO.l_en;
+			wordInfo.langVN = wordDAO.l_vn;
+			wordInfo.lastInterval = wordDAO.last_ivl.ToString();
+			wordInfo.level = wordDAO.level.ToString();
+			wordInfo.package = wordDAO.package;
+			wordInfo.priority = wordDAO.priority;
+			wordInfo.question = wordDAO.question;
+			wordInfo.queue = wordDAO.queue.ToString();
+			wordInfo.revCount = wordDAO.rev_count.ToString();
+			wordInfo.status = wordDAO.status.ToString();
+			wordInfo.subcats = wordDAO.subcats;
+			wordInfo.userNote = wordDAO.user_note;
+			wordInfo.wordid = wordDAO.id.ToString();
+
+			return wordInfo;
+		}
+
+		private List<WordInfo> _convertListWordDAOToListWordInfo(List<WordDAO> listWordDAO)
+		{
+			List<WordInfo> listWordInfo = new List<WordInfo>();
+			foreach (WordDAO wordDAO in listWordDAO)
+			{
+				listWordInfo.Add(_convertWordDAOToWordInfo(wordDAO));
+			}
+
+			return listWordInfo;
+		}
 		private void _createInreivewListForADay(List<WordInfo> wordInfos)
 		{
 			List<string> listID = new List<string>();
@@ -289,8 +550,9 @@ namespace LazzyBee
 			dict.Add("count", wordInfos.Count().ToString());
 
 			string value = JsonConvert.SerializeObject(dict);
-			string strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = 'inreview'", value);
-			database.Execute
+			string strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", value, CommonDefine.PROGRESS_INREVIEW_KEY);
+
+			database.Execute(strQuery);
 
 		}
 

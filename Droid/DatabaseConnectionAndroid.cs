@@ -1,5 +1,4 @@
 ﻿using SQLite;
-using LocalDataAccess.Droid;
 using System.IO;
 [assembly: Xamarin.Forms.Dependency(typeof(LazzyBee.Droid.DatabaseConnectionAndroid))]
 namespace LazzyBee.Droid
