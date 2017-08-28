@@ -8,11 +8,10 @@ namespace LazzyBee
 		public App()
 		{
 			InitializeComponent();
-
-			MainPage = new LazzyBeePage();
-
 			//configs
 			initialConfiguration();
+
+			MainPage = new LazzyBeePage();
 
 		}
 

@@ -307,6 +307,11 @@ namespace LazzyBee
 				igniredLevel = "0";
 			}
 
+			if (lowestLevel == null || lowestLevel.Length == 0)
+			{
+				lowestLevel = CommonDefine.DEFAULT_LEVEL;
+			}
+
 			string strQuery = string.Format("SELECT * from 'vocabulary' " +
 											"WHERE package LIKE '%%,{0},%%' " +
 											"AND queue = {1} AND level >= {2} AND level <> {3} " +
@@ -429,15 +434,79 @@ namespace LazzyBee
 
 				dict.Add("card", strListID);
 				dict.Add("count", pickedIDList.Count().ToString());
+				dict.Add("date", curDate.ToString());
 
 				value = JsonConvert.SerializeObject(dict);
 				strQuery = string.Format("UPDATE 'system' SET value = '{0}' " +
 				                         "where key = '{1}'", value, CommonDefine.PROGRESS_PICKEDWORD_KEY);
 
 				database.Execute(strQuery);
+
+				//remove these words from buffer
+				strListID = _convertListStringToAString(buffer);
+				Dictionary<string, string> dictBuffer = new Dictionary<string, string>();
+
+				dictBuffer.Add("card", strListID);
+				dictBuffer.Add("count", pickedIDList.Count().ToString());
+
+				value = JsonConvert.SerializeObject(dict);
+				strQuery = string.Format("UPDATE 'system' SET value = '{0}' " +
+										 "where key = '{1}'", value, CommonDefine.PROGRESS_BUFFER_KEY);
+
+				database.Execute(strQuery);
+
+				//update queue to NEW_WORD for picked words
+				if (pickedIDList.Count() > 0)
+				{
+					strQuery = string.Format("UPDATE 'vocabulary'" +
+					                         " SET queue = {0} where id IN {1}", WordInfo.QUEUE_NEW_WORD, strListID);
+					database.Execute(strQuery);
+				}
 			}
 		}
+
+		public int getCountOfPickedWord()
+		{
+			//get word id from pickedword
+			return _getCountOfWordByKey(CommonDefine.PROGRESS_PICKEDWORD_KEY);
+		}
+
+		public int getCountOfBuffer()
+		{
+			//get word id from buffer
+			return _getCountOfWordByKey(CommonDefine.PROGRESS_BUFFER_KEY);
+		}
+
+		public int getCountOfInreview()
+		{
+			//get word id from Inreview
+			return _getCountOfWordByKey(CommonDefine.PROGRESS_INREVIEW_KEY);
+		}
+
 		/******************** PRIVATE FUNCTIONS AREA ********************/
+		/* count of words in buffer, pickedword, inreview */
+		private int _getCountOfWordByKey(string key)
+		{
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", key);
+			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
+			string value = "";
+			if (systemDAOs.Count > 0)
+			{
+				value = systemDAOs.ElementAt(0).value;
+			}
+
+			//parse the result to get word-id list
+			JObject valueJsonObj = JObject.Parse(value);
+			var cards = valueJsonObj["cards"];
+			int count = int.Parse((string)valueJsonObj["count"]);
+
+			if (!key.Equals(CommonDefine.PROGRESS_INREVIEW_KEY))
+			{
+				count = cards.Count();
+			}
+
+			return count;
+		}
 		/* get list of words from vocabulary by list of ids from system with key "inreview" */
 		private List<WordInfo> _getReviewListFromSystem()
 		{

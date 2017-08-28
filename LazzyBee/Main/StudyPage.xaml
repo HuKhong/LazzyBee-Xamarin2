@@ -4,5 +4,10 @@
 	x:Class="LazzyBee.StudyPage"
 	Title="Study">
 	<ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+			<WebView x:Name="webView" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+			</WebView>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

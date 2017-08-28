@@ -46,5 +46,29 @@ namespace LazzyBee
 
 			return false;
 		}
+
+		public static int getDailyTarget()
+		{
+			int res = 0;
+
+			if (Common.checkKey(CommonDefine.SETTINGS_NEW_CARD_KEY) == false)
+			{
+				res = int.Parse(loadSettingValueByKey(CommonDefine.SETTINGS_NEW_CARD_KEY));
+			}
+
+			return res;
+		}
+
+		public static int getTotalTarget()
+		{
+			int res = 0;
+
+			if (Common.checkKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY) == false)
+			{
+				res = int.Parse(loadSettingValueByKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY));
+			}
+
+			return res;
+		}
 	}
 }

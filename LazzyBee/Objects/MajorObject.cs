@@ -10,6 +10,10 @@ namespace LazzyBee
 
 		public MajorObject()
 		{
+			majorName = CommonDefine.DEFAULT_SUBJECT;
+	        majorThumbnail = "images/majors/blank.png";
+			checkFlag = false;
+	        enabled = false;
 		}
 
 		public MajorObject(string _majorName, string _thumbnail, bool _checkFlag)

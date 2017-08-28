@@ -48,4 +48,9 @@ public class CommonDefine
 	public const string DATABASENAME_NEW = "new_english.db";
 	public const string DATABASENAME_BACKUP = "word.csv";
 	public const string STREAK_BACKUP = "streak.csv";
+
+	public const int SECONDS_OF_DAY = (24*3600);
+	public const int SECONDS_OF_HALFDAY = (12 * 3600);
+	public const int BUFFER_SIZE = 100;
+
 }
