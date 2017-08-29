@@ -127,32 +127,37 @@ namespace LazzyBee
 				}
 
 				//parse the result to get word-id list
-				JObject valueJsonObj = JObject.Parse(value);
-				var cards = valueJsonObj["cards"];
-				string strWordIDList = cards.ToString();
-
-				string major = CommonDefine.DEFAULT_SUBJECT;
-				List<WordDAO> wordDAOs = new List<WordDAO>();
-
-				while ((wordDAOs.Count() < cards.Count()))
+				if (value != null)
 				{
-					//get word object  from vocabulary
-					strQuery = string.Format("SELECT * from 'vocabulary'" +
-													"WHERE id IN {0} ORDER BY priority desc, level", strWordIDList);
-					wordDAOs.AddRange(database.Query<WordDAO>(strQuery));
+					var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+					string strWordIDList = valueJsonObj["cards"];
+					List<string> listCards = _convertStringToList(strWordIDList);
 
-					//if specilized word is not enough
-					if (wordDAOs.Count() < cards.Count() && !major.Equals(CommonDefine.DEFAULT_SUBJECT))
+					string major = CommonDefine.DEFAULT_SUBJECT;
+					List<WordDAO> wordDAOs = new List<WordDAO>();
+
+					while ((wordDAOs.Count() < listCards.Count()))
 					{
-						major = CommonDefine.DEFAULT_SUBJECT;
+						//get word object  from vocabulary
+						strQuery = string.Format("SELECT * from 'vocabulary'" +
+												 "WHERE id IN ({0}) ORDER BY priority desc, level", strWordIDList);
+						wordDAOs.AddRange(database.Query<WordDAO>(strQuery));
+
+						//if specilized word is not enough
+						if (wordDAOs.Count() < listCards.Count() && !major.Equals(CommonDefine.DEFAULT_SUBJECT))
+						{
+							major = CommonDefine.DEFAULT_SUBJECT;
+						}
+						else
+						{
+							break;
+						}
 					}
-					else
-					{
-						break;
-					}
+
+					return _convertListWordDAOToListWordInfo(wordDAOs);
 				}
 
-				return _convertListWordDAOToListWordInfo(wordDAOs);
+				return new List<WordInfo>();
 			}
 		}
 
@@ -347,10 +352,11 @@ namespace LazzyBee
 			string strListID = _convertListStringToAString(listID);
 			Dictionary<string, string> dict = new Dictionary<string, string>();
 
-			dict.Add("card", strListID);
+			dict.Add("cards", strListID);
 			dict.Add("count", resList.Count().ToString());
 
 			string value = JsonConvert.SerializeObject(dict);
+
 			strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", value, CommonDefine.PROGRESS_BUFFER_KEY);
 
 			database.Execute(strQuery);
@@ -371,9 +377,14 @@ namespace LazzyBee
 			}
 
 			//parse the result to get old date
-			JObject valueJsonObj = JObject.Parse(value);
-			int oldDate = int.Parse(valueJsonObj["date"].ToString());
+			Dictionary<string, string> valueJsonObj;
+			int oldDate = 0;
 
+			if (value != null)
+			{
+				valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+				oldDate = int.Parse(valueJsonObj["date"].ToString());
+			}
 			//compare current date
 			int curDate = DateTimeHelper.getBeginOfDayInSec();   //just get time at the begin of day
 			int offset = 0;
@@ -407,32 +418,37 @@ namespace LazzyBee
 				}
 
 				//parse the result to get word-id list
-				valueJsonObj = JObject.Parse(value);
-				var cards = valueJsonObj["cards"];
-				string strWordIDList = cards.ToString();
-
+				string strWordIDList = "";
 				List<string> pickedIDList = new List<string>();
-				int count = 0;
 				List<string> buffer = new List<string>();
 
-				foreach (var card in cards)
+				if (value != null)
 				{
-					buffer.Add((string)card);
-				}
+					valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+					strWordIDList = valueJsonObj["cards"];
+					List<string> listCards = _convertStringToList(strWordIDList);
 
-				while (pickedIDList.Count() < amount && count < cards.Count())
-				{
+					int count = 0;
 
-					pickedIDList.Add((string)cards.ElementAt(count));
-					buffer.RemoveAt(count);
-					count++;
+					foreach (string card in listCards)
+					{
+						buffer.Add(card);
+					}
+
+					while (pickedIDList.Count() < amount && count < listCards.Count)
+					{
+
+						pickedIDList.Add((string)listCards.ElementAt(count));
+						buffer.RemoveAt(count);
+						count++;
+					}
 				}
 
 				//update "pickedword" field in system
 				string strListID = _convertListStringToAString(pickedIDList);
 				Dictionary<string, string> dict = new Dictionary<string, string>();
 
-				dict.Add("card", strListID);
+				dict.Add("cards", strListID);
 				dict.Add("count", pickedIDList.Count().ToString());
 				dict.Add("date", curDate.ToString());
 
@@ -446,7 +462,7 @@ namespace LazzyBee
 				strListID = _convertListStringToAString(buffer);
 				Dictionary<string, string> dictBuffer = new Dictionary<string, string>();
 
-				dictBuffer.Add("card", strListID);
+				dictBuffer.Add("cards", strListID);
 				dictBuffer.Add("count", pickedIDList.Count().ToString());
 
 				value = JsonConvert.SerializeObject(dict);
@@ -459,7 +475,7 @@ namespace LazzyBee
 				if (pickedIDList.Count() > 0)
 				{
 					strQuery = string.Format("UPDATE 'vocabulary'" +
-					                         " SET queue = {0} where id IN {1}", WordInfo.QUEUE_NEW_WORD, strListID);
+					                         " SET queue = {0} where id IN ({1})", WordInfo.QUEUE_NEW_WORD, strListID);
 					database.Execute(strQuery);
 				}
 			}
@@ -496,13 +512,15 @@ namespace LazzyBee
 			}
 
 			//parse the result to get word-id list
-			JObject valueJsonObj = JObject.Parse(value);
+			//JObject valueJsonObj = JObject.Parse(value);
+			var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 			var cards = valueJsonObj["cards"];
 			int count = int.Parse((string)valueJsonObj["count"]);
+			List<string> listCards = _convertStringToList(cards);
 
 			if (!key.Equals(CommonDefine.PROGRESS_INREVIEW_KEY))
 			{
-				count = cards.Count();
+				count = listCards.Count();
 			}
 
 			return count;
@@ -519,36 +537,40 @@ namespace LazzyBee
 			}
 
 			//parse the result to get word-id list
-			JObject valueJsonObj = JObject.Parse(value);
-			var cards = valueJsonObj["cards"];
-			string strWordIDList = cards.ToString();
-
-			int oldDate = int.Parse(valueJsonObj["date"].ToString());
-
-			//compare current date
-			int curDate = DateTimeHelper.getBeginOfDayInSec();   //just get time at the begin of day
-			int offset = 0;
-
-			if (curDate >= oldDate)
+			if (value != null)
 			{
-				offset = curDate - oldDate;
+				var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+				string strWordIDList = valueJsonObj["cards"];
+				if (strWordIDList.Length > 0) 
+				{
+					int oldDate = int.Parse(valueJsonObj["date"].ToString());
 
-			}
-			else
-			{
-				offset = oldDate - curDate;
-			}
+					//compare current date
+					int curDate = DateTimeHelper.getBeginOfDayInSec();   //just get time at the begin of day
+					int offset = 0;
 
-			List<WordDAO> wordDAOs = null;
-			if (offset < DateTimeHelper.SECONDS_OF_DAY)
-			{     
-				//get if it is new. If review list is old, get review list from vocabulary table
-				strQuery = string.Format("SELECT * FROM 'vocabulary'" +
-				                         " where id IN {0}", strWordIDList);
+					if (curDate >= oldDate)
+					{
+						offset = curDate - oldDate;
 
-				wordDAOs = database.Query<WordDAO>(strQuery);
+					}
+					else
+					{
+						offset = oldDate - curDate;
+					}
 
-				return _convertListWordDAOToListWordInfo(wordDAOs);
+					List<WordDAO> wordDAOs = null;
+					if (offset < DateTimeHelper.SECONDS_OF_DAY)
+					{
+						//get if it is new. If review list is old, get review list from vocabulary table
+						strQuery = string.Format("SELECT * FROM 'vocabulary'" +
+						                         " where id IN ({0})", strWordIDList);
+
+						wordDAOs = database.Query<WordDAO>(strQuery);
+
+						return _convertListWordDAOToListWordInfo(wordDAOs);
+					}
+				}
 			}
 
 			return null;
@@ -595,9 +617,13 @@ namespace LazzyBee
 		private List<WordInfo> _convertListWordDAOToListWordInfo(List<WordDAO> listWordDAO)
 		{
 			List<WordInfo> listWordInfo = new List<WordInfo>();
-			foreach (WordDAO wordDAO in listWordDAO)
+
+			if (listWordDAO != null)
 			{
-				listWordInfo.Add(_convertWordDAOToWordInfo(wordDAO));
+				foreach (WordDAO wordDAO in listWordDAO)
+				{
+					listWordInfo.Add(_convertWordDAOToWordInfo(wordDAO));
+				}
 			}
 
 			return listWordInfo;
@@ -615,7 +641,7 @@ namespace LazzyBee
 			Dictionary<string, string> dict = new Dictionary<string, string>();
 
 			dict.Add("date", curDate.ToString());
-			dict.Add("card", strListID);
+			dict.Add("cards", strListID);
 			dict.Add("count", wordInfos.Count().ToString());
 
 			string value = JsonConvert.SerializeObject(dict);

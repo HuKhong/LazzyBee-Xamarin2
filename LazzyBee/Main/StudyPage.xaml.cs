@@ -91,22 +91,32 @@ namespace LazzyBee
 
 			setTitleAndButtonsState();
 
-			_wordObj = [self getAWordFromCurrentList:nil];
-        if (_wordObj) {
-            [self displayQuestion:_wordObj];
-            
-            [self showHideButtonsPanel:NO];
-            
-        } else {
-            [self.navigationController popViewControllerAnimated:YES];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"noWordToStudyToday" object:nil];
-        }
+			wordInfo = getAWordFromCurrentList();
 
+			if (wordInfo != null) {
+					displayQuestion (wordInfo);
+	            
+	            //[self showHideButtonsPanel:NO];
+	            
+	        } else {
+	            //[self.navigationController popViewControllerAnimated:YES];
+	            
+	            //[[NSNotificationCenter defaultCenter] postNotificationName:@"noWordToStudyToday" object:nil];
+	        }
+		}
+
+		private void displayQuestion(WordInfo wd)
+		{
 			WebView webView = this.FindByName<WebView>("webView");
 			var htmlSource = new HtmlWebViewSource();
 
+			MajorObject major = new MajorObject();
+			string html = HTMLHelper.createHTMLForQuestion(wd, major);
+
+			htmlSource.Html = html;
+			webView.Source = htmlSource;
 		}
+
 		private void setTitleAndButtonsState()
 		{
 			string title = SCREEN_MODE_REVIEW;
@@ -217,9 +227,9 @@ namespace LazzyBee
 
 				//update title
 				setTitleAndButtonsState();
-
-				return res;
     		}
+
+			return res;
 		}
 	}
 }

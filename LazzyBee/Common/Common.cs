@@ -51,7 +51,7 @@ namespace LazzyBee
 		{
 			int res = 0;
 
-			if (Common.checkKey(CommonDefine.SETTINGS_NEW_CARD_KEY) == false)
+			if (Common.checkKey(CommonDefine.SETTINGS_NEW_CARD_KEY) == true)
 			{
 				res = int.Parse(loadSettingValueByKey(CommonDefine.SETTINGS_NEW_CARD_KEY));
 			}
@@ -63,7 +63,7 @@ namespace LazzyBee
 		{
 			int res = 0;
 
-			if (Common.checkKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY) == false)
+			if (Common.checkKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY) == true)
 			{
 				res = int.Parse(loadSettingValueByKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY));
 			}

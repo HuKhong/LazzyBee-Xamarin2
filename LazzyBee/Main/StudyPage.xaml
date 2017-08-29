@@ -5,7 +5,7 @@
 	Title="Study">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
-			<WebView x:Name="webView" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+			<WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Maroon">
 
 			</WebView>
 		</StackLayout>

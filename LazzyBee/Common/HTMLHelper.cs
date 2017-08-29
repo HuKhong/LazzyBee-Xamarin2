@@ -5,7 +5,8 @@ using LazzyBee;
 using Newtonsoft.Json.Linq;
 
 public class HTMLHelper {
-	private static string SPEAKER_IMG_LINK = "https://firebasestorage.googleapis.com/v0/b/lazeebee-977.appspot.com/o/speaker.png?alt=media&token=be4d8dc7-b5c0-4f3d-b5e2-893c30ec18ee";
+	//private static string SPEAKER_IMG_LINK = "https://firebasestorage.googleapis.com/v0/b/lazeebee-977.appspot.com/o/speaker.png?alt=media&token=be4d8dc7-b5c0-4f3d-b5e2-893c30ec18ee";
+private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 
 	public static string createHTMLForQuestion (WordInfo word, MajorObject major) {
 		Debug.WriteLine("createHTMLForQuestion");
@@ -31,10 +32,10 @@ public class HTMLHelper {
 	        }
 	    }
 
-		string htmlString = "<!DOCTYPE html>\n" +
-			"<html>\n" +
-			"<head>\n" +
-			"<style>\n" +
+		string htmlString = "<!DOCTYPE html>" +
+			"<html>" +
+			"<head>" +
+			"<style>" +
 			"figure {{" +
 			"   text-align: center;" +
 			"   margin: auto;" +
@@ -49,7 +50,7 @@ public class HTMLHelper {
 			"a {{" +
 			"   margin-top:10px;" +
 			"}}" +
-			"</style>\n" +
+			"</style>" +
 			"<script>" +
 			//play the text
 			"function playText(content, rate) {{" +
@@ -72,21 +73,21 @@ public class HTMLHelper {
 			"<body>" +
 			"<div style='width:100%%'>" +
 			"{0}" +  //strWordIconTag
-			"</div>\n" +
-			"</body>\n" +
+			"</div>" +
+			"</body>" +
 			"</html>";
 
 		try {
 			float speed = float.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_TTS_SPEED_KEY));
 			Debug.WriteLine("createHTMLForQuestion speed :: " +speed.ToString());
-			string strWordIconTag = @"<div style='float:left;width:90%%;text-align: center;'>" +
-	                        "<strong style='font-size:18pt;'> {0} </strong>\n" +   //%@ will be replaced by word.question
-				"</div>\n" +
-				"<div style='float:right;width:10%%'>\n" +
-				"<a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/><p>\n" +
-				"</div>\n" +
-				"<div style='width:90%%'>\n" +
-                "<center>[%@]</center>" +
+			string strWordIconTag = @"<div style='float:left; width:90%;text-align: center;'>" +
+	                        "<strong style='font-size:18pt;'> {0} </strong>" +   //%@ will be replaced by word.question
+				"</div>" +
+				"<div style='float:right; width:10%;'>" +
+				"<a onclick='playText(\"{1}\", {2:0.0});'><img width=10% src='{3}'/><p>" +
+				"</div>" +
+				"<div style='width:90%'>" +
+				"<center>{4}</center>" +
                 "</div>";
 
 			strWordIconTag = String.Format(strWordIconTag, word.question, word.question, speed, SPEAKER_IMG_LINK, package);
@@ -190,51 +191,51 @@ public class HTMLHelper {
 		//create html
 		try {
 			strWordIconTag = "<div style='float:right;width:10%%'>" +
-				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100%% src='{2}'/></a>\n" +
-				"</div>\n";
+				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100%% src='{2}'/></a>" +
+				"</div>";
 			strWordIconTag = String.Format(strWordIconTag, word.question, speed, SPEAKER_IMG_LINK);
 
 			if (strExplanation != null && strExplanation.Length > 0) {
 				strExplainIconTag = "<div style=\"float:left;width:90%%; font-size:14pt;\">" +
-					"   <em>{0}</em> \n" + //%@ will be replaced by strExplanation
-					"</div>\n" +
-					"<div style=\"float:right;width:10%%\">\n " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>\n" +  //%@ will be replaced by strExplanation
-					"</div>\n";
+					"   <em>{0}</em> " + //%@ will be replaced by strExplanation
+					"</div>" +
+					"<div style=\"float:right;width:10%%\"> " +
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>" +  //%@ will be replaced by strExplanation
+					"</div>";
 				strExplainIconTag = String.Format(strExplainIconTag, strExplanation, plainExplanation, speed, SPEAKER_IMG_LINK);
 			}
 
 			if (strExample != null && strExample.Length > 0) {
-				strExampleIconTag = "<div style=\"width:90%%; font-size:12pt;\"><strong>Example: </strong></div>\n" +
+				strExampleIconTag = "<div style=\"width:90%%; font-size:12pt;\"><strong>Example: </strong></div>" +
 				"<div style=\"float:left;width:90%%; font-size:14pt;\">" +
-					"   <em>{0}</em> \n" + //%@ will be replaced by strExample
-					"</div>\n" +
-					"<div style=\"float:right;width:10%%\">\n " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>\n" +  //%@ will be replaced by strExample
-					"</div>\n";
+					"   <em>{0}</em> " + //%@ will be replaced by strExample
+					"</div>" +
+					"<div style=\"float:right;width:10%%\"> " +
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>" +  //%@ will be replaced by strExample
+					"</div>";
 				strExampleIconTag = String.Format(strExampleIconTag, strExample, plainExample, speed, SPEAKER_IMG_LINK);
 			}
 
 			string userNote = word.userNote;
 
 			if (userNote != null && userNote.Length > 0) {			
-				userNote = userNote.Replace("\n", "<br>");
+				userNote = userNote.Replace("", "<br>");
 
 				string userNoteLabel = "User note";
-				strNoteTag = "<div style=\"width:100%%; font-size:12pt;\"><br><center><hr></center></div>\n" +
-					"<div style=\"width:100%%; font-size:12pt;\"><strong>{0}: </strong></div>\n" +
+				strNoteTag = "<div style=\"width:100%%; font-size:12pt;\"><br><center><hr></center></div>" +
+					"<div style=\"width:100%%; font-size:12pt;\"><strong>{0}: </strong></div>" +
 					"<div style=\"width:100%%; font-size:14pt;\">" +
-					"   <em>{1}</em> \n" + //%@ will be replaced by word.userNote
-					"</div>\n";
+					"   <em>{1}</em> " + //%@ will be replaced by word.userNote
+					"</div>";
 
 				strNoteTag = String.Format(strNoteTag, userNoteLabel, userNote);
 			}
 
 			htmlString = @"<html>" +
 			    "<head>" +
-				"<meta content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"\n" +
-				"name=\"viewport\">\n" +
-				"<style>\n" +
+				"<meta content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"" +
+				"name=\"viewport\">" +
+				"<style>" +
 				"figure {{" +
 				"   text-align: center;" +
 				"   margin: auto;" +
@@ -254,7 +255,7 @@ public class HTMLHelper {
 				"border-top: 3px double #8c8c8c;" +
 				"text-align:center;" +
 				"}}" +
-				"</style>\n" +
+				"</style>" +
 				"<script>" +
 				//play the text
 				"function playText(content, rate) {{" +
@@ -283,14 +284,14 @@ public class HTMLHelper {
 
 				"       <div style='width:90%%'>" +
 				"           <center><font size='4'> {2} </font></center>" +  //%@ will be replaced by pronunciation
-				"       </div>\n" +
+				"       </div>" +
 
 				"           <p style=\"text-align: center;\">  </p>" +  //%@ will be replaced by image link, temporary leave it blank
 
 				"       <div style=\"width:100%%\"></div>" +
-				"            {3} \n" +     //%@ will be replaced by strExplainIconTag
+				"            {3} " +     //%@ will be replaced by strExplainIconTag
 
-				"            {4} \n" +    //%@ will be replaced by strExampleIconTag
+				"            {4} " +    //%@ will be replaced by strExampleIconTag
 
 				"       <div style='width:90%%'>" +
 				"           <br><br><br><br><center>{5}<font size='4' color='blue'><em style='margin-left: 10px'> {6} </em></font></center>" +    //%@ will be replaced by meaning
@@ -299,7 +300,7 @@ public class HTMLHelper {
 				"   {7} " +     //%@ will be replaced by strNoteTag
 
 				"   </body>" +
-				"</html>\n";
+				"</html>";
 
 			Debug.WriteLine("createHTMLForQuestion 1 :: " + htmlString);
 			htmlString = String.Format(htmlString, word.question, strWordIconTag, strPronounciation, strExplainIconTag, strExampleIconTag, package, strMeaning, strNoteTag);
