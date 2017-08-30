@@ -2,12 +2,43 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="LazzyBee.StudyPage"
-	Title="Study">
+	Title="Study"
+	BackgroundColor="Silver">
 	<ContentPage.Content>
-		<StackLayout Orientation="Vertical">
-			<WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Maroon">
+			<StackLayout Orientation="Vertical">
 
-			</WebView>
-		</StackLayout>
+				<StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray"
+					Padding="10,0,10,0">
+					<Label Text="New: " VerticalOptions="Center" TextColor="Blue" WidthRequest="90"/>
+					<Label Text="Again: " VerticalOptions="Center" TextColor="Red" WidthRequest="90"/>
+					<Label Text="Review: " VerticalOptions="Center" TextColor="Yellow" WidthRequest="90"/>
+				</StackLayout>
+
+				<WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+				</WebView>
+				<StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray"
+						Padding="10,0,10,0">
+					<!--<Button x:Name="btnAgain" Text="Again" TranslationY="20" VerticalOptions="Center"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnAgainClicked"/>
+
+					<Button x:Name="btnHard" Text="Hard" TranslationY="20" VerticalOptions="Center"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnHardClicked"/>
+
+					<Button x:Name="btnNormal" Text="Again" TranslationY="20" VerticalOptions="Center"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnNormalClicked"/>
+
+					<Button x:Name="btnEasy" Text="Again" TranslationY="20" VerticalOptions="Center"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnEasyClicked"/>-->
+				</StackLayout>
+			</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

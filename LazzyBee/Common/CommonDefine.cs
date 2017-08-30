@@ -13,11 +13,11 @@ public class CommonDefine
 	public const string DEFAULT_LEVEL = "2";
 	public const string DEFAULT_NEW_CARD_PER_DAY = "5";
 	public const string DEFAULT_TOTAL_CARD_PER_DAY = "40";
-	public const string DEFAULT_TTS_SPEED = "0.4";
+	public const string DEFAULT_TTS_SPEED = "0.7";
 	public const string DEFAULT_TIME_TO_SHOW_ANSWER = "3";
-	public const string	DEFAULT_AUTO_PLAY_SOUND = "1";
-	public const string DEFAULT_DISPLAY_MEANING = "1";
-	public const string	DEFAULT_NOTIFICATION = "1";
+	public const string	DEFAULT_AUTO_PLAY_SOUND = "true";
+	public const string DEFAULT_DISPLAY_MEANING = "true";
+	public const string	DEFAULT_NOTIFICATION = "true";
 	public const string DEFAULT_TIME_SHOW_NOTIFICATION = "13h30";
 
 	//settings key

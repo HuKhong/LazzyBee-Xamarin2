@@ -41,7 +41,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 			"   margin: auto;" +
 			"}}" +
 			"figure.image img {{" +
-			"   width: 100%% !important;" +
+			"   width: 100% !important;" +
 			"   height: auto !important;" +
 			"}}" +
 			"figcaption {{" +
@@ -71,7 +71,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 			"</script>" +
 			"</head>" +
 			"<body>" +
-			"<div style='width:100%%'>" +
+			"<div style='width:100%'>" +
 			"{0}" +  //strWordIconTag
 			"</div>" +
 			"</body>" +
@@ -84,7 +84,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 	                        "<strong style='font-size:18pt;'> {0} </strong>" +   //%@ will be replaced by word.question
 				"</div>" +
 				"<div style='float:right; width:10%;'>" +
-				"<a onclick='playText(\"{1}\", {2:0.0});'><img width=10% src='{3}'/><p>" +
+				"<a onclick='playText(\"{1}\", {2:0.0});'><img src='{3}'/><p>" +
 				"</div>" +
 				"<div style='width:90%'>" +
 				"<center>{4}</center>" +
@@ -190,28 +190,28 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 
 		//create html
 		try {
-			strWordIconTag = "<div style='float:right;width:10%%'>" +
-				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100%% src='{2}'/></a>" +
+			strWordIconTag = "<div style='float:right;width:10%'>" +
+				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100% src='{2}'/></a>" +
 				"</div>";
 			strWordIconTag = String.Format(strWordIconTag, word.question, speed, SPEAKER_IMG_LINK);
 
 			if (strExplanation != null && strExplanation.Length > 0) {
-				strExplainIconTag = "<div style=\"float:left;width:90%%; font-size:14pt;\">" +
+				strExplainIconTag = "<div style=\"float:left;width:90%; font-size:14pt;\">" +
 					"   <em>{0}</em> " + //%@ will be replaced by strExplanation
 					"</div>" +
-					"<div style=\"float:right;width:10%%\"> " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>" +  //%@ will be replaced by strExplanation
+					"<div style=\"float:right;width:10%\"> " +
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100% src='{3}'/></a></p>" +  //%@ will be replaced by strExplanation
 					"</div>";
 				strExplainIconTag = String.Format(strExplainIconTag, strExplanation, plainExplanation, speed, SPEAKER_IMG_LINK);
 			}
 
 			if (strExample != null && strExample.Length > 0) {
-				strExampleIconTag = "<div style=\"width:90%%; font-size:12pt;\"><strong>Example: </strong></div>" +
-				"<div style=\"float:left;width:90%%; font-size:14pt;\">" +
+				strExampleIconTag = "<div style=\"width:90%; font-size:12pt;\"><strong>Example: </strong></div>" +
+				"<div style=\"float:left;width:90%; font-size:14pt;\">" +
 					"   <em>{0}</em> " + //%@ will be replaced by strExample
 					"</div>" +
-					"<div style=\"float:right;width:10%%\"> " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100%% src='{3}'/></a></p>" +  //%@ will be replaced by strExample
+					"<div style=\"float:right;width:10%\"> " +
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100% src='{3}'/></a></p>" +  //%@ will be replaced by strExample
 					"</div>";
 				strExampleIconTag = String.Format(strExampleIconTag, strExample, plainExample, speed, SPEAKER_IMG_LINK);
 			}
@@ -222,9 +222,9 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 				userNote = userNote.Replace("", "<br>");
 
 				string userNoteLabel = "User note";
-				strNoteTag = "<div style=\"width:100%%; font-size:12pt;\"><br><center><hr></center></div>" +
-					"<div style=\"width:100%%; font-size:12pt;\"><strong>{0}: </strong></div>" +
-					"<div style=\"width:100%%; font-size:14pt;\">" +
+				strNoteTag = "<div style=\"width:100%; font-size:12pt;\"><br><center><hr></center></div>" +
+					"<div style=\"width:100%; font-size:12pt;\"><strong>{0}: </strong></div>" +
+					"<div style=\"width:100%; font-size:14pt;\">" +
 					"   <em>{1}</em> " + //%@ will be replaced by word.userNote
 					"</div>";
 
@@ -241,7 +241,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 				"   margin: auto;" +
 				"}}" +
 				"figure.image img {{" +
-				"   width: 100%% !important;" +
+				"   width: 100% !important;" +
 				"   height: auto !important;" +
 				"}}" +
 				"figcaption {{" +
@@ -276,24 +276,24 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 				"</script>" +
 				"</head>" +
 				"<body>" +
-				"   <div style='width:100%%'>" +
-				"       <div style='float:left;width:90%%;text-align: center;'>" +
+				"   <div style='width:100%'>" +
+				"       <div style='float:left;width:90%;text-align: center;'>" +
 				"           <strong style='font-size:18pt;'> {0} </strong>" +    //%@ will be replaced by word
 				"       </div>" +
 				"       {1}" +   //%@ will be replaced by strWordIconTag
 
-				"       <div style='width:90%%'>" +
+				"       <div style='width:90%'>" +
 				"           <center><font size='4'> {2} </font></center>" +  //%@ will be replaced by pronunciation
 				"       </div>" +
 
 				"           <p style=\"text-align: center;\">  </p>" +  //%@ will be replaced by image link, temporary leave it blank
 
-				"       <div style=\"width:100%%\"></div>" +
+				"       <div style=\"width:100%\"></div>" +
 				"            {3} " +     //%@ will be replaced by strExplainIconTag
 
 				"            {4} " +    //%@ will be replaced by strExampleIconTag
 
-				"       <div style='width:90%%'>" +
+				"       <div style='width:90%'>" +
 				"           <br><br><br><br><center>{5}<font size='4' color='blue'><em style='margin-left: 10px'> {6} </em></font></center>" +    //%@ will be replaced by meaning
 				"       </div>" +
 				"   </div>" +

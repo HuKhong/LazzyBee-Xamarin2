@@ -19,7 +19,6 @@ namespace LazzyBee
 		private List<WordInfo> newWordList = new List<WordInfo>();
 		private List<WordInfo> studyAgainList = new List<WordInfo>();
 		private List<WordInfo> reviewWordList = new List<WordInfo>();
-		readonly string Mode_Study;
 
 		public StudyPage()
 		{
@@ -94,7 +93,7 @@ namespace LazzyBee
 			wordInfo = getAWordFromCurrentList();
 
 			if (wordInfo != null) {
-					displayQuestion (wordInfo);
+				displayQuestion (wordInfo);
 	            
 	            //[self showHideButtonsPanel:NO];
 	            
@@ -105,6 +104,7 @@ namespace LazzyBee
 	        }
 		}
 
+		/******************** PRIVATE FUNCTIONS AREA ********************/
 		private void displayQuestion(WordInfo wd)
 		{
 			WebView webView = this.FindByName<WebView>("webView");
@@ -112,6 +112,18 @@ namespace LazzyBee
 
 			MajorObject major = new MajorObject();
 			string html = HTMLHelper.createHTMLForQuestion(wd, major);
+
+			htmlSource.Html = html;
+			webView.Source = htmlSource;
+		}
+
+		private void displayAnswer(WordInfo wd)
+		{
+			WebView webView = this.FindByName<WebView>("webView");
+			var htmlSource = new HtmlWebViewSource();
+
+			MajorObject major = new MajorObject();
+			string html = HTMLHelper.createHTMLForAnswer(wd, major);
 
 			htmlSource.Html = html;
 			webView.Source = htmlSource;
