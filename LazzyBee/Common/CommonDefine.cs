@@ -40,12 +40,6 @@ public class CommonDefine
 	public const string SHOW_GUIDE_KEY = "ShowGuide";
 	public const string REVERSE_ENABL_KEY = "ReverseEnable";
 
-	public const string PROGRESS_INREVIEW_KEY = "inreview";
-	public const string PROGRESS_BUFFER_KEY = "buffer";
-	public const string PROGRESS_PICKEDWORD_KEY = "pickedword";
-
-	public const string DATABASENAME = "english.db";
-	public const string DATABASENAME_NEW = "new_english.db";
 	public const string DATABASENAME_BACKUP = "word.csv";
 	public const string STREAK_BACKUP = "streak.csv";
 

@@ -220,6 +220,7 @@ namespace LazzyBee
 				if (wordInfo != null)
 				{
 					reviewWordList.Remove(wordInfo);
+					SqliteHelper.Instance.updateInreviewWordList(reviewWordList);
 				}
 
 			} else if (screenMode.Equals(SCREEN_MODE_NEWWORD))
@@ -227,6 +228,7 @@ namespace LazzyBee
 				if (wordInfo != null)
 				{
 					newWordList.Remove(wordInfo);
+					SqliteHelper.Instance.updatePickedWordList(newWordList);
 				}
 			}
 
@@ -281,7 +283,7 @@ namespace LazzyBee
 				}
 
 				//re-add old to again list after set screen mode
-				if (sender.Equals(btnAgain))
+				if (sender != null && sender.Equals(btnAgain))
 				{
 					studyAgainList.Add(wordInfo);
 
@@ -303,32 +305,35 @@ namespace LazzyBee
 		//flag = true -> show [4 buttons]
 		private async void showHide4ButtonsPanel(bool flag)
 		{
-			string[] btnsTitle = Algorithm.getInstance().nextIntervalStringsList(wordInfo);
-			string btnAgainTitle = string.Format("{0}\n({1})", BTN_TITLE_AGAIN, btnsTitle[0]);
-			string btnHardTitle = string.Format("{0}\n({1})", BTN_TITLE_HARD, btnsTitle[1]);
-			string btnNormalTitle = string.Format("{0}\n({1})", BTN_TITLE_NORMAL, btnsTitle[2]);
-			string btnEasyTitle = string.Format("{0}\n({1})", BTN_TITLE_EASY, btnsTitle[3]);
-
-			//btnAgain.Text 	= btnAgainTitle;
-			//btnHard.Text 	= btnHardTitle;
-			//btnNormal.Text 	= btnNormalTitle;
-			//btnEasy.Text 	= btnEasyTitle;
-			//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
-
-
-			if (flag)
+			if (wordInfo != null)
 			{
-				showAnswerPanel.IsVisible = false;
-				fourButtonsPanel.IsVisible = true;
-				//await showAnswerPanel.FadeTo(0, 300);
-				//await fourButtonsPanel.FadeTo(1, 300);
-			}
-			else
-			{
-				showAnswerPanel.IsVisible = true;
-				fourButtonsPanel.IsVisible = false;
-				//await showAnswerPanel.FadeTo(0, 300);
-				//await fourButtonsPanel.FadeTo(1, 300);
+				string[] btnsTitle = Algorithm.getInstance().nextIntervalStringsList(wordInfo);
+				string btnAgainTitle = string.Format("{0}\n({1})", BTN_TITLE_AGAIN, btnsTitle[0]);
+				string btnHardTitle = string.Format("{0}\n({1})", BTN_TITLE_HARD, btnsTitle[1]);
+				string btnNormalTitle = string.Format("{0}\n({1})", BTN_TITLE_NORMAL, btnsTitle[2]);
+				string btnEasyTitle = string.Format("{0}\n({1})", BTN_TITLE_EASY, btnsTitle[3]);
+
+				//btnAgain.Text 	= btnAgainTitle;
+				//btnHard.Text 	= btnHardTitle;
+				//btnNormal.Text 	= btnNormalTitle;
+				//btnEasy.Text 	= btnEasyTitle;
+				//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
+
+
+				if (flag)
+				{
+					showAnswerPanel.IsVisible = false;
+					fourButtonsPanel.IsVisible = true;
+					//await showAnswerPanel.FadeTo(0, 300);
+					//await fourButtonsPanel.FadeTo(1, 300);
+				}
+				else
+				{
+					showAnswerPanel.IsVisible = true;
+					fourButtonsPanel.IsVisible = false;
+					//await showAnswerPanel.FadeTo(0, 300);
+					//await fourButtonsPanel.FadeTo(1, 300);
+				}
 			}
 		}
 
