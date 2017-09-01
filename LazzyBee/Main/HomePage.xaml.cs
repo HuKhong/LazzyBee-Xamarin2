@@ -13,15 +13,15 @@ namespace LazzyBee.Main
         {
 			InitializeComponent();
 
-			Button btnStartLearning = this.FindByName<Button>("btnStartLearning");
+			//Button btnStartLearning = this.FindByName<Button>("btnStartLearning");
 			btnStartLearning.BackgroundColor = CommonDefine.SECOND_COLOR;
 			btnStartLearning.TextColor = Color.White;
 
-			Button btnIncoming = this.FindByName<Button>("btnIncomingList");
-			btnIncoming.BackgroundColor = CommonDefine.SECOND_COLOR;
-			btnIncoming.TextColor = Color.White;
+			//Button btnIncoming = this.FindByName<Button>("btnIncomingList");
+			btnIncomingList.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnIncomingList.TextColor = Color.White;
 
-			Button btnMoreWords = this.FindByName<Button>("btnMoreWords");
+			//Button btnMoreWords = this.FindByName<Button>("btnMoreWords");
 			btnMoreWords.BackgroundColor = CommonDefine.SECOND_COLOR;
 			btnMoreWords.TextColor = Color.White;
 

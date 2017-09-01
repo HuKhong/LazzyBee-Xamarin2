@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -8,6 +9,12 @@ namespace LazzyBee
 	public partial class StudyPage : ContentPage
 	{
 		private SqliteHelper sqlLiteHelper = SqliteHelper.Instance;
+
+		public const string BTN_TITLE_AGAIN = "Again";
+		public const string BTN_TITLE_HARD = "Hard";
+		public const string BTN_TITLE_NORMAL = "Normal";
+		public const string BTN_TITLE_EASY = "Easy";
+		public const string BTN_TITLE_SHOW_ANSWER = "Show Answer";
 
 		public const string SCREEN_MODE_NEWWORD = "New Word";
 		public const string SCREEN_MODE_AGAIN = "Learn Again";
@@ -20,9 +27,42 @@ namespace LazzyBee
 		private List<WordInfo> studyAgainList = new List<WordInfo>();
 		private List<WordInfo> reviewWordList = new List<WordInfo>();
 
+		//private Button btnAgain;
+		//private Button btnHard;
+		//private Button btnNormal;
+		//private Button btnEasy;
+
+		//private Button btnShowAnswer;
+
 		public StudyPage()
 		{
 			InitializeComponent();
+
+			//btnAgain = this.FindByName<Button>("btnAgain");
+			btnAgain.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnAgain.TextColor = Color.White;
+
+			//btnHard = this.FindByName<Button>("btnHard");
+			btnHard.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnHard.TextColor = Color.White;
+
+			//btnNormal = this.FindByName<Button>("btnNormal");
+			btnNormal.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnNormal.TextColor = Color.White;
+
+			//btnEasy = this.FindByName<Button>("btnEasy");
+			btnEasy.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnEasy.TextColor = Color.White;
+
+			//btnShowAnswer = this.FindByName<Button>("btnShowAnswer");
+			btnShowAnswer.BackgroundColor = CommonDefine.SECOND_COLOR;
+			btnShowAnswer.TextColor = Color.White;
+
+			//btnAgain.Text 	= BTN_TITLE_AGAIN;
+			//btnHard.Text 	= BTN_TITLE_HARD;
+			//btnNormal.Text 	= BTN_TITLE_NORMAL;
+			//btnEasy.Text 	= BTN_TITLE_EASY;
+			//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
 
 			string title = SCREEN_MODE_NEWWORD;
 			if (screenMode.Equals(SCREEN_MODE_NEWWORD))
@@ -90,7 +130,8 @@ namespace LazzyBee
 
 			setTitleAndButtonsState();
 
-			wordInfo = getAWordFromCurrentList();
+			wordInfo = getAWordFromCurrentList(null);
+            showHide4ButtonsPanel(false);
 
 			if (wordInfo != null) {
 				displayQuestion (wordInfo);
@@ -136,31 +177,35 @@ namespace LazzyBee
 			{
 				title = SCREEN_MODE_NEWWORD;
 
-				//btnEasy.enabled = YES;
-				//btnNorm.enabled = YES;
+				btnEasy.IsEnabled = true;
+				btnNormal.IsEnabled = true;
 
 			}
 			else if (screenMode.Equals(SCREEN_MODE_AGAIN))
 			{
 				title = SCREEN_MODE_AGAIN;
 
-				//btnEasy.enabled = NO;
-				//btnNorm.enabled = NO;
+				btnEasy.IsEnabled = false;
+				btnNormal.IsEnabled = false;
 
 			}
 			else if (screenMode.Equals(SCREEN_MODE_REVIEW))
 			{
 				title = SCREEN_MODE_REVIEW;
 
-				//btnEasy.enabled = YES;
-				//btnNorm.enabled = YES;
+				btnEasy.IsEnabled = true;
+				btnNormal.IsEnabled = true;
 			}
 
 			this.Title = title;
+
+			lbNewWord.Text = string.Format("New: {0}", newWordList.Count);
+			lbAgain.Text = string.Format("Again: {0}", studyAgainList.Count);
+			lbReview.Text = string.Format("Review: {0}", reviewWordList.Count);
 		}
 
 		//only need to check sender in case click on Again button
-		private WordInfo getAWordFromCurrentList()
+		private WordInfo getAWordFromCurrentList(Button sender)
 		{
 			WordInfo res = null;
 			//remove the old word from array
@@ -236,12 +281,173 @@ namespace LazzyBee
 				}
 
 				//re-add old to again list after set screen mode
+				if (sender.Equals(btnAgain))
+				{
+					studyAgainList.Add(wordInfo);
 
-				//update title
-				setTitleAndButtonsState();
+					if (res == null)
+					{
+						screenMode = SCREEN_MODE_AGAIN;
+						res = studyAgainList.ElementAt(0);
+					}
+				}
     		}
 
+			//update title
+			setTitleAndButtonsState();
+
 			return res;
+		}
+
+		//flag = false -> show [Show Answer] button
+		//flag = true -> show [4 buttons]
+		private async void showHide4ButtonsPanel(bool flag)
+		{
+			string[] btnsTitle = Algorithm.getInstance().nextIntervalStringsList(wordInfo);
+			string btnAgainTitle = string.Format("{0}\n({1})", BTN_TITLE_AGAIN, btnsTitle[0]);
+			string btnHardTitle = string.Format("{0}\n({1})", BTN_TITLE_HARD, btnsTitle[1]);
+			string btnNormalTitle = string.Format("{0}\n({1})", BTN_TITLE_NORMAL, btnsTitle[2]);
+			string btnEasyTitle = string.Format("{0}\n({1})", BTN_TITLE_EASY, btnsTitle[3]);
+
+			//btnAgain.Text 	= btnAgainTitle;
+			//btnHard.Text 	= btnHardTitle;
+			//btnNormal.Text 	= btnNormalTitle;
+			//btnEasy.Text 	= btnEasyTitle;
+			//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
+
+
+			if (flag)
+			{
+				showAnswerPanel.IsVisible = false;
+				fourButtonsPanel.IsVisible = true;
+				//await showAnswerPanel.FadeTo(0, 300);
+				//await fourButtonsPanel.FadeTo(1, 300);
+			}
+			else
+			{
+				showAnswerPanel.IsVisible = true;
+				fourButtonsPanel.IsVisible = false;
+				//await showAnswerPanel.FadeTo(0, 300);
+				//await fourButtonsPanel.FadeTo(1, 300);
+			}
+		}
+
+		/***************** BUTTONS HANDLE *****************/
+		void btnAgainClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnAgainClicked");
+			//update word and update db
+			if (wordInfo != null) {
+				Algorithm.getInstance().updateWordProgressWithEaseOption(ref wordInfo, Algorithm.OPTION_AGAIN);
+				SqliteHelper.Instance.updateWord(wordInfo);
+		    }
+
+			//show next word
+			wordInfo = getAWordFromCurrentList((Button)sender);
+
+			if (wordInfo != null)
+			{
+				displayQuestion(wordInfo);
+				showHide4ButtonsPanel(false);
+			}
+			else
+			{
+				//        [self.navigationController popViewControllerAnimated:YES];
+
+				//        [[NSNotificationCenter defaultCenter]
+				//postNotificationName:@"completedDailyTarget" object:nil];
+			}
+		}
+
+		void btnHardClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnHardClicked");
+			//update word and update db
+			if (wordInfo != null)
+			{
+				Algorithm.getInstance().updateWordProgressWithEaseOption(ref wordInfo, Algorithm.OPTION_HARD);
+				SqliteHelper.Instance.updateWord(wordInfo);
+			}
+
+			//show next word
+			wordInfo = getAWordFromCurrentList((Button)sender);
+
+			if (wordInfo != null)
+			{
+				displayQuestion(wordInfo);
+				showHide4ButtonsPanel(false);
+			}
+			else
+			{
+				//        [self.navigationController popViewControllerAnimated:YES];
+
+				//        [[NSNotificationCenter defaultCenter]
+				//postNotificationName:@"completedDailyTarget" object:nil];
+			}
+		}
+
+		void btnNormalClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnNormalClicked");
+			//update word and update db
+			if (wordInfo != null)
+			{
+				Algorithm.getInstance().updateWordProgressWithEaseOption(ref wordInfo, Algorithm.OPTION_GOOD);
+				SqliteHelper.Instance.updateWord(wordInfo);
+			}
+
+			//show next word
+			wordInfo = getAWordFromCurrentList((Button)sender);
+
+			if (wordInfo != null)
+			{
+				displayQuestion(wordInfo);
+				showHide4ButtonsPanel(false);
+			}
+			else
+			{
+				//        [self.navigationController popViewControllerAnimated:YES];
+
+				//        [[NSNotificationCenter defaultCenter]
+				//postNotificationName:@"completedDailyTarget" object:nil];
+			}
+		}
+
+		void btnEasyClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnEasyClicked");
+			//update word and update db
+			if (wordInfo != null)
+			{
+				Algorithm.getInstance().updateWordProgressWithEaseOption(ref wordInfo, Algorithm.OPTION_EASY);
+				SqliteHelper.Instance.updateWord(wordInfo);
+			}
+
+			//show next word
+			wordInfo = getAWordFromCurrentList((Button)sender);
+
+			if (wordInfo != null)
+			{
+				displayQuestion(wordInfo);
+				showHide4ButtonsPanel(false);
+			}
+			else
+			{
+				//        [self.navigationController popViewControllerAnimated:YES];
+
+				//        [[NSNotificationCenter defaultCenter]
+				//postNotificationName:@"completedDailyTarget" object:nil];
+			}
+		}
+
+		void btnShowAnswerClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnShowAnswerClicked");
+			if (wordInfo != null)
+			{
+                displayAnswer(wordInfo);
+				showHide4ButtonsPanel(true);
+			}
 		}
 	}
 }
