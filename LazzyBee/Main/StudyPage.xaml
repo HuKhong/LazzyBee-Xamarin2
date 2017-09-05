@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:LazzyBee"
 	x:Class="LazzyBee.StudyPage"
 	Title="Study"
 	BackgroundColor="White">
@@ -9,9 +10,13 @@
 
 			<StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray"
 				Padding="10,0,10,0">
-				<Label x:Name="lbNewWord" Text="New: " VerticalOptions="Center" TextColor="Blue" WidthRequest="90"/>
-				<Label x:Name="lbAgain" Text="Again: " VerticalOptions="Center" TextColor="Red" WidthRequest="90"/>
-				<Label x:Name="lbReview" Text="Review: " VerticalOptions="Center" TextColor="Yellow" WidthRequest="90"/>
+				<Label x:Name="lbNewWord" Text="New: " VerticalOptions="Center" TextColor="Blue" FontSize="15" WidthRequest="90"/>
+				<Label x:Name="lbAgain" Text="Again: " VerticalOptions="Center" TextColor="Red" FontSize="15" WidthRequest="90"/>
+				<Label x:Name="lbReview" Text="Review: " VerticalOptions="Center" TextColor="Yellow" FontSize="15" WidthRequest="90"/>
+
+				<Button x:Name="btnDict" Image="images/icons/ic_dictionary.png"
+					VerticalOptions="Center" HorizontalOptions="EndAndExpand"
+					Clicked="btnDictionaryClicked"/>
 			</StackLayout>
 
 			<WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -38,7 +43,7 @@
 					BorderColor="Gray"
 					Clicked="btnNormalClicked"/>
 
-				<Button x:Name="btnEasy" Text="Easy" TextColor="White"
+				<Button x:Name="btnEasy" Text="Easy" TextColor="White" 
 					VerticalOptions="Center" HorizontalOptions="FillAndExpand"
 					BorderWidth="1"
 					BorderColor="Gray"
@@ -53,7 +58,6 @@
 						BorderColor="Gray"
 						Clicked="btnShowAnswerClicked"/>
 			</StackLayout>
-
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

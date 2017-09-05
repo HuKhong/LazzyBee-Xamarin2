@@ -23,6 +23,12 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Main\IncomingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Main\DictionaryTabPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Main\DictionaryWebView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -55,6 +61,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\IDatabaseConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WordDAO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\FileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\DictionaryTabPage.xaml.cs">
+      <DependentUpon>DictionaryTabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Main\DictionaryWebView.xaml.cs">
+      <DependentUpon>DictionaryWebView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />

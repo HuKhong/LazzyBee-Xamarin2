@@ -313,6 +313,14 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 		return htmlString;
 	}
 
+	//dictType: vn, en
+	//public static string createHTMLDict(WordInfo word, string dictType)
+	//{
+
+	//}
+
+
+	/******************** PRIVATE FUNCTIONS ********************/
 	private static string removeHTML(string input) {
 		return Regex.Replace(input, "<.*?>", String.Empty);
 	}

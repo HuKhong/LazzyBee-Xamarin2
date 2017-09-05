@@ -20,7 +20,8 @@ namespace LazzyBee
 		public const string SCREEN_MODE_AGAIN = "Learn Again";
 		public const string SCREEN_MODE_REVIEW = "Review";
 
-		public string screenMode = SCREEN_MODE_NEWWORD;
+		private string _screenMode = SCREEN_MODE_NEWWORD;
+		private bool _isShowingAnswer = false;
 
 		private WordInfo wordInfo;
 		private List<WordInfo> newWordList = new List<WordInfo>();
@@ -58,25 +59,33 @@ namespace LazzyBee
 			btnShowAnswer.BackgroundColor = CommonDefine.SECOND_COLOR;
 			btnShowAnswer.TextColor = Color.White;
 
-			//btnAgain.Text 	= BTN_TITLE_AGAIN;
-			//btnHard.Text 	= BTN_TITLE_HARD;
-			//btnNormal.Text 	= BTN_TITLE_NORMAL;
-			//btnEasy.Text 	= BTN_TITLE_EASY;
-			//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
+			Console.WriteLine("wdith :: " + App.Current.MainPage.Width.ToString());
+			double width = App.Current.MainPage.Width;
+
+			btnAgain.WidthRequest = width / 5;
+			btnHard.WidthRequest = width / 5;
+			btnNormal.WidthRequest = width / 5;
+			btnEasy.WidthRequest = width / 5;
+
+			btnAgain.Text 	= BTN_TITLE_AGAIN;
+			btnHard.Text 	= BTN_TITLE_HARD;
+			btnNormal.Text 	= BTN_TITLE_NORMAL;
+			btnEasy.Text 	= BTN_TITLE_EASY;
+			btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
 
 			string title = SCREEN_MODE_NEWWORD;
-			if (screenMode.Equals(SCREEN_MODE_NEWWORD))
+			if (_screenMode.Equals(SCREEN_MODE_NEWWORD))
 			{
 				title = SCREEN_MODE_NEWWORD;
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_AGAIN))
+			else if (_screenMode.Equals(SCREEN_MODE_AGAIN))
 			{
 
 				title = SCREEN_MODE_AGAIN;
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_REVIEW))
+			else if (_screenMode.Equals(SCREEN_MODE_REVIEW))
 			{
 
 				title = SCREEN_MODE_REVIEW;
@@ -115,17 +124,17 @@ namespace LazzyBee
 			//check if the list is not empty to switch screen mode, review is the highest priority
 			if (reviewWordList.Count > 0)
 			{
-				screenMode = SCREEN_MODE_REVIEW;
+				_screenMode = SCREEN_MODE_REVIEW;
 
 			}
 			else if (studyAgainList.Count > 0)
 			{
-				screenMode = SCREEN_MODE_AGAIN;
+				_screenMode = SCREEN_MODE_AGAIN;
 
 			}
 			else if (newWordList.Count > 0)
 			{
-				screenMode = SCREEN_MODE_NEWWORD;
+				_screenMode = SCREEN_MODE_NEWWORD;
 			}
 
 			setTitleAndButtonsState();
@@ -156,6 +165,8 @@ namespace LazzyBee
 
 			htmlSource.Html = html;
 			webView.Source = htmlSource;
+
+			_isShowingAnswer = false;
 		}
 
 		private void displayAnswer(WordInfo wd)
@@ -168,12 +179,14 @@ namespace LazzyBee
 
 			htmlSource.Html = html;
 			webView.Source = htmlSource;
+
+			_isShowingAnswer = true;
 		}
 
 		private void setTitleAndButtonsState()
 		{
 			string title = SCREEN_MODE_REVIEW;
-			if (screenMode.Equals(SCREEN_MODE_NEWWORD))
+			if (_screenMode.Equals(SCREEN_MODE_NEWWORD))
 			{
 				title = SCREEN_MODE_NEWWORD;
 
@@ -181,7 +194,7 @@ namespace LazzyBee
 				btnNormal.IsEnabled = true;
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_AGAIN))
+			else if (_screenMode.Equals(SCREEN_MODE_AGAIN))
 			{
 				title = SCREEN_MODE_AGAIN;
 
@@ -189,7 +202,7 @@ namespace LazzyBee
 				btnNormal.IsEnabled = false;
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_REVIEW))
+			else if (_screenMode.Equals(SCREEN_MODE_REVIEW))
 			{
 				title = SCREEN_MODE_REVIEW;
 
@@ -209,13 +222,13 @@ namespace LazzyBee
 		{
 			WordInfo res = null;
 			//remove the old word from array
-			if (screenMode.Equals(SCREEN_MODE_AGAIN))
+			if (_screenMode.Equals(SCREEN_MODE_AGAIN))
 			{
 				if (wordInfo != null)
 				{
 					studyAgainList.Remove(wordInfo);
 				}
-			} else if (screenMode.Equals(SCREEN_MODE_REVIEW))
+			} else if (_screenMode.Equals(SCREEN_MODE_REVIEW))
 			{
 				if (wordInfo != null)
 				{
@@ -223,7 +236,7 @@ namespace LazzyBee
 					SqliteHelper.Instance.updateInreviewWordList(reviewWordList);
 				}
 
-			} else if (screenMode.Equals(SCREEN_MODE_NEWWORD))
+			} else if (_screenMode.Equals(SCREEN_MODE_NEWWORD))
 			{
 				if (wordInfo != null)
 				{
@@ -233,7 +246,7 @@ namespace LazzyBee
 			}
 
 			//get next word, if it's nil then switch array and screen mod
-   			if (screenMode.Equals(SCREEN_MODE_AGAIN))
+   			if (_screenMode.Equals(SCREEN_MODE_AGAIN))
 			{
 				if (studyAgainList.Count > 0)
 				{
@@ -241,7 +254,7 @@ namespace LazzyBee
 				}
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_REVIEW))
+			else if (_screenMode.Equals(SCREEN_MODE_REVIEW))
 			{
 				if (reviewWordList.Count > 0)
 				{
@@ -249,7 +262,7 @@ namespace LazzyBee
 				}
 
 			}
-			else if (screenMode.Equals(SCREEN_MODE_NEWWORD))
+			else if (_screenMode.Equals(SCREEN_MODE_NEWWORD))
 			{
 				if (newWordList.Count > 0)
 				{
@@ -261,19 +274,19 @@ namespace LazzyBee
         		//check if the list is not empty to switch screen mode, review is the highest priority
         		if (reviewWordList.Count > 0)
 				{
-					screenMode = SCREEN_MODE_REVIEW;
+					_screenMode = SCREEN_MODE_REVIEW;
 					res = reviewWordList.ElementAt(0);
 
 				}
 				else if (studyAgainList.Count > 0)
 				{
-					screenMode = SCREEN_MODE_AGAIN;
+					_screenMode = SCREEN_MODE_AGAIN;
 					res = studyAgainList.ElementAt(0);
 
 				}
 				else if (newWordList.Count > 0)
 				{
-					screenMode = SCREEN_MODE_NEWWORD;
+					_screenMode = SCREEN_MODE_NEWWORD;
 					res = newWordList.ElementAt(0);
 
 				}
@@ -289,7 +302,7 @@ namespace LazzyBee
 
 					if (res == null)
 					{
-						screenMode = SCREEN_MODE_AGAIN;
+						_screenMode = SCREEN_MODE_AGAIN;
 						res = studyAgainList.ElementAt(0);
 					}
 				}
@@ -303,21 +316,21 @@ namespace LazzyBee
 
 		//flag = false -> show [Show Answer] button
 		//flag = true -> show [4 buttons]
-		private async void showHide4ButtonsPanel(bool flag)
+		private void showHide4ButtonsPanel(bool flag)
 		{
 			if (wordInfo != null)
 			{
 				string[] btnsTitle = Algorithm.getInstance().nextIntervalStringsList(wordInfo);
-				string btnAgainTitle = string.Format("{0}\n({1})", BTN_TITLE_AGAIN, btnsTitle[0]);
-				string btnHardTitle = string.Format("{0}\n({1})", BTN_TITLE_HARD, btnsTitle[1]);
-				string btnNormalTitle = string.Format("{0}\n({1})", BTN_TITLE_NORMAL, btnsTitle[2]);
-				string btnEasyTitle = string.Format("{0}\n({1})", BTN_TITLE_EASY, btnsTitle[3]);
+				string btnAgainTitle = string.Format("{0} ({1})", "test", btnsTitle[0]);
+				string btnHardTitle = string.Format("{0}", btnsTitle[1]);
+				string btnNormalTitle = string.Format("{0}", btnsTitle[2]);
+				string btnEasyTitle = string.Format("{0}", btnsTitle[3]);
 
-				//btnAgain.Text 	= btnAgainTitle;
-				//btnHard.Text 	= btnHardTitle;
-				//btnNormal.Text 	= btnNormalTitle;
-				//btnEasy.Text 	= btnEasyTitle;
-				//btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
+				btnAgain.Text 	= btnAgainTitle;
+				btnHard.Text 	= btnHardTitle;
+				btnNormal.Text 	= btnNormalTitle;
+				btnEasy.Text 	= btnEasyTitle;
+				btnShowAnswer.Text = BTN_TITLE_SHOW_ANSWER;
 
 
 				if (flag)
@@ -452,6 +465,19 @@ namespace LazzyBee
 			{
                 displayAnswer(wordInfo);
 				showHide4ButtonsPanel(true);
+			}
+		}
+
+		void btnDictionaryClicked(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("btnShowAnswerClicked");
+			if (wordInfo != null)
+			{
+				if (_isShowingAnswer == true)
+				{
+					DictionaryTabPage dictTabPage = new DictionaryTabPage();
+					Navigation.PushAsync(dictTabPage);
+				}
 			}
 		}
 	}
