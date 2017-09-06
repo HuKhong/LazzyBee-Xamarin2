@@ -4,14 +4,15 @@
 	x:Class="LazzyBee.DictionaryWebView">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
-			<WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
-			</WebView>
 
 			<StackLayout x:Name="adsViewHolder" Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray"
 				Padding="0,0,0,0">
 
 			</StackLayout>
+			<WebView x:Name="DictWebView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+			</WebView>
+
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

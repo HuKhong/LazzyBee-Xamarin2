@@ -5,8 +5,10 @@ using LazzyBee;
 using Newtonsoft.Json.Linq;
 
 public class HTMLHelper {
+	public const string LANG_EN = "EN";
+	public const string LANG_VI = "VI";
 	//private static string SPEAKER_IMG_LINK = "https://firebasestorage.googleapis.com/v0/b/lazeebee-977.appspot.com/o/speaker.png?alt=media&token=be4d8dc7-b5c0-4f3d-b5e2-893c30ec18ee";
-private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
+	private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 
 	public static string createHTMLForQuestion (WordInfo word, MajorObject major) {
 		Debug.WriteLine("createHTMLForQuestion");
@@ -191,7 +193,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 		//create html
 		try {
 			strWordIconTag = "<div style='float:right;width:10%'>" +
-				"<a onclick='playText(\"{0}\", {1:0.0});'><img width=100% src='{2}'/></a>" +
+				"<a onclick='playText(\"{0}\", {1:0.0});'><img src='{2}'/></a>" +
 				"</div>";
 			strWordIconTag = String.Format(strWordIconTag, word.question, speed, SPEAKER_IMG_LINK);
 
@@ -200,7 +202,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 					"   <em>{0}</em> " + //%@ will be replaced by strExplanation
 					"</div>" +
 					"<div style=\"float:right;width:10%\"> " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100% src='{3}'/></a></p>" +  //%@ will be replaced by strExplanation
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img src='{3}'/></a></p>" +  //%@ will be replaced by strExplanation
 					"</div>";
 				strExplainIconTag = String.Format(strExplainIconTag, strExplanation, plainExplanation, speed, SPEAKER_IMG_LINK);
 			}
@@ -211,7 +213,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 					"   <em>{0}</em> " + //%@ will be replaced by strExample
 					"</div>" +
 					"<div style=\"float:right;width:10%\"> " +
-					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img width=100% src='{3}'/></a></p>" +  //%@ will be replaced by strExample
+					"   <p><a onclick='playText(\"{1}\", {2:0.0});'><img src='{3}'/></a></p>" +  //%@ will be replaced by strExample
 					"</div>";
 				strExampleIconTag = String.Format(strExampleIconTag, strExample, plainExample, speed, SPEAKER_IMG_LINK);
 			}
@@ -231,7 +233,7 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 				strNoteTag = String.Format(strNoteTag, userNoteLabel, userNote);
 			}
 
-			htmlString = @"<html>" +
+			htmlString = "<html>" +
 			    "<head>" +
 				"<meta content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"" +
 				"name=\"viewport\">" +
@@ -314,10 +316,146 @@ private static string SPEAKER_IMG_LINK = "images/icons/ic_speaker.png";
 	}
 
 	//dictType: vn, en
-	//public static string createHTMLDict(WordInfo word, string dictType)
-	//{
+	public static string createHTMLDict(WordInfo word, string dictType)
+	{
+		string htmlString = "";
+		string temp = "";
 
-	//}
+		if (dictType.Equals(LANG_VI))
+		{
+			temp = word.langVN.Replace("\n", "");
+
+		}
+		else if (dictType.Equals(LANG_EN))
+		{
+			temp = word.langEN.Replace("\n", "");
+		}
+
+		temp = removeNBSP(temp);
+		Debug.WriteLine("createHTMLDict :: temp :: " +temp);
+		htmlString = "<html>" +
+					"<head>" +
+					"<meta content=\"width=device-width, initial-scale=1.0, user-scalable=yes\"" +
+					"name=\"viewport\">" +
+					"<style>" +
+					/*css for l_en*/
+					".sense-block {" +
+					"margin: 15px 5px 10px;" +
+					"}" +
+
+					".def-block {" +
+					"    margin-top: 5px;" +
+					"}" +
+
+					".def-head {" +
+					"display: block;" +
+					"    text-indent: -1.5em;" +
+					"    padding-left: 1.5em;" +
+					"}" +
+
+					".def {" +
+					"    font-weight: bold;" +
+					"color: #a8397a;" +
+					"}" +
+
+					".eg {" +
+					"color: #555;" +
+					"    font-style: italic;" +
+					"color: #444444;" +
+					"}" +
+
+					".epp-xref, .freq {" +
+					"margin: 0;" +
+					"padding: 0;" +
+					"border: 0;" +
+					"    text-indent: 0;" +
+					"}" +
+
+					".examp {" +
+					"margin: .25em 0 .25em 1.5em;" +
+					"display: block;" +
+					"}" +
+
+					".epp-xref {" +
+					"padding: 0 2px;" +
+					"display: inline-block;" +
+					"    min-width: 14px;" +
+					"    text-align: center;" +
+					"color: #fff;" +
+					"    font-family: \"Verdana\", sans-serif;" +
+					"    background-color: #2060c0;" +
+					"    border-radius: 4px;" +
+					"    -moz-border-radius: 4px;" +
+					"    -webkit-border-radius: 4px;" +
+					"}" +
+
+					".freq {" +
+					"padding: 0 2px;" +
+					"display: inline-block;" +
+					"    min-width: 14px;" +
+					"    text-align: center;" +
+					"color: #fff;" +
+					"    font-family: \"Verdana\", sans-serif;" +
+					"    background-color: #2060c0;" +
+					"    border-radius: 4px;" +
+					"    -moz-border-radius: 4px;" +
+					"    -webkit-border-radius: 4px;" +
+					"}" +
+
+					".usage {" +
+					"    font-variant: small-caps;" +
+					"color: #000;" +
+					"}" +
+
+					".hw {" +
+					"color: #008;" +
+					"border: 0;" +
+					"    font-weight: bold;" +
+					"    font-family: sans-serif;" +
+					"    font-size: 14px;" +
+					"}" +
+					"ul.tabs {" +
+					"    list-style: none;" +
+					"padding: 0;" +
+					"}" +
+					/*en css for l_en new update*/
+					".tl {" +
+					"    font-size: 14px;" +
+					"    color: #0e74af;" +
+					"    font-weight: bold;" +
+					"}" +
+					".ex {" +
+					"    color: gray;" +
+					"    margin-left: 15px;" +
+					"}" +
+					"figure {" +
+					"   text-align: center;" +
+					"   margin: auto;" +
+					"}" +
+					"figure.image img {" +
+					"   width: 100% !important;" +
+					"   height: auto !important;" +
+					"}" +
+					"figcaption {" +
+					"   font-size: 10px;" +
+					"}" +
+					"a {" +
+					"   margin-top:10px;" +
+					"}" +
+					"</style>" +
+					"<script>" +
+					"</script>" +
+
+					"</head>" +
+					"<body>" +
+			"   <div style='width:100%'>";
+					//temp +     //%@ will be replaced by l_vn or l_en
+				 //   "   </div>" +
+				 //   "   </body>" +
+				 //   "</html>";
+		htmlString = htmlString + temp + "   </div>" + "   </body>" + "</html>";
+	    return htmlString;
+	}
 
 
 	/******************** PRIVATE FUNCTIONS ********************/

@@ -167,6 +167,7 @@ namespace LazzyBee
 			webView.Source = htmlSource;
 
 			_isShowingAnswer = false;
+			btnDict.IsEnabled = false;
 		}
 
 		private void displayAnswer(WordInfo wd)
@@ -181,6 +182,7 @@ namespace LazzyBee
 			webView.Source = htmlSource;
 
 			_isShowingAnswer = true;
+			btnDict.IsEnabled = true;
 		}
 
 		private void setTitleAndButtonsState()
@@ -321,7 +323,7 @@ namespace LazzyBee
 			if (wordInfo != null)
 			{
 				string[] btnsTitle = Algorithm.getInstance().nextIntervalStringsList(wordInfo);
-				string btnAgainTitle = string.Format("{0} ({1})", "test", btnsTitle[0]);
+				string btnAgainTitle = string.Format("{0}", BTN_TITLE_AGAIN);
 				string btnHardTitle = string.Format("{0}", btnsTitle[1]);
 				string btnNormalTitle = string.Format("{0}", btnsTitle[2]);
 				string btnEasyTitle = string.Format("{0}", btnsTitle[3]);
@@ -476,6 +478,8 @@ namespace LazzyBee
 				if (_isShowingAnswer == true)
 				{
 					DictionaryTabPage dictTabPage = new DictionaryTabPage();
+					dictTabPage.wordInfo = wordInfo;
+					dictTabPage.showLazzyBeeTab = false;
 					Navigation.PushAsync(dictTabPage);
 				}
 			}

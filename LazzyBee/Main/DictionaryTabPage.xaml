@@ -2,8 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	xmlns:local="clr-namespace:LazzyBee"
 	x:Class="LazzyBee.DictionaryTabPage">
-	
-	<local:DictionaryWebView Title="EN" Icon="images/icons/ic_alert.png"/>
-	<local:DictionaryWebView Title="VI" Icon="images/icons/ic_alert.png"/>
-	<local:DictionaryWebView Title="LazzyBee" Icon="images/icons/ic_alert.png"/>
+
+		<local:DictionaryWebView x:Name="TabEN" Title="EN" Icon="images/icons/ic_alert.png"/>
+		<local:DictionaryWebView x:Name="TabVI" Title="VI" Icon="images/icons/ic_alert.png"/>
+		<local:DictionaryWebView x:Name="TabLazzyBee" Title="LazzyBee" Icon="images/icons/ic_alert.png" IsEnabled="false"/>
+
 </TabbedPage>
