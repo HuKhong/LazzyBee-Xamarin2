@@ -1,15 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 
 namespace LazzyBee
 {
 	public partial class IncomingPage : ContentPage
 	{
+		private List<WordInfo> wordsList = new List<WordInfo>();
+		private List<IncomingListItem> incomingListItems = new List<IncomingListItem>();
 		public IncomingPage()
 		{
 			InitializeComponent();
+			wordsList.AddRange(SqliteHelper.Instance.getIncomingList());
+
+			string strMeaning = "";
+			string package = "";
+			string packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+			string strPronounciation = "";
+
+			MajorObject major = Common.loadMajorFromProperties();
+			if (major != null)
+			{
+				package = major.displayName();
+				packageLowcase = major.majorName.ToLower();
+			}
+			else
+			{
+				packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+			}
+
+			foreach (WordInfo word in wordsList)
+			{
+				IncomingListItem incomingItem = new IncomingListItem();
+
+				//parse the answer to dictionary object
+				JObject dictAnswer = JObject.Parse(word.answers);
+
+				//A word may has many meanings corresponding to many fields (common, it, economic...)
+				//The meaning of each field is considered as a package
+				var dictPackages = dictAnswer["packages"];
+				var dictSinglePackage = dictPackages[packageLowcase];
+
+				if (dictSinglePackage == null)
+				{
+					dictSinglePackage = dictPackages[CommonDefine.DEFAULT_SUBJECT];
+					package = "";
+				}
+
+				strPronounciation = (string)dictAnswer["pronoun"];
+
+				if (strPronounciation.Equals("//") == true)
+				{
+					strPronounciation = "";
+				}
+
+				//meaning
+				strMeaning = (string)dictSinglePackage["meaning"];
+
+				//remove <p>, keep <br>
+				if (strMeaning != null)
+				{
+					strMeaning = strMeaning.Replace("<p>", String.Empty);
+					strMeaning = strMeaning.Replace("</p>", String.Empty);
+
+				}
+				else
+				{
+					strMeaning = "";
+				}
+				incomingItem.Word = word.question;
+				incomingItem.Pronounce = strPronounciation;
+				incomingItem.Meaning = strMeaning;
+				incomingItem.Level = word.level;
+
+				incomingListItems.Add(incomingItem);
+			}
+
+			incomingListView.ItemsSource = incomingListItems;
 		}
 	}
 }

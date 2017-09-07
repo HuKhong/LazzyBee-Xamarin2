@@ -33,7 +33,7 @@ namespace LazzyBee
 					}
 					else
 					{
-						MajorObject major = new MajorObject();
+						MajorObject major = Common.loadMajorFromProperties();
 						html = HTMLHelper.createHTMLForQuestion(_wordInfo, major);
 					}
 
@@ -68,7 +68,7 @@ namespace LazzyBee
 					}
 					else
 					{
-						MajorObject major = new MajorObject();
+						MajorObject major = Common.loadMajorFromProperties();
 						html = HTMLHelper.createHTMLForAnswer(_wordInfo, major);
 					}
 

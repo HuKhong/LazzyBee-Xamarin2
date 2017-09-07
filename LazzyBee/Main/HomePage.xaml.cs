@@ -52,13 +52,48 @@ namespace LazzyBee.Main
 			Navigation.PushAsync(incomingPage);
 		}
 
-		void btnMoreWordsClicked(object sender, System.EventArgs e)
+		async void btnMoreWordsClicked(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("btnMoreWordsClicked");
-//List<WordDAO> words = sqliteHelper.getAllWords();
+			int count = SqliteHelper.Instance.getCountOfInreview();
+			count = count + SqliteHelper.Instance.getCountOfPickedWord();
+			count = count + SqliteHelper.Instance.getCountOfStudyAgain();
 
-//Debug.WriteLine("test");
-//			DisplayAlert("Alert", words.Count.ToString(), "OK");
+			if (count > 0)
+			{
+               var answer = await DisplayAlert("Notice", 
+				                               "You still have a few words need to learn. Complete them before adding more words.", 
+				                               "Learn", "Cancel");
+				if (answer == true)
+				{
+					StudyPage stdPage = new StudyPage();
+					await Navigation.PushAsync(stdPage);
+				}
+
+			}
+			else
+			{
+				//check and pick new words
+				int countBuffer = sqlLiteHelper.getCountOfBuffer();
+				int dailyTarget = Common.getDailyTarget();
+
+				if (countBuffer < dailyTarget)
+				{
+					prepareWordsToStudyingQueue();
+				}
+
+				sqlLiteHelper.pickUpRandom10WordsToStudyingQueue(dailyTarget, true);
+
+				StudyPage stdPage = new StudyPage();
+				await Navigation.PushAsync(stdPage);
+
+				//show ad full screen
+				//	if (self.interstitial.isReady)
+				//	{
+
+				//[self.interstitial presentFromRootViewController:self];
+				//}
+			}
 		}
 
 		private void prepareWordsToStudyingQueue()

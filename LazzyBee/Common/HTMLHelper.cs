@@ -15,8 +15,15 @@ public class HTMLHelper {
 		string package = "";
 		string packageLowcase = CommonDefine.DEFAULT_SUBJECT;
 
-		package = major.displayName();
-		packageLowcase = major.majorName.ToLower();
+		if (major != null)
+		{
+			package = major.displayName();
+			packageLowcase = major.majorName.ToLower();
+		}
+		else
+		{
+			packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+		}
 		       
 		if (!packageLowcase.Equals(CommonDefine.DEFAULT_SUBJECT)) {
 
@@ -118,8 +125,15 @@ public class HTMLHelper {
 		string packageLowcase = CommonDefine.DEFAULT_SUBJECT;
 		string strPronounciation = "";
 
-		package = major.displayName();
-		packageLowcase = major.majorName.ToLower();
+		if (major != null)
+		{
+			package = major.displayName();
+			packageLowcase = major.majorName.ToLower();
+		}
+		else
+		{
+			packageLowcase = CommonDefine.DEFAULT_SUBJECT;
+		}
 
 		//parse the answer to dictionary object
 		JObject dictAnswer = JObject.Parse(word.answers);
@@ -288,15 +302,15 @@ public class HTMLHelper {
 				"           <center><font size='4'> {2} </font></center>" +  //%@ will be replaced by pronunciation
 				"       </div>" +
 
-				"           <p style=\"text-align: center;\">  </p>" +  //%@ will be replaced by image link, temporary leave it blank
+				"           <p style=\"text-align: center;\"> {3} </p>" +  //%@ will be replaced by image link, temporary leave it blank
 
 				"       <div style=\"width:100%\"></div>" +
-				"            {3} " +     //%@ will be replaced by strExplainIconTag
+				"            {4} " +     //%@ will be replaced by strExplainIconTag
 
-				"            {4} " +    //%@ will be replaced by strExampleIconTag
+				"            {5} " +    //%@ will be replaced by strExampleIconTag
 
 				"       <div style='width:90%'>" +
-				"           <br><br><br><br><center>{5}<font size='4' color='blue'><em style='margin-left: 10px'> {6} </em></font></center>" +    //%@ will be replaced by meaning
+				"           <br><br><br><br><center>{6}<font size='4' color='blue'><em style='margin-left: 10px'> {7} </em></font></center>" +    //%@ will be replaced by meaning
 				"       </div>" +
 				"   </div>" +
 				"   {7} " +     //%@ will be replaced by strNoteTag
@@ -304,9 +318,8 @@ public class HTMLHelper {
 				"   </body>" +
 				"</html>";
 
-			Debug.WriteLine("createHTMLForQuestion 1 :: " + htmlString);
-			htmlString = String.Format(htmlString, word.question, strWordIconTag, strPronounciation, strExplainIconTag, strExampleIconTag, package, strMeaning, strNoteTag);
-			Debug.WriteLine("createHTMLForQuestion 2 :: " + htmlString);
+			htmlString = String.Format(htmlString, word.question, strWordIconTag, strPronounciation, imageLink, strExplainIconTag, strExampleIconTag, package, strMeaning, strNoteTag);
+			Debug.WriteLine("createHTMLForQuestion :: " + htmlString);
 
 		} catch (Exception e) {
 			Debug.WriteLine("createHTMLForAnswer :: Exception :; " +e.ToString());

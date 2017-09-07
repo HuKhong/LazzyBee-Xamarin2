@@ -67,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Main\DictionaryWebView.xaml.cs">
       <DependentUpon>DictionaryWebView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\IncomingListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />

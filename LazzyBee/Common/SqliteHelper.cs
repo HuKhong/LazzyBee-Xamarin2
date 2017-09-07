@@ -258,9 +258,10 @@ namespace LazzyBee
 
 		public void insertWordToDatabase(WordInfo word)
 		{
-			string strQuery = string.Format("SELECT COUNT(*) FROM 'vocabulary' WHERE gid = {0}", word.gid);
+			string strQuery = string.Format("SELECT * FROM 'vocabulary' WHERE gid = {0}", word.gid);
+			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
+			int count = wordDAOs.Count;
 
-			int count = database.Execute(strQuery);
 			string formattedAnswer = word.answers.Replace("\'", "\'\'");
 			string formattedVN = word.langVN.Replace("\'", "\'\'");
 			string formattedEN = word.langEN.Replace("\'", "\'\'");
@@ -291,20 +292,21 @@ namespace LazzyBee
 
 		public int getCountOfStudyAgain()
 		{
-			string strQuery = "SELECT COUNT(*) FROM 'vocabulary' where queue = 1";
+			string strQuery = string.Format("SELECT id FROM 'vocabulary' where queue = {0}", WordInfo.QUEUE_AGAIN);
 
-			int count = database.Execute(strQuery);
+			List<WordDAO> res = database.Query<WordDAO>(strQuery);
 
-			return count;
+			return res.Count;
 		}
 
 		public int getCountOfStudiedWord()
 		{
-			string strQuery = string.Format("SELECT COUNT(*) FROM 'vocabulary'" +
+			string strQuery = string.Format("SELECT id FROM 'vocabulary'" +
 											" WHERE queue = {0} OR queue = {1}", WordInfo.QUEUE_REVIEW, WordInfo.QUEUE_DONE);
 
-			int count = database.Execute(strQuery);
-			return count;
+			List<WordDAO> res = database.Query<WordDAO>(strQuery);
+
+			return res.Count;
 		}
 
 		/* pick up "amount" news word-ids from vocabulary, then add to buffer 

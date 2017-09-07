@@ -160,7 +160,7 @@ namespace LazzyBee
 			WebView webView = this.FindByName<WebView>("webView");
 			var htmlSource = new HtmlWebViewSource();
 
-			MajorObject major = new MajorObject();
+			MajorObject major = Common.loadMajorFromProperties();
 			string html = HTMLHelper.createHTMLForQuestion(wd, major);
 
 			htmlSource.Html = html;
@@ -175,7 +175,7 @@ namespace LazzyBee
 			WebView webView = this.FindByName<WebView>("webView");
 			var htmlSource = new HtmlWebViewSource();
 
-			MajorObject major = new MajorObject();
+			MajorObject major = Common.loadMajorFromProperties();
 			string html = HTMLHelper.createHTMLForAnswer(wd, major);
 
 			htmlSource.Html = html;

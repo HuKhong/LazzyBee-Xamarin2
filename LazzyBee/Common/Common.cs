@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace LazzyBee
@@ -69,6 +70,29 @@ namespace LazzyBee
 			}
 
 			return res;
+		}
+
+		public static void saveMajorToProperties(MajorObject major)
+		{
+			string strMajor = JsonConvert.SerializeObject(major);
+
+			if (strMajor != null)
+			{
+				saveSettingValue(CommonDefine.SELECTED_MAJOR_KEY, strMajor);
+			}
+		}
+
+		public static MajorObject loadMajorFromProperties()
+		{
+			if (Common.checkKey(CommonDefine.SELECTED_MAJOR_KEY) == true)
+			{
+				string strMajor = loadSettingValueByKey(CommonDefine.SELECTED_MAJOR_KEY);
+				MajorObject major = JsonConvert.DeserializeObject<MajorObject>(strMajor);
+
+				return major;
+			}
+
+			return null;
 		}
 	}
 }
