@@ -61,7 +61,7 @@ namespace LazzyBee.Main
 
 			if (count > 0)
 			{
-               var answer = await DisplayAlert("Notice", 
+               var answer = await DisplayAlert("Attention", 
 				                               "You still have a few words need to learn. Complete them before adding more words.", 
 				                               "Learn", "Cancel");
 				if (answer == true)

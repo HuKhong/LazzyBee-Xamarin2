@@ -68,6 +68,7 @@
       <DependentUpon>DictionaryWebView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Objects\IncomingListItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Objects\HtmlFormattedLabel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />

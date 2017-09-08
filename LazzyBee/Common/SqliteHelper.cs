@@ -537,19 +537,22 @@ namespace LazzyBee
 				value = systemDAOs.ElementAt(0).value;
 			}
 
-			//parse the result to get word-id list
-			//JObject valueJsonObj = JObject.Parse(value);
-			var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
-			var cards = valueJsonObj[DB_SYSTEM_KEY_CARDS];
-			int count = int.Parse((string)valueJsonObj[DB_SYSTEM_KEY_COUNT]);
-			List<string> listCards = _convertStringToList(cards);
-
-			if (!key.Equals(PROGRESS_INREVIEW_KEY))
+			if (value != null)
 			{
-				count = listCards.Count();
+				//parse the result to get word-id list
+				//JObject valueJsonObj = JObject.Parse(value);
+				var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+				var cards = valueJsonObj[DB_SYSTEM_KEY_CARDS];
+				int count = int.Parse((string)valueJsonObj[DB_SYSTEM_KEY_COUNT]);
+				List<string> listCards = _convertStringToList(cards);
+
+				if (!key.Equals(PROGRESS_INREVIEW_KEY))
+				{
+					count = listCards.Count();
+				}
 			}
 
-			return count;
+			return 0;
 		}
 		/* get list of words from vocabulary by list of ids from system with key "inreview" */
 		private List<WordInfo> _getReviewListFromSystem()

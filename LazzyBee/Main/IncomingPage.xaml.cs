@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
+using System.Net;
 
 namespace LazzyBee
 {
@@ -69,11 +70,12 @@ namespace LazzyBee
 				{
 					strMeaning = "";
 				}
+
 				incomingItem.Word = word.question;
 				incomingItem.Pronounce = strPronounciation;
-				incomingItem.Meaning = strMeaning;
-				incomingItem.Level = word.level;
-
+				incomingItem.Meaning = WebUtility.HtmlDecode(strMeaning);
+				incomingItem.Level = string.Format("Level: {0}", word.level);
+				
 				incomingListItems.Add(incomingItem);
 			}
 
