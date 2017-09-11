@@ -19,7 +19,7 @@
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Orientation="Vertical" BackgroundColor="Gray" Padding="0,1,0,0">
-								<Grid Padding="5,10" BackgroundColor="#323232" RowSpacing="1">
+								<Grid Padding="5,10" BackgroundColor="#323232">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="30" />
 										<ColumnDefinition Width="*" />
@@ -32,8 +32,11 @@
 						</ViewCell>
 					</DataTemplate>
 				</ListView.ItemTemplate>
-				
 			</ListView>
+
+			<Label x:Name="lbVersionInfo" Text="App version 0.0.1" TextColor="White"  BackgroundColor="#323232" VerticalOptions="EndAndExpand">
+
+			</Label>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

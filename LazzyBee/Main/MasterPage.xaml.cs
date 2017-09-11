@@ -23,30 +23,30 @@ namespace LazzyBee.Main
 
 			mainFunctionItems.Add(new MasterPageItem
 			{
-				Title = "Majors list",
+				Title = "Majors List",
 				IconSource = "images/icons/ic_list.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(MajorsListPage)
 			});
 
 			mainFunctionItems.Add(new MasterPageItem
 			{
 				Title = "Dictionary",
 				IconSource = "images/icons/ic_dictionary.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(DictionaryPage)
 			});
 
 			mainFunctionItems.Add(new MasterPageItem
 			{
 				Title = "Statistics",
 				IconSource = "images/icons/ic_graph.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(StatisticsPage)
 			});
 
 			mainFunctionItems.Add(new MasterPageItem
 			{
-				Title = "Vocabulary test",
+				Title = "Vocabulary Test",
 				IconSource = "images/icons/ic_extension.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(VocabularyTestPage)
 			});
 
 
@@ -55,14 +55,14 @@ namespace LazzyBee.Main
 			{
 				Title = "Settings",
 				IconSource = "images/icons/ic_setting.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(SettingsPage)
 			});
 
 			mainFunctionItems.Add(new MasterPageItem
 			{
 				Title = "Help",
 				IconSource = "images/icons/ic_help.png",
-				TargetType = typeof(HomePage)
+				TargetType = typeof(HelpPage)
 			});
 
 			//Share
@@ -70,7 +70,7 @@ namespace LazzyBee.Main
 			{
 				Title = "Share",
 				IconSource = "images/icons/ic_share.png",
-				TargetType = typeof(HomePage)
+				TargetType = null
 			});
 
 			listView.ItemsSource = mainFunctionItems;

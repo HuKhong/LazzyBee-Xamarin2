@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:LazzyBee"
+	x:Class="LazzyBee.SettingsPage">
+	<ContentPage.Content>
+		<TableView Intent="Form">
+			<TableRoot>
+				<!--Target -->
+				<TableSection Title="Target">
+					<TextCell x:Name="tcDailyNewWords" Text="Daily new words" Detail="5 words per day"
+						Tapped="HandleTappedOnDailyTarget"/>
+					
+					<TextCell x:Name="tcDailyTotal" Text="Daily max total words" Detail="40 words per day" 
+						Tapped="HandleTappedOnDailyMaxTotal"/>
+					
+					<TextCell x:Name="tcLevel" Text="Level: 2"
+							Tapped="HandleTappedOnLevel"/>
+				</TableSection>
+				
+				<!--Configuration -->
+				<TableSection Title="Configuration">
+					<ViewCell>
+						<StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+							<Image Source="images/icons/ic_turtle.png" HorizontalOptions="Start"/>
+							
+							<Slider x:Name="slSpeed" Minimum="0.4" Maximum="1.5" Value="1"  HorizontalOptions="FillAndExpand"
+								ValueChanged="HandleSpeedSliderValueChanged"/>
+							
+							<Image Source="images/icons/ic_rabbit.png" HorizontalOptions="End"/>
+						</StackLayout>
+					</ViewCell>
+					
+					<SwitchCell x:Name="swAutoplay" Text="Autoplay pronunciation" 
+						OnChanged="HandleSWAutoPlayOnChanged"/>
+					
+					<SwitchCell x:Name="swDisplayMeaning" Text="Display meaning" 
+						OnChanged="HandleSWDisplayMeaningOnChanged"/>
+					
+					<TextCell x:Name="tcWaitingTime" Text="Waiting time to answer" Detail="3 seconds"
+						Tapped="HandleTappedOnWaitingTime"/>
+				</TableSection>
+
+				<!--Reminder -->
+				<TableSection Title="Reminder">
+					<SwitchCell x:Name="swReminder" Text="Turn on reminder" 
+						OnChanged="HandleSWReminderOnOffOnChanged"/>
+					<TextCell x:Name="tcTimeToReminder" Text="Time to remind" Detail="13:30"
+						Tapped="HandleTappedOnReminderTime"/>
+				</TableSection>
+
+				<!--Database -->
+				<TableSection Title="Database">
+					<TextCell x:Name="tcUpdateDB" Text="Update database" Detail="Current version: 8"
+						Tapped="HandleTappedOnUpdateDatabase"/>
+					<TextCell x:Name="tcBackupDB" Text="Backup database" Detail="[backup code]"
+						Tapped="HandleTappedOnBackupDatabase"/>
+					<TextCell x:Name="tcRestoreDB" Text="Restore database"
+						Tapped="HandleTappedOnRestoreDatabase"/>
+				</TableSection>
+				
+			</TableRoot>
+		</TableView>
+	</ContentPage.Content>
+</ContentPage>
