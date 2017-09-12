@@ -18,7 +18,7 @@ public class CommonDefine
 	public const string	DEFAULT_AUTO_PLAY_SOUND = "true";
 	public const string DEFAULT_DISPLAY_MEANING = "true";
 	public const string	DEFAULT_NOTIFICATION = "true";
-	public const string DEFAULT_TIME_SHOW_NOTIFICATION = "13h30";
+	public const string DEFAULT_TIME_SHOW_NOTIFICATION = "13:30";
 
 	//settings key
 	public const string SETTINGS_MY_LEVEL_KEY = "LowestLevel";
@@ -38,7 +38,7 @@ public class CommonDefine
 	public const string BACKUP_CODE_KEY = "BackupCode";
 	public const string STREAK_INFO_KEY = "StreakInfo";
 	public const string SHOW_GUIDE_KEY = "ShowGuide";
-	public const string REVERSE_ENABL_KEY = "ReverseEnable";
+	public const string REVERSE_ENABLE_KEY = "ReverseEnable";
 
 	public const string DATABASENAME_BACKUP = "word.csv";
 	public const string STREAK_BACKUP = "streak.csv";

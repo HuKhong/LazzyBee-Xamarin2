@@ -8,35 +8,43 @@
 	
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" BackgroundColor="White">
-			<Image Source="images/others/rearBanner.png" />
-			
-			<ListView x:Name="listView"  IsGroupingEnabled="false"
-				SeparatorVisibility="None"
-				SeparatorColor="Silver"
-				BackgroundColor="#323232" >
-				
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ViewCell>
-							<StackLayout Orientation="Vertical" BackgroundColor="Gray" Padding="0,1,0,0">
-								<Grid Padding="5,10" BackgroundColor="#323232">
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="30" />
-										<ColumnDefinition Width="*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="{Binding IconSource}" />
-									<Label Grid.Column="1" Text="{Binding Title}" TextColor="White"
-										VerticalOptions="FillAndExpand"/>
-								</Grid>
-							</StackLayout>
-						</ViewCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+			<Image BackgroundColor="White" Source="images/others/rearBanner.png" />
 
-			<Label x:Name="lbVersionInfo" Text="App version 0.0.1" TextColor="White"  BackgroundColor="#323232" VerticalOptions="EndAndExpand">
+			<StackLayout Orientation="Vertical" BackgroundColor="#323232">
+				<ListView x:Name="listView"  IsGroupingEnabled="false"
+					SeparatorVisibility="None"
+					SeparatorColor="Silver"
+					BackgroundColor="#323232" >
+					
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout Orientation="Vertical" BackgroundColor="Gray" Padding="0,1,0,0">
+									<Grid Padding="5,10" BackgroundColor="#323232">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="30" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Image Source="{Binding IconSource}" />
+										<Label Grid.Column="1" Text="{Binding Title}" TextColor="White"
+											VerticalOptions="FillAndExpand"/>
+									</Grid>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
 
-			</Label>
+				<Label x:Name="lbVersionInfo" Text="App version 0.0.1"
+					HorizontalTextAlignment="Center"
+					TextColor="White"
+					FontSize="15"
+					BackgroundColor="#323232"
+					Margin="2"
+					VerticalOptions="EndAndExpand">
+
+				</Label>
+			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

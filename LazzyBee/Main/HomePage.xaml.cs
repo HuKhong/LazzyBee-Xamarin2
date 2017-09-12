@@ -34,7 +34,7 @@ namespace LazzyBee.Main
 
 			//check and pick new words
 			int countBuffer = sqlLiteHelper.getCountOfBuffer();
-			int dailyTarget = Common.getDailyTarget();
+			int dailyTarget = Common.loadDailyTarget();
 
 			if (countBuffer < dailyTarget)
 			{
@@ -75,7 +75,7 @@ namespace LazzyBee.Main
 			{
 				//check and pick new words
 				int countBuffer = sqlLiteHelper.getCountOfBuffer();
-				int dailyTarget = Common.getDailyTarget();
+				int dailyTarget = Common.loadDailyTarget();
 
 				if (countBuffer < dailyTarget)
 				{

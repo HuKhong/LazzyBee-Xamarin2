@@ -97,20 +97,20 @@ namespace LazzyBee
 			reviewWordList.AddRange(sqlLiteHelper.getReviewList());
 			int countOfReview = sqlLiteHelper.getCountOfInreview(); //dont use [_reviewWordList count] because it could be changed while learning
 
-			int limit = Common.getTotalTarget() - countOfReview;
+			int limit = Common.loadTotalTarget() - countOfReview;
 			if (limit > 0)
 			{
 				studyAgainList.AddRange(sqlLiteHelper.getStudyAgainListWithLimit(limit));
 			}
 
-			int countOfNew = Common.getTotalTarget();
+			int countOfNew = Common.loadTotalTarget();
 			countOfNew = countOfNew - countOfReview - studyAgainList.Count;
 
 			if (countOfNew >= 0)
 			{
-				if (countOfNew > Common.getDailyTarget())
+				if (countOfNew > Common.loadDailyTarget())
 				{
-					countOfNew = Common.getDailyTarget();
+					countOfNew = Common.loadDailyTarget();
 				}
 			}
 			else

@@ -87,7 +87,7 @@ public class HTMLHelper {
 			"</html>";
 
 		try {
-			float speed = float.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_TTS_SPEED_KEY));
+			double speed = Common.loadSpeakingSpeed();
 			Debug.WriteLine("createHTMLForQuestion speed :: " +speed.ToString());
 			string strWordIconTag = @"<div style='float:left; width:90%;text-align: center;'>" +
 	                        "<strong style='font-size:18pt;'> {0} </strong>" +   //%@ will be replaced by word.question
@@ -191,13 +191,13 @@ public class HTMLHelper {
 			strMeaning = "";
 		}
 
-		bool displayMeaningFlag = bool.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_DISPLAY_MEANING_KEY));
+		bool displayMeaningFlag = Common.loadDisplayMeaningFlag();
 		if (displayMeaningFlag == false)
 		{
 			strMeaning = "";
 		}
 
-		float speed = float.Parse(Common.loadSettingValueByKey(CommonDefine.SETTINGS_TTS_SPEED_KEY));
+		double speed = Common.loadSpeakingSpeed();
 
 		string strExplainIconTag 	= "";
 		string strExampleIconTag 	= "";

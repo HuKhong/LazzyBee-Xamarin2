@@ -317,7 +317,7 @@ namespace LazzyBee
 			//pick up "amount" news word-ids from vocabulary that not included the old words
 			List<WordDAO> resList = new List<WordDAO>();
 
-			string lowestLevel = Common.loadSettingValueByKey(CommonDefine.SETTINGS_MY_LEVEL_KEY);
+			string lowestLevel = Common.loadSelectedLevel();
 			string igniredLevel = "7";
 
 			if (!package.Equals(CommonDefine.DEFAULT_SUBJECT))
@@ -419,7 +419,7 @@ namespace LazzyBee
 				if (oldDate == 0 ||
 					offset > CommonDefine.SECONDS_OF_HALFDAY)
 				{
-					Common.saveSettingValue(CommonDefine.COMPLETED_FLAG_KEY, "0");
+					Common.saveCompletedFlag(false);
         		}
 
 				strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", PROGRESS_BUFFER_KEY);
@@ -608,10 +608,10 @@ namespace LazzyBee
 		/* if list id in "inreview" is obsoleted, get new list from vocabulary */
 		private List<WordInfo> _getReviewListFromVocabulary()
 		{
-			string totalWordADayInSetting = Common.loadSettingValueByKey(CommonDefine.SETTINGS_TOTAL_CARD_KEY);
+			int totalWord = Common.loadTotalTarget();
 			string strQuery = string.Format("SELECT * FROM 'vocabulary'  " +
 						                    "where queue = {0} AND due <= {1} ORDER BY level LIMIT {2}", 
-						                    WordInfo.QUEUE_REVIEW, DateTimeHelper.getEndOfDayInSec(), totalWordADayInSetting);
+						                    WordInfo.QUEUE_REVIEW, DateTimeHelper.getEndOfDayInSec(), totalWord);
 
 			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 

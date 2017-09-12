@@ -8,11 +8,21 @@
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 
-			<StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray"
-				Padding="10,0,10,0">
-				<Label x:Name="lbNewWord" Text="New: " VerticalOptions="Center" TextColor="Blue" FontSize="15" WidthRequest="90"/>
-				<Label x:Name="lbAgain" Text="Again: " VerticalOptions="Center" TextColor="Red" FontSize="15" WidthRequest="90"/>
-				<Label x:Name="lbReview" Text="Review: " VerticalOptions="Center" TextColor="Yellow" FontSize="15" WidthRequest="90"/>
+			<StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Gray" Padding="10,0,10,0">
+				<Label x:Name="lbNewWord" Text="New: " 
+					VerticalOptions="Center" 
+					TextColor="Blue" FontSize="15"
+					WidthRequest="90"/>
+				
+				<Label x:Name="lbAgain" Text="Again: " 
+					VerticalOptions="Center" 
+					TextColor="Red" FontSize="15" 
+					WidthRequest="90"/>
+				
+				<Label x:Name="lbReview" Text="Review: " 
+					VerticalOptions="Center"
+					TextColor="Yellow" FontSize="15"
+					WidthRequest="90"/>
 
 				<Button x:Name="btnDict" Image="images/icons/ic_dictionary.png"
 					VerticalOptions="Center" HorizontalOptions="EndAndExpand"
