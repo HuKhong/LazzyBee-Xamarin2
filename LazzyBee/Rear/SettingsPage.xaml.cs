@@ -7,28 +7,31 @@ namespace LazzyBee
 {
 	public partial class SettingsPage : ContentPage
 	{
+		private const int TOTAL_OPTION_VERY_EASY = 20;
+		private const int TOTAL_OPTION_EASY = 30;
+		private const int TOTAL_OPTION_NORMAL = 40;
+		private const int TOTAL_OPTION_HARD = 60;
+		private const int TOTAL_OPTION_IMPOSSIBLE = 80;
+
 		public SettingsPage()
 		{
 			InitializeComponent();
 
 			//daily target
 			int dailyTargetNum = Common.loadDailyTarget();
-			if (dailyTargetNum == 1)
-			{
-				tcDailyNewWords.Detail = string.Format("{0} word per day", dailyTargetNum);
-			}
-			else
-			{
-				tcDailyNewWords.Detail = string.Format("{0} words per day", dailyTargetNum);
-			}
+			pickerNewWordTarget.SelectedIndex = dailyTargetNum / 5;
 
 			//total target
 			int dailyTotalNum = Common.loadTotalTarget();
-			tcDailyTotal.Detail = string.Format("{0} words per day", dailyTotalNum);
+			pickerTotalTarget.SelectedIndex = whatRowInTotalTargetTable(dailyTotalNum);
 
 			//Level
 			string lv = Common.loadSelectedLevel();
-			tcLevel.Text = string.Format("Level: {0}", lv);
+			if (lv == null)
+			{
+				lv = CommonDefine.DEFAULT_LEVEL;
+			}
+			pickerLevel.SelectedIndex = int.Parse(lv);
 
 			//speed
 			double speed = Common.loadSpeakingSpeed();
@@ -42,13 +45,18 @@ namespace LazzyBee
 			bool display = Common.loadDisplayMeaningFlag();
 			swDisplayMeaning.On = display;
 
+			//waiting time
+			int waitingTime = Common.loadWaitingTimeToShowAnswer();
+			pickerWaitingTime.SelectedIndex = waitingTime;
+
 			//remind on/off
 			bool remind = Common.loadRemindOnOffFlag();
 			swReminder.On = remind;
 
 			//remind time
 			string time = Common.loadRemindTime();
-			tcTimeToReminder.Detail = time;
+			//TimeSpan timeSpand = new TimeSpan(
+			//pickerRemindTime.Time
 
 			//current db ver
 			string dbVer = Common.loadCurrentDBVersion();
@@ -59,17 +67,66 @@ namespace LazzyBee
 			tcBackupDB.Detail = backupCode;
 		}
 
+		private int whatRowInTotalTargetTable(int value)
+		{
+			int row = 0;
+
+			if (value == TOTAL_OPTION_VERY_EASY)
+			{
+				row = 0;
+
+			}
+			else if (value == TOTAL_OPTION_EASY)
+			{
+				row = 1;
+
+			}
+			else if (value == TOTAL_OPTION_NORMAL)
+			{
+				row = 2;
+			}
+			else if (value == TOTAL_OPTION_HARD)
+			{
+				row = 3;
+
+			}
+			else if (value == TOTAL_OPTION_IMPOSSIBLE)
+			{
+				row = 4;
+			}
+
+			return row;
+		}
+
 		//Target
+		void HandleDailyTargetSelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("HandleDailyTargetSelectedIndexChanged");
+			//throw new NotImplementedException();
+		}
+
 		void HandleTappedOnDailyTarget(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("HandleTappedOnDailyTarget");
 			//throw new NotImplementedException();
 		}
 
+		void HandleTotalTargetSelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("HandleTotalTargetSelectedIndexChanged");
+			//throw new NotImplementedException(
+		}
+
 		void HandleTappedOnDailyMaxTotal(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("HandleTappedOnDailyMaxTotal");
 			//throw new NotImplementedException();
+		}
+
+		void HandleLevelSelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("HandleLevelSelectedIndexChanged");
+			//throw new NotImplementedExceptio
 		}
 
 		void HandleTappedOnLevel(object sender, System.EventArgs e)
@@ -103,6 +160,12 @@ namespace LazzyBee
 			//throw new NotImplementedException();
 		}
 
+		void HandleWaitingTimeSelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			Debug.WriteLine("HandleWaitingTimeSelectedIndexChanged");
+			//throw new NotImplementedException(
+		}
+
 		//Reminder
 		void HandleSWReminderOnOffOnChanged(object sender, Xamarin.Forms.ToggledEventArgs e)
 		{
@@ -110,10 +173,11 @@ namespace LazzyBee
 			//throw new NotImplementedException();
 		}
 
-		void HandleTappedOnReminderTime(object sender, System.EventArgs e)
+		void HandleReminderTimeChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			Debug.WriteLine("HandleTappedOnReminderTime");
+			Debug.WriteLine("HandleReminderTimeChanged");
 			//throw new NotImplementedException();
+
 		}
 
 		//Database

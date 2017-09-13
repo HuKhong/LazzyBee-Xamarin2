@@ -5,9 +5,70 @@
 			<TableRoot>
 				<!--Target -->
 				<TableSection Title="Target">
-					<TextCell x:Name="tcDailyNewWords" Text="Daily new words" Detail="5 words per day" Tapped="HandleTappedOnDailyTarget" />
-					<TextCell x:Name="tcDailyTotal" Text="Daily max total words" Detail="40 words per day" Tapped="HandleTappedOnDailyMaxTotal" />
-					<TextCell x:Name="tcLevel" Text="Level: 2" Tapped="HandleTappedOnLevel" />
+					<ViewCell Tapped="HandleTappedOnDailyTarget">
+						<StackLayout Orientation="Horizontal" Padding="15,5,15,5" VerticalOptions="Center">
+							<StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Start">
+								<Label Text="Daily new words" VerticalOptions="Start" />
+								<Label Text="(words per day)" FontSize="12" TextColor="Gray" VerticalOptions="Start" />
+							</StackLayout>
+
+							<Picker x:Name="pickerNewWordTarget" SelectedIndex="1"
+								BackgroundColor="White" TextColor="Green" WidthRequest="90"
+								HorizontalOptions="EndAndExpand"
+								SelectedIndexChanged="HandleDailyTargetSelectedIndexChanged">
+								<Picker.Items>
+									<x:String>0 words</x:String>
+									<x:String>5 words</x:String>
+									<x:String>10 words</x:String>
+									<x:String>15 words</x:String>
+									<x:String>20 words</x:String>
+								</Picker.Items>
+							</Picker>
+						</StackLayout>
+					</ViewCell>
+
+					<ViewCell Tapped="HandleTappedOnDailyMaxTotal">
+						<StackLayout Orientation="Horizontal" Padding="15,5,15,5" VerticalOptions="Center">
+							<StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Start">
+								<Label Text="Daily max total words" VerticalOptions="Start"/>
+								<Label Text="(words per day)" FontSize="12" TextColor="Gray" VerticalOptions="Start" />
+							</StackLayout>
+
+							<Picker x:Name="pickerTotalTarget" SelectedIndex="2"
+								BackgroundColor="White" TextColor="Green" WidthRequest="90"
+								HorizontalOptions="EndAndExpand"
+								SelectedIndexChanged="HandleTotalTargetSelectedIndexChanged">
+								<Picker.Items>
+									<x:String>20 words</x:String>
+									<x:String>30 words</x:String>
+									<x:String>40 words</x:String>
+									<x:String>60 words</x:String>
+									<x:String>80 words</x:String>
+								</Picker.Items>
+							</Picker>
+						</StackLayout>
+					</ViewCell>
+
+					<ViewCell Tapped="HandleTappedOnLevel">
+						<StackLayout Orientation="Horizontal" Padding="15,5,15,5" VerticalOptions="Center">
+							<Label Text="Level" VerticalOptions="Center" />
+
+							<Picker x:Name="pickerLevel" SelectedIndex="1"
+								BackgroundColor="White" TextColor="Green"
+								WidthRequest="40"
+								HorizontalOptions="EndAndExpand"
+								SelectedIndexChanged="HandleLevelSelectedIndexChanged">
+								<Picker.Items>
+									<x:String>1</x:String>
+									<x:String>2</x:String>
+									<x:String>3</x:String>
+									<x:String>4</x:String>
+									<x:String>5</x:String>
+									<x:String>6</x:String>
+								</Picker.Items>
+							</Picker>
+						</StackLayout>
+					</ViewCell>
 				</TableSection>
 				<!--Configuration -->
 				<TableSection Title="Configuration">
@@ -20,12 +81,46 @@
 					</ViewCell>
 					<SwitchCell x:Name="swAutoplay" Text="Autoplay pronunciation" OnChanged="HandleSWAutoPlayOnChanged" />
 					<SwitchCell x:Name="swDisplayMeaning" Text="Display meaning" OnChanged="HandleSWDisplayMeaningOnChanged" />
-					<TextCell x:Name="tcWaitingTime" Text="Waiting time to answer" Detail="3 seconds" Tapped="HandleTappedOnWaitingTime" />
+
+					<ViewCell Tapped="HandleTappedOnWaitingTime">
+						<StackLayout Orientation="Horizontal" Padding="15,5,15,5" VerticalOptions="Center">
+							<StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Start">
+								<Label Text="Waiting time to answer" VerticalOptions="Start"/>
+								<Label Text="(second)" FontSize="12" TextColor="Gray" VerticalOptions="Start" />
+							</StackLayout>
+
+							<Picker x:Name="pickerWaitingTime" SelectedIndex="2"
+								BackgroundColor="White" TextColor="Green" WidthRequest="100"
+								HorizontalOptions="EndAndExpand"
+								SelectedIndexChanged="HandleWaitingTimeSelectedIndexChanged">
+								<Picker.Items>
+									<x:String>0 seconds</x:String>
+									<x:String>1 second</x:String>
+									<x:String>2 seconds</x:String>
+									<x:String>3 seconds</x:String>
+									<x:String>4 seconds</x:String>
+									<x:String>5 seconds</x:String>
+									<x:String>6 seconds</x:String>
+									<x:String>7 seconds</x:String>
+									<x:String>8 seconds</x:String>
+									<x:String>9 seconds</x:String>
+									<x:String>10 seconds</x:String>
+								</Picker.Items>
+							</Picker>
+						</StackLayout>
+					</ViewCell>
 				</TableSection>
 				<!--Reminder -->
 				<TableSection Title="Reminder">
 					<SwitchCell x:Name="swReminder" Text="Turn on reminder" OnChanged="HandleSWReminderOnOffOnChanged" />
-					<TextCell x:Name="tcTimeToReminder" Text="Time to remind" Detail="13:30" Tapped="HandleTappedOnReminderTime" />
+					<!--					<TextCell x:Name="tcTimeToReminder" Text="Time to remind" Detail="13:30" Tapped="HandleTappedOnReminderTime" />-->
+					<ViewCell>
+						<StackLayout Orientation="Horizontal" Padding="15,0,15,0" VerticalOptions="Center">
+							<Label Text="Remind me at time" VerticalOptions="Center" HorizontalOptions="Start" />
+							<TimePicker x:Name="pickerRemindTime" BackgroundColor="Maroon" TextColor="White" HorizontalOptions="EndAndExpand" Format="HH:MM" PropertyChanged="HandleReminderTimeChanged">
+							</TimePicker>
+						</StackLayout>
+					</ViewCell>
 				</TableSection>
 				<!--Database -->
 				<TableSection Title="Database">
@@ -35,16 +130,5 @@
 				</TableSection>
 			</TableRoot>
 		</TableView>
-		<Picker x:Name="picker" Title="Select a monkey">
-			<Picker.Items>
-				<x:String>Baboon</x:String>
-				<x:String>Capuchin Monkey</x:String>
-				<x:String>Blue Monkey</x:String>
-				<x:String>Squirrel Monkey</x:String>
-				<x:String>Golden Lion Tamarin</x:String>
-				<x:String>Howler Monkey</x:String>
-				<x:String>Japanese Macaque</x:String>
-			</Picker.Items>
-		</Picker>
 	</ContentPage.Content>
 </ContentPage>
