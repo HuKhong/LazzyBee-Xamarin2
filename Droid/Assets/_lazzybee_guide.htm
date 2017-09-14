@@ -1,0 +1,669 @@
+﻿<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style rel="stylesheet">
+body, table td, select, button {
+  font-family: Arial Unicode MS, Arial, sans-serif;
+  font-size: small;
+}
+pre {
+  font-family: "courier new", courier;
+  font-size: small;
+}
+body {
+  color: black;
+  margin: 10px;
+  border: 0px;
+  padding: 0px;
+  background: #fff;
+  direction: ltr;
+}
+a, a:visited {
+  color: #0066cc;
+  text-decoration:none;
+}
+
+a:hover {
+  color: #0066cc;
+  text-decoration:underline;
+}
+
+select {
+  background: white;
+}
+
+</style>
+<meta content="initial-scale=1.0, user-scalable=yes" name="viewport">
+<style type="text/css" rel="stylesheet" data-href="http://www.lazzybee.com/mobile-resources/mobile.css">@CHARSET "ISO-8859-1";
+
+html {
+	font-size: 13px !important;
+	box-sizing: border-box;
+	/* min-width: 320px; */
+}
+
+/* css for show image in content ckeditor */
+p img {
+	width: 100% !important;
+	text-align: center;
+	margin: auto;
+}
+
+body {
+	margin: 0 !important;
+	color: #404040 !important;
+	font-family: Arial, Helvetica, sans-serif !important;
+	font-size: 16px !important;
+	line-height: 1.5em !important;
+	background: white !important;
+	-webkit-text-size-adjust: 100% !important;
+	-ms-text-size-adjust: none !important;
+	min-width: 320px !important;
+	overflow-x: hidden;
+}
+/* css for mfooter*/
+#mfooter {
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	height: 25px;
+	width: 100%;
+	text-align: center;
+	background-color: rgba(48, 27, 12, 1);
+	color: white;
+}
+
+.header_w {
+	width: 100%;
+	height: 40px;
+	margin: auto;
+	padding: 4px 0;
+	background: #009688;
+	box-shadow: 0 0 3px #009688;
+}
+
+.header {
+	padding: 0px 12px 0px 0;
+}
+
+.left_header {
+	width: 45px;
+	float: left;
+}
+
+.right_header_w {
+	margin-left: 45px;
+}
+
+.right_header {
+	border-radius: 10px;
+	height: 28px;
+	background-color: white;
+	box-shadow: 0 0 3px rgba(252, 250, 250, 0.7);
+	margin-top: 5px;
+}
+
+#menuBtn {
+	padding: 12px;
+	padding-top: 7px;
+	font-size: 1.5em;
+}
+
+#btsearch {
+	width: 40px;
+	float: right;
+	font-size: 1.1em;
+	text-align: center;
+	padding-top: 6px;
+}
+
+#inputsearch {
+	margin-left: 10px;
+	width: 85%;
+	float: left;
+	margin-right: 10px;
+}
+
+#txt_valueSearch {
+	margin-top: 1px;
+	height: 27px;
+	color: white !important;
+	background-color: white;
+	border: 0;
+}
+
+input#txt_valueSearch {
+	border: none;
+	padding: 1px;
+	height: 27px !important;
+	padding-bottom: 0px;
+	width: 100%;
+}
+
+button.fa.fa-search {
+	background-color: white;
+	border: none;
+	padding: 0px;
+}
+
+input.gwt-TextBox {
+	background-color: white;
+	border: none;
+	outline: none;
+}
+
+.txt_valueSearch input {
+	border: none;
+}
+
+.main_title {
+	margin-top: 4px;
+	font-size: 1.5em;
+	line-height: 1.3em;
+	color: white;
+}
+
+#main {
+	min-height: 300px;
+	height: 100%;
+}
+
+#content {
+	margin: 0px 10px;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+figure {
+	text-align: center;
+	margin: auto;
+}
+
+figure.image img {
+	width: 100% !important;
+	height: auto !important;
+}
+
+figcaption {
+	/* size: 10px !important; */
+	/* font-size: 10px; */
+	
+}
+
+h1 {
+	font-size: 1.8rem;
+	line-height: 1.8rem;
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+
+.list-mean {
+	padding-left: 10px;
+}
+
+a {
+	text-decoration: none;
+}
+
+#menu ul li a {
+	width: 100%;
+	margin: 0px 10px;
+	color: white;
+}
+
+#menu ul li img {
+	width: 30px;
+}
+
+.m_menu_help, .m_menu_blog, .m_menu_seach {
+	border-bottom: solid 1px gray;
+}
+
+#menu li {
+	height: 50px;
+	line-height: 50px;
+	padding: 0px 20px 0px 10px;
+	line-height: 50px;
+}
+/* css for home*/
+.header_table {
+	position: relative;
+	font-size: 22px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.skill-table {
+	margin: 20px auto 0px;
+	padding: 0;
+}
+
+.skill-table tr {
+	width: 100%;
+}
+
+.table-cell {
+	height: 50px;
+	text-align: center;
+	width: 130px;
+	background: #009688;
+	cursor: pointer;
+	border-radius: 3px;
+	color: white;
+	padding: 10px 5px;
+	display: inline-block;
+	white-space: normal;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.table-cell:hover {
+	background: #0066c
+}
+
+.mainMTestTool {
+	width: 600px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 60px;
+}
+
+.MTestTool_Obj5:hover {
+	background: tomato;
+}
+
+.MTestTool_Obj5 {
+	width: 140px;
+	cursor: pointer;
+	padding: 10px 20px 15px 20px;
+	background: gray;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	display: inline-block;
+	margin-right: 15px;
+	position: relative;
+}
+
+.actionForm {
+	width: 100%;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+#mdic_introduction {
+	/* position: absolute;
+	right: 10px;
+	bottom: 20px;
+	left: 10px; */
+	
+}
+
+#notfoundVoca {
+	text-align: center;
+	margin-top: 10px;
+}
+/*mobile overides*/
+@media ( max-width : 319px) {
+	#inputsearch {
+		width: 60%;
+	}
+	.table-cell {
+		width: 120px;
+	}
+	.mainMTestTool {
+		width: 300px;
+	}
+	a.MTestTool_Obj2 {
+		margin-bottom: 20px;
+	}
+	.MTestTool_Obj5 {
+		width: 90px;
+		margin: 10px 5px;
+	}
+}
+
+@media ( min-width : 320px) and (max-width: 420px) {
+	#inputsearch {
+		width: 67%;
+	}
+	.mainMTestTool {
+		width: 300px;
+	}
+	.MTestTool_Obj5 {
+		width: 90px;
+		margin: 10px 5px;
+	}
+}
+
+@media ( min-width : 421px) and (max-width: 520px) {
+	#inputsearch {
+		width: 75%;
+	}
+	.table-cell {
+		width: 140px;
+	}
+	.skill-table {
+		border-spacing: 30px 20px;
+	}
+	.mainMTestTool {
+		width: 400px;
+	}
+	.MTestTool_Obj5 {
+		width: 120px;
+		margin: 10px 20px;
+	}
+}
+
+@media ( min-width : 521px) and (max-width: 600px) {
+	#inputsearch {
+		width: 80%;
+	}
+	.table-cell {
+		width: 150px;
+		font-size: 16px;
+		height: 60px;
+	}
+	.skill-table {
+		border-spacing: 30px 10px;
+	}
+	.mainMTestTool {
+		width: 500px;
+	}
+	.MTestTool_Obj5 {
+		width: 100px;
+		margin: 10px 10px;
+	}
+}
+
+@media ( min-width : 601px) and (max-width: 767px) {
+	#inputsearch {
+		width: 84%;
+	}
+	.table-cell {
+		height: 70px;
+		width: 200px;
+		font-size: 17px;
+	}
+	.skill-table {
+		border-spacing: 40px 20px;
+	}
+	.mainMTestTool {
+		width: 590px;
+	}
+	.MTestTool_Obj5 {
+		width: 130px;
+		margin: 10px 10px;
+	}
+}
+
+@media ( max-width : 767px) {
+}
+
+@media ( min-width : 768px) {
+	#inputsearch {
+		width: 88%;
+	}
+	.table-cell {
+		height: 70px;
+		width: 200px;
+		font-size: 17px;
+	}
+	.skill-table {
+		border-spacing: 40px 20px;
+	}
+	.mainMTestTool {
+		width: 590px;
+	}
+	.MTestTool_Obj5 {
+		width: 130px;
+		margin: 10px 10px;
+	}
+}
+
+.VocaEditorTool_Obj1 {
+	background: #009688;
+	padding: 7px 15px;
+	border: 1px silver solid;
+	color: white;
+	border-radius: 5px;
+	margin-right: 10px;
+}
+
+.VocaEditorTool_Obj1:hover {
+	background: silver;
+	cursor: pointer;
+	color: #009688;
+}
+
+.VocaEditorTool_Obj2 {
+	font-weight: 700;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	margin-right: 20px;
+	width: 150px;
+}
+
+.VocaEditorTool_Obj3 {
+	margin-bottom: 10px;
+}
+
+.VocaEditorTool_Obj4 {
+	width: 400px;
+	height: 26px;
+	padding-left: 5px;
+	border: 1px solid #b6b6b6;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+}
+
+.VocaEditorTool_Obj5 {
+	position: relative;
+	top: 10px;
+}
+
+.VocaEditorTool_Obj6 {
+	
+}
+
+.VocaEditorTool_Obj6:hover {
+	color: silver !important;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.VocaEditorTool_Obj7 {
+	font-weight: 700;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	margin-bottom: 24px;
+}
+
+.VocaEditorTool_Obj8 {
+	width: 400px;
+	margin-left: -5px;
+}
+
+.VocaEditorTool_Obj9 {
+	margin-top: 20px;
+}
+
+.VocaEditorTool_Obj10 {
+	color: gray;
+}
+
+.VocaEditorTool_Obj11 {
+	width: 130px;
+	text-align: center;
+	padding: 5px;
+	background: silver;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.VocaEditorTool_Obj11:hover {
+	background: tomato;
+	color: white;
+	cursor: pointer;
+}
+
+.VocaEditorTool_Obj12 {
+	padding-bottom: 30px;
+}
+
+.table-app {
+	margin: auto;
+}
+
+.tl {
+	font-size: 14px;
+	color: #0e74af;
+	font-weight: bold;
+}
+
+.ex {
+	color: gray;
+	margin-left: 15px;
+}
+/* css for mblog*/
+.nameBlog {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.nameBlog h1 {
+	font-size: 1.6rem;
+	color: #009688;
+}
+
+.publishdate {
+	font: 13px/1.3 arial;
+	color: #888;
+	padding-bottom: 10px;
+}
+
+.avatarBlog {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.titleBlog h1 {
+	font-size: 22px;
+	color: rgb(56, 119, 127);
+}
+
+.titleBlog h1 a {
+	color: #009688;
+	text-decoration: none;
+}
+
+#blogs ul {
+	padding-left: 0px !important;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #E6E9EB;
+}
+
+#blogs ul li {
+	display: block;
+	overflow: hidden;
+	padding: 5px 0;
+	margin-top: 10px;
+}
+
+.imgdefault {
+	width: 100%
+}
+
+.avatar {
+	float: left;
+	padding: 10px 10px 10px 0px;
+	height: 140px;
+	width: 140px;
+}
+
+.imgdefault a {
+	display: inline;
+	overflow: hidden;
+}
+
+p {
+	text-align: justify;
+	color: #333;
+	line-height: 150%;
+	font-size: 17px;
+	/* white-space: pre-line; */
+	margin-top: 0px;
+}
+
+.mparagraptext {
+	padding-top: 5px;
+}
+</style>
+
+<title>Phương pháp học từ vựng với LazzyBee</title>
+</head>
+
+<body>
+
+	<div id="main">
+		<div id="content">
+			<div class="nameBlog">
+				<h1>Phương pháp học từ vựng với LazzyBee</h1>
+			</div>
+			<div class="mCenter">
+   <div>
+      <p style="text-align:justify"><span style="color:#0000FF"><em>Mỗi ứng dụng luôn có những đặc điểm riêng biệt, nếu không nắm rõ cách sử dụng bạn sẽ không thể đạt được kết quả tốt như mong muốn, thậm chí trong một số trường hợp, tác dụng có thể là <a href="http://www.lazzybee.com/blog/did_you_read_the_manual" style="text-decoration:underline;">hoàn toàn trái ngược</a>.</em></span><br><span style="color:#0000FF"><em>Phương pháp học với LazzyBee rất đơn giản, chúng tôi khuyến nghị người dùng cần hiểu rõ phương pháp học để đạt hiệu quả cao nhất.</em></span></p>
+      <hr>
+      <p style="text-align:center">VUI LÒNG DÀNH VÀI PHÚT ĐỌC KỸ HƯỚNG DẪN DƯỚI ĐÂY.</p>
+	  
+      <p style="text-align:justify"><span style="color:#0000CD;"><strong>I. Phương ph&aacute;p luận</strong></span></p>
+<p align="JUSTIFY">Phương ph&aacute;p học của LazzyBee c&oacute; thể t&oacute;m gọn lại như sau: &quot;Học đều đặn&quot; &amp; &quot;&Ocirc;n lại chọn lọc&quot;</p>
+<p align="JUSTIFY">T&iacute;nh năng quan trọng nhất gi&uacute;p cho việc học cực kỳ hiệu quả l&agrave; việc &ocirc;n lại, ứng dụng chỉ chọn c&aacute;c từ m&agrave; bạn sắp qu&ecirc;n để đưa ra &ocirc;n lại, điều n&agrave;y gi&uacute;p cho bạn gần như kh&ocirc;ng thể qu&ecirc;n c&aacute;c từ đ&atilde; học.</p>
+<p align="JUSTIFY">Khi học một từ, LazzyBee sẽ đưa c&aacute;c gợi &yacute; lần &ocirc;n lại tiếp theo để bạn lựa chọn. Việc lựa chọn thời điểm &ocirc;n tập phụ thuộc v&agrave;o đ&aacute;nh gi&aacute; của ch&iacute;nh bạn:</p>
+<ul>
+   <li align="JUSTIFY">Nếu bạn nhớ từ kh&ocirc;ng tốt lắm, h&atilde;y chọn thời gian ngắn hơn để &ocirc;n lại từ đ&oacute; thường xuy&ecirc;n hơn.</li>
+   <li align="JUSTIFY">Ngược lại, h&atilde;y chọn thời gian &ocirc;n lại d&agrave;i hơn để tr&aacute;nh tốn thời gian cho c&aacute;c từ đ&atilde; nhớ tốt.</li>
+</ul>
+<p align="JUSTIFY">C&aacute;c đề xuất về thời gian &ocirc;n lại được t&iacute;nh to&aacute;n ri&ecirc;ng biệt cho từng từ, dựa v&agrave;o to&agrave;n bộ lịch sử học của từ đ&oacute;, sử dụng một thuật to&aacute;n dựa tr&ecirc;n nghi&ecirc;n cứu khoa học về tr&iacute; nhớ. C&aacute;c lựa chọn sẽ thay đổi sau mỗi lần &ocirc;n lại, v&agrave; thời gian &ocirc;n lại sẽ được k&eacute;o d&agrave;i dần khi ứng dụng thấy bạn nhớ từ đ&oacute; được l&acirc;u hơn.</p>
+<ul></ul>
+      
+	  <p style="text-align:justify"><strong>II. Cách học</strong></p>
+      <p>1. Hàng ngày, LazzyBee sẽ hiển thị lần lượt các từ bạn mới hay các từ cũ đã đến thời gian ôn lại.</p>
+
+	  <p style="text-align:justify"><strong>2. </strong>Bạn h&atilde;y nhớ lại nghĩa của từ (nghĩa tiếng Việt hoặc Anh đều được), sau đ&oacute; bấm &quot;Xem kết quả&quot;, v&agrave; chọn thời gian &ocirc;n lại lần tới t&ugrave;y theo đ&aacute;nh gi&aacute; tr&iacute; nhớ của m&igrave;nh. C&oacute; 4 mức đ&aacute;nh gi&aacute;, v&agrave; ch&uacute;ng t&ocirc;i khuyến nghị bạn n&ecirc;n chọn như sau:</p>
+	  
+      <p style="text-align:justify"><span style="color:#0000FF"><strong>Học lại (Again)</strong></span>: Nếu bạn hoàn toàn không nhớ nghĩa của từ này (hoặc chưa biết).</p>
+      <p style="text-align:justify"><span style="color:#0000FF"><strong>Khó (Hard)</strong>:</span> Nếu bạn mất khá thời gian mới nhớ nghĩa của từ.</p>
+      <p style="text-align:justify"><span style="color:#0000FF"><strong>Tốt (Good)</strong>:</span> Bạn chỉ mất một chút thời gian để nhớ (5s chẳng hạn).</p>
+      <p style="text-align:justify"><span style="color:#0000FF"><strong>Dễ (Easy)</strong>:</span> Bạn nhớ ngay lập tức.</p>
+      <p style="text-align:justify">Với mỗi một lựa chọn, LazzyBee hiển thị thời gian ôn lại tương ứng tiếp theo ở trên nút bấm đó (như trên hình minh họa là <strong>Easy</strong>: 11 ngày, <strong>Good</strong>: 7 ngày, <strong>Hard</strong>: 4 ngày, và <strong>Again</strong>: 10 phút).</p>
+      
+	  <div style="clear:both">
+   <p style="text-align:justify"><strong>3. </strong>Lặp lại c&aacute;c bước tr&ecirc;n để học hết c&aacute;c từ chương tr&igrave;nh đưa ra, bao gồm cả c&aacute;c từ mới cũng như c&aacute;c từ cần nhắc lại, that&#39;s all. Mỗi ng&agrave;y, ứng dụng sẽ sắp xếp c&aacute;c từ ph&ugrave; hợp với bạn cho ng&agrave;y đ&oacute;, v&agrave; bạn chỉ phải thực hiện c&aacute;c bước như tr&ecirc;n.</p>
+   <p style="text-align:justify"><span style="color:#0000CD;"><strong>III. C&aacute;c ch&uacute; &yacute; ch&iacute;nh</strong></span></p>
+   <ul>
+      <li>Kh&ocirc;ng n&ecirc;n học qu&aacute; nhiều trong một ng&agrave;y - <em>Rome wasn&#39;t built in a day</em>.</li>
+      <li>Học <a href="http://www.lazzybee.com/blog/motivation_to_speak_english_perfectly">đều đặn h&agrave;ng ng&agrave;y</a> (bạn chỉ tốn khoảng 5 ph&uacute;t tổng cộng)</li>
+      <li>
+         Lựa chọn thời gian &ocirc;n lại ph&ugrave; hợp.
+         <ul>
+            <li>Nếu bạn chọn thời gian d&agrave;i, bạn sẽ học &iacute;t hơn h&agrave;ng ng&agrave;y, nhưng c&oacute; khả năng cao bạn sẽ qu&ecirc;n từ đ&oacute;.</li>
+            <li>Nếu bạn chọn thời gian ngắn, chất lượng sẽ tốt hơn, nhưng h&agrave;ng ng&agrave;y bạn sẽ tốn thời gian hơn</li>
+         </ul>
+      </li>
+   </ul>
+   <p style="text-align:justify"><span style="color:#0000CD;"><strong>IV. Bạn c&oacute; nghĩ rằng n&oacute; qu&aacute; đơn giản?</strong></span></p>
+   <p style="text-align:justify">LazzyBee hoạt động dựa tr&ecirc;n nghi&ecirc;n cứu khoa học đ&atilde; được chứng minh, v&agrave; đảm bảo bạn c&oacute; thể học <a href="http://www.lazzybee.com/blog/can_you_learn_2000_words_per_year">2000 từ một năm chỉ với 5 ph&uacute;t mỗi ng&agrave;y</a></p>
+</div><p style="text-align:justify"><em>Trên đây là hướng dẫn ngắn gọn nhưng rất quan trọng. Nếu bạn muốn tìm hiểu kỹ thêm, xin mời xem thêm mục <a href="http://www.lazzybee.com/blog/q&a">hỏi đáp</a> và các bài viết khác trên blog.</em></p>
+      <p><strong>Chúc các bạn thành công cùng LazzyBee!</strong></p>
+      <hr>
+      <p style="text-align: right;">LazzyBee Team</p>
+   </div>
+   <br>
+</div>
+		</div>
+	</div>
+	<div class="mfooter" id="mfooter">
+		<center>Born2Go©2016</center>
+	</div>
+
+<iframe src="about:blank" id="lazzybeemobile" tabindex="-1" style="position: absolute; width: 0px; height: 0px; border: none; left: -1000px; top: -1000px;"></iframe><div aria-hidden="true" style="display: none;"></div></body></html>

@@ -105,6 +105,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rear\VocabularyTestPage.xaml.cs">
       <DependentUpon>VocabularyTestPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IBaseUrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />

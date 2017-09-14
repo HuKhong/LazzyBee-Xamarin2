@@ -12,7 +12,7 @@
 					TranslationY="20"/>
 
 			<Button x:Name="btnStartLearning"
-				Text="Start learning"
+				Text="Start learning" FontSize="16"
 				TranslationY="20"
 				Margin="10"
 				BorderWidth="1"
@@ -25,13 +25,13 @@
 				TranslationY="10">
 
 				<Button x:Name="btnIncomingList" Grid.Row="0" Grid.Column="0"
-					Text="Incoming list" Margin="0,5,5,5"
+					Text="Incoming list" FontSize="16" Margin="0,5,5,5"
 					BorderWidth="1"
 					BorderColor="Gray"
 					Clicked="btnIncomingListClicked"/>
 					
 				<Button x:Name="btnMoreWords" Grid.Row="0" Grid.Column="1"
-					Text="More words" Margin="0,5,0,5"
+					Text="More words" FontSize="16" Margin="0,5,0,5"
 					BorderWidth="1"
 					BorderColor="Gray"
 					Clicked="btnMoreWordsClicked"/>

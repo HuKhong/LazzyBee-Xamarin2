@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:LazzyBee" x:Class="LazzyBee.SettingsPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:LazzyBee" x:Class="LazzyBee.SettingsPage"
+	Title="Settings">
 	<ContentPage.Content>
 		<TableView Intent="Form">
 			<TableRoot>
@@ -75,7 +77,7 @@
 					<ViewCell>
 						<StackLayout Orientation="Horizontal" Padding="10,0,10,0">
 							<Image Source="images/icons/ic_turtle.png" HorizontalOptions="Start" />
-							<Slider x:Name="slSpeed" Minimum="0.4" Maximum="1.5" Value="1" HorizontalOptions="FillAndExpand" ValueChanged="HandleSpeedSliderValueChanged" />
+							<Slider x:Name="slSpeed" Minimum="0.4" Maximum="1.2" Value="1" HorizontalOptions="FillAndExpand" ValueChanged="HandleSpeedSliderValueChanged" />
 							<Image Source="images/icons/ic_rabbit.png" HorizontalOptions="End" />
 						</StackLayout>
 					</ViewCell>
@@ -114,10 +116,10 @@
 				<TableSection Title="Reminder">
 					<SwitchCell x:Name="swReminder" Text="Turn on reminder" OnChanged="HandleSWReminderOnOffOnChanged" />
 					<!--					<TextCell x:Name="tcTimeToReminder" Text="Time to remind" Detail="13:30" Tapped="HandleTappedOnReminderTime" />-->
-					<ViewCell>
+					<ViewCell  Tapped="HandleTappedOnRemindTime">
 						<StackLayout Orientation="Horizontal" Padding="15,0,15,0" VerticalOptions="Center">
 							<Label Text="Remind me at time" VerticalOptions="Center" HorizontalOptions="Start" />
-							<TimePicker x:Name="pickerRemindTime" BackgroundColor="Maroon" TextColor="White" HorizontalOptions="EndAndExpand" Format="HH:MM" PropertyChanged="HandleReminderTimeChanged">
+							<TimePicker x:Name="pickerRemindTime" BackgroundColor="Maroon" TextColor="White" HorizontalOptions="EndAndExpand" Format="HH:mm" PropertyChanged="HandleReminderTimeChanged">
 							</TimePicker>
 						</StackLayout>
 					</ViewCell>
