@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LazzyBee.MajorsListPage"
-	Title="Majors List">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LazzyBee.MajorsListPage" Title="Majors List">
 	<ContentPage.Content>
+		<StackLayout>
+			<ListView x:Name="majorsListView" SeparatorVisibility="Default" BackgroundColor="White">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell Height="64">
+							<StackLayout BackgroundColor="Silver" Padding="0,1,0,0">
+								<StackLayout Orientation="Horizontal" BackgroundColor="White" VerticalOptions="CenterAndExpand">
+									<Image Source="{Binding majorThumbnail}"
+										Width="60" HeightRequest="60"/>
+									<Label Text="{Binding displayName}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"
+										FontSize="16"/>
+									<CheckBox x:Name="checkbox">
+									</CheckBox>
+								</StackLayout>
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

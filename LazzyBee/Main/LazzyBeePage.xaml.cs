@@ -32,6 +32,7 @@ namespace LazzyBee.Main
 					BarTextColor = Color.White
 				};
 				masterPage.ListView.SelectedItem = null;
+
 				IsPresented = false;
 			}
 		}

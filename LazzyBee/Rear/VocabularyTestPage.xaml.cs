@@ -10,6 +10,7 @@ namespace LazzyBee
 		public VocabularyTestPage()
 		{
 			InitializeComponent();
+			webViewVocaTest.Source = "http://www.lazzybee.com/testvocab?menu=0";
 		}
 	}
 }

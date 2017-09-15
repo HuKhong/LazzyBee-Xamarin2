@@ -6,7 +6,7 @@
 	<ContentPage.Content>
         <StackLayout Orientation="Vertical">
 			<SearchBar x:Name="searchBox"
-				Placeholder="Dictionary"/>
+				Placeholder="Dictionary" FontSize="16"/>
             <Image Source="images/logos/big_logo.png" 
 					HeightRequest="188" WidthRequest="188"
 					TranslationY="20"/>
