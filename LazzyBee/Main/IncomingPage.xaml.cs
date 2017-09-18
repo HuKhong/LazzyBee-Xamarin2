@@ -23,7 +23,7 @@ namespace LazzyBee
 			MajorObject major = Common.loadMajorFromProperties();
 			if (major != null)
 			{
-				package = major.displayName();
+				package = major.displayName;
 				packageLowcase = major.majorName.ToLower();
 			}
 			else

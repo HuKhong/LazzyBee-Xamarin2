@@ -3,10 +3,15 @@ namespace LazzyBee
 {
 	public class MajorObject
 	{
-		public string majorName;
-		public string majorThumbnail;
-		public bool checkFlag;
-		public bool enabled;
+		public string majorName { get; set; }
+		public string majorThumbnail { get; set; }
+		public bool checkFlag { get; set; }
+		public bool enabled { get; set; }
+		public string displayName
+		{
+			get { return displayNameFunc(); }
+		}
+		public string imgRadioBtn { get; set; }
 
 		public MajorObject()
 		{
@@ -14,6 +19,7 @@ namespace LazzyBee
 	        majorThumbnail = "images/majors/blank.png";
 			checkFlag = false;
 	        enabled = false;
+			imgRadioBtn = "images/majors/radiobtn-unchecked.png";
 		}
 
 		public MajorObject(string _majorName, string _thumbnail, bool _checkFlag)
@@ -24,7 +30,7 @@ namespace LazzyBee
 	        enabled = false;
 		}
 
-		public string displayName() {
+		public string displayNameFunc() {
 			string res = "";
 			    
 			if (majorName.ToLower().Equals("economic")) {

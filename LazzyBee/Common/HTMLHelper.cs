@@ -17,7 +17,7 @@ public class HTMLHelper {
 
 		if (major != null)
 		{
-			package = major.displayName();
+			package = major.displayName;
 			packageLowcase = major.majorName.ToLower();
 		}
 		else
@@ -127,7 +127,7 @@ public class HTMLHelper {
 
 		if (major != null)
 		{
-			package = major.displayName();
+			package = major.displayName;
 			packageLowcase = major.majorName.ToLower();
 		}
 		else

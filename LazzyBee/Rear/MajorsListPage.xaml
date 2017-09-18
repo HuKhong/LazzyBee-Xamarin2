@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LazzyBee.MajorsListPage" Title="Majors List">
 	<ContentPage.Content>
-		<StackLayout>
-			<ListView x:Name="majorsListView" SeparatorVisibility="Default" BackgroundColor="White">
+		<StackLayout Orientation="Vertical">
+			<ListView x:Name="majorsListView" ItemsSource="{Binding majorObjects}" SeparatorVisibility="None" BackgroundColor="White" RowHeight="64">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<ViewCell Height="64">
-							<StackLayout BackgroundColor="Silver" Padding="0,1,0,0">
-								<StackLayout Orientation="Horizontal" BackgroundColor="White" VerticalOptions="CenterAndExpand">
+						<ViewCell>
+							<StackLayout BackgroundColor="Silver" Padding="0,1,0,0" Spacing="0">
+								<StackLayout Orientation="Horizontal" BackgroundColor="White"  HeightRequest="63"
+									VerticalOptions="CenterAndExpand"
+									Spacing="0" Padding="10,0,10,0">
+
 									<Image Source="{Binding majorThumbnail}"
-										Width="60" HeightRequest="60"/>
-									<Label Text="{Binding displayName}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"
+										WidthRequest="50" HeightRequest="50" VerticalOptions="Center"/>
+									
+									<Label Text="{Binding displayName}" HorizontalOptions="FillAndExpand" Margin="10,0,0,0" 
+										HorizontalTextAlignment="Start"
+										VerticalOptions="Center"
 										FontSize="16"/>
-									<CheckBox x:Name="checkbox">
-									</CheckBox>
+									
+
+									<Image Source="{Binding imgRadioBtn}"
+										WidthRequest="20" HeightRequest="20" 
+										VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
 								</StackLayout>
 							</StackLayout>
 						</ViewCell>
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
+
+			<Button Text/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

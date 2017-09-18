@@ -123,7 +123,7 @@ namespace LazzyBee
 			//throw new NotImplementedException();
 			string target = pickerNewWordTarget.SelectedItem.ToString();
 			Common.saveDailyTarget(int.Parse(target.Substring(0, 2)));
-
+			TableView tableSettings = new TableView();
 		}
 
 		void HandleTappedOnDailyTarget(object sender, System.EventArgs e)

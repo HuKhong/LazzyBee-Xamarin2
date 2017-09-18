@@ -93,11 +93,18 @@ namespace LazzyBee
 		//save/load major
 		public static void saveMajorToProperties(MajorObject major)
 		{
-			string strMajor = JsonConvert.SerializeObject(major);
-
-			if (strMajor != null)
+			if (major != null)
 			{
-				saveSettingValue(CommonDefine.SELECTED_MAJOR_KEY, strMajor);
+				string strMajor = JsonConvert.SerializeObject(major);
+
+				if (strMajor != null)
+				{
+					saveSettingValue(CommonDefine.SELECTED_MAJOR_KEY, strMajor);
+				}
+			}
+			else
+			{
+                clearSettingValueByKey(CommonDefine.SELECTED_MAJOR_KEY);
 			}
 		}
 
