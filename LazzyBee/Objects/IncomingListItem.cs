@@ -7,5 +7,6 @@ namespace LazzyBee
 		public string Meaning { get; set; }
 		public string Pronounce { get; set; }
 		public string Level { get; set; }
+		public WordInfo word;
 	}
 }

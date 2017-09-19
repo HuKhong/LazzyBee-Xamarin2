@@ -30,7 +30,8 @@
 				</ListView.ItemTemplate>
 			</ListView>
 
-			<Button Text/>
+			<Button Image="images/majors/home.png" Clicked="HandleHomeClicked"
+				HeightRequest="55" WidthRequest="150" VerticalOptions="Center"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

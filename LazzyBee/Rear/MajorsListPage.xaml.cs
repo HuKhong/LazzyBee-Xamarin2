@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
+using LazzyBee.Main;
 
 namespace LazzyBee
 {
@@ -118,6 +119,7 @@ namespace LazzyBee
 						{
 							m.checkFlag = false;
 							m.imgRadioBtn = "images/majors/radiobtn-unchecked.png";
+							break;
 						}
 
 					}
@@ -131,6 +133,7 @@ namespace LazzyBee
 						{
 							item.checkFlag = true;
 							item.imgRadioBtn = "images/majors/radiobtn-checked.png";
+							break;
 						}
 
 					}
@@ -147,6 +150,7 @@ namespace LazzyBee
 							{
 								item.checkFlag = true;
 								item.imgRadioBtn = "images/majors/radiobtn-checked.png";
+								break;
 							}
 
 						}
@@ -163,6 +167,18 @@ namespace LazzyBee
 
 				Common.saveMajorToProperties(curMajor);
 			}
+		}
+
+		void HandleHomeClicked(object sender, System.EventArgs e)
+		{
+			//throw new NotImplementedException();
+			//masterPage.Detail = new NavigationPage((Page)Activator.CreateInstance(HomePage));
+			LazzyBeePage lzPage = (LazzyBeePage)App.Current.MainPage;
+			lzPage.Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(HomePage)))
+			{
+				BarBackgroundColor = CommonDefine.MAIN_COLOR,
+				BarTextColor = Color.White
+			};
 		}
 	}
 }

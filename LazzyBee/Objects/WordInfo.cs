@@ -13,7 +13,7 @@ namespace LazzyBee
 
 		public string wordid;
 		public string gid;
-		public string question;
+		public string question { get; set; }
 		public string answers;
 		public string status;
 		public string subcats;

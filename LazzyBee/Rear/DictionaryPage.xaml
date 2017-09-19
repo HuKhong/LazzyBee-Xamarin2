@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LazzyBee.DictionaryPage"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="LazzyBee.DictionaryPage" 
 	Title="Dictionary">
 	<ContentPage.Content>
+		<RelativeLayout>
+                <StackLayout Orientation="Vertical" Spacing="0">
+				<SearchBar x:Name="searchBox"
+					Placeholder="Search" FontSize="16"/>
+				<ListView x:Name="dictionaryListView" SeparatorVisibility="Default">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" VerticalOptions="Center" Padding="15,0,10,0">
+									<Label Text="{Binding question}" TextColor="Black" FontSize="16"
+										VerticalOptions="FillAndExpand"/>
+									<Image Source="images/others/arrow_gray.png" WidthRequest="7" HeightRequest="7"
+										HorizontalOptions="EndAndExpand"/>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+			<StackLayout IsVisible="true" Padding="12"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+				VerticalOptions="CenterAndExpand"
+	                HorizontalOptions="CenterAndExpand">
+
+		       <ActivityIndicator Color="Red" IsRunning="true" Scale="2"
+					VerticalOptions="CenterAndExpand"
+	                HorizontalOptions="CenterAndExpand" Opacity="0.5">
+				</ActivityIndicator>
+
+	        </StackLayout>
+		</RelativeLayout>
 	</ContentPage.Content>
 </ContentPage>

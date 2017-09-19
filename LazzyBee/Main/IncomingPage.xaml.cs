@@ -13,6 +13,9 @@ namespace LazzyBee
 		public IncomingPage()
 		{
 			InitializeComponent();
+
+			incomingListView.ItemSelected += OnItemSelected;
+
 			wordsList.AddRange(SqliteHelper.Instance.getIncomingList());
 
 			string strMeaning = "";
@@ -75,11 +78,27 @@ namespace LazzyBee
 				incomingItem.Pronounce = strPronounciation;
 				incomingItem.Meaning = WebUtility.HtmlDecode(strMeaning);
 				incomingItem.Level = string.Format("Level: {0}", word.level);
-				
+				incomingItem.word = word;
+
 				incomingListItems.Add(incomingItem);
 			}
 
 			incomingListView.ItemsSource = incomingListItems;
+		}
+
+		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			var item = e.SelectedItem as IncomingListItem;
+
+			if (item != null)
+			{
+				DictionaryTabPage dictTabPage = new DictionaryTabPage();
+				dictTabPage.wordInfo = item.word;
+				dictTabPage.showLazzyBeeTab = true;
+				Navigation.PushAsync(dictTabPage);
+			}
+
+			incomingListView.SelectedItem = null;
 		}
 	}
 }

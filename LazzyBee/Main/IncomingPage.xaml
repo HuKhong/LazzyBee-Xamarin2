@@ -9,7 +9,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="8,2,8,2" HeightRequest="44">
+                            <Grid Padding="15,2,10,2" HeightRequest="44">
                                 <Label Grid.Row="0" Grid.Column="0" 
 									Text="{Binding Word}"
 									FontAttributes="Bold"

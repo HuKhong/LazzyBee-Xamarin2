@@ -87,7 +87,7 @@ namespace LazzyBee
 		{
 			lock (collisionLock)
 			{
-				string strQuery = "SELECT * FROM 'vocabulary'";
+				string strQuery = "SELECT * FROM 'vocabulary' ORDER BY question";
 				List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 				return _convertListWordDAOToListWordInfo(wordDAOs);
 			}
