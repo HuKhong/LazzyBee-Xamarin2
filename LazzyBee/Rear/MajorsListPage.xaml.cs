@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using LazzyBee.Main;
+using System.Threading;
 
 namespace LazzyBee
 {
@@ -15,92 +16,103 @@ namespace LazzyBee
 		public MajorsListPage()
 		{
 			InitializeComponent();
-			curMajor = Common.loadMajorFromProperties();
-			//it
-			MajorObject it = new MajorObject();
-			it.majorName = "it";
-			it.majorThumbnail = "images/majors/it.png";
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(it.majorName))
+			ThreadStart threadStart = new ThreadStart(loadMajorsContent);
+			Thread myThread = new Thread(threadStart);
+			myThread.Start();
+		}
+
+		void loadMajorsContent()
+		{
+			Device.BeginInvokeOnMainThread(() =>
 			{
-				it.checkFlag = true;
-				it.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
+				curMajor = Common.loadMajorFromProperties();
+				//it
+				MajorObject it = new MajorObject();
+				it.majorName = "it";
+				it.majorThumbnail = "images/majors/it.png";
 
-			majorObjects.Add(it);
+				if (curMajor != null &&
+					curMajor.majorName.Equals(it.majorName))
+				{
+					it.checkFlag = true;
+					it.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
 
-			//Science
-			MajorObject science = new MajorObject();
-			science.majorName = "Science";
-			science.majorThumbnail = "images/majors/science.png";
+				majorObjects.Add(it);
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(science.majorName))
-			{
-				science.checkFlag = true;
-				science.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
-			majorObjects.Add(science);
+				//Science
+				MajorObject science = new MajorObject();
+				science.majorName = "Science";
+				science.majorThumbnail = "images/majors/science.png";
 
-			//Economic
-			MajorObject economic = new MajorObject();
-			economic.majorName = "Economic";
-			economic.majorThumbnail = "images/majors/economic.png";
+				if (curMajor != null &&
+					curMajor.majorName.Equals(science.majorName))
+				{
+					science.checkFlag = true;
+					science.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
+				majorObjects.Add(science);
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(economic.majorName))
-			{
-				economic.checkFlag = true;
-				economic.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
+				//Economic
+				MajorObject economic = new MajorObject();
+				economic.majorName = "Economic";
+				economic.majorThumbnail = "images/majors/economic.png";
 
-			majorObjects.Add(economic);
+				if (curMajor != null &&
+					curMajor.majorName.Equals(economic.majorName))
+				{
+					economic.checkFlag = true;
+					economic.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
 
-			//Medicine
-			MajorObject medicine = new MajorObject();
-			medicine.majorName = "Medicine";
-			medicine.majorThumbnail = "images/majors/medicine.png";
+				majorObjects.Add(economic);
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(medicine.majorName))
-			{
-				medicine.checkFlag = true;
-				medicine.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
+				//Medicine
+				MajorObject medicine = new MajorObject();
+				medicine.majorName = "Medicine";
+				medicine.majorThumbnail = "images/majors/medicine.png";
 
-			majorObjects.Add(medicine);
+				if (curMajor != null &&
+					curMajor.majorName.Equals(medicine.majorName))
+				{
+					medicine.checkFlag = true;
+					medicine.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
 
-			//IELTS
-			MajorObject ielts = new MajorObject();
-			ielts.majorName = "IELTS";
-			ielts.majorThumbnail = "images/majors/ielts.png";
+				majorObjects.Add(medicine);
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(ielts.majorName))
-			{
-				ielts.checkFlag = true;
-				ielts.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
+				//IELTS
+				MajorObject ielts = new MajorObject();
+				ielts.majorName = "IELTS";
+				ielts.majorThumbnail = "images/majors/ielts.png";
 
-			majorObjects.Add(ielts);
+				if (curMajor != null &&
+					curMajor.majorName.Equals(ielts.majorName))
+				{
+					ielts.checkFlag = true;
+					ielts.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
 
-			//TOEIC
-			MajorObject toeic = new MajorObject();
-			toeic.majorName = "TOEIC";
-			toeic.majorThumbnail = "images/majors/toeic.png";
+				majorObjects.Add(ielts);
 
-			if (curMajor != null &&
-				curMajor.majorName.Equals(toeic.majorName))
-			{
-				toeic.checkFlag = true;
-				toeic.imgRadioBtn = "images/majors/radiobtn-checked.png";
-			}
+				//TOEIC
+				MajorObject toeic = new MajorObject();
+				toeic.majorName = "TOEIC";
+				toeic.majorThumbnail = "images/majors/toeic.png";
 
-			majorObjects.Add(toeic);
+				if (curMajor != null &&
+					curMajor.majorName.Equals(toeic.majorName))
+				{
+					toeic.checkFlag = true;
+					toeic.imgRadioBtn = "images/majors/radiobtn-checked.png";
+				}
 
-			majorsListView.ItemsSource = majorObjects;
-			majorsListView.ItemSelected += OnItemSelected;
+				majorObjects.Add(toeic);
+
+				majorsListView.ItemsSource = majorObjects;
+				majorsListView.ItemSelected += OnItemSelected;
+			});
 		}
 
 		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

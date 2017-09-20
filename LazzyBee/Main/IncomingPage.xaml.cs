@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 using System.Net;
+using System.Threading;
 
 namespace LazzyBee
 {
@@ -10,12 +11,28 @@ namespace LazzyBee
 	{
 		private List<WordInfo> wordsList = new List<WordInfo>();
 		private List<IncomingListItem> incomingListItems = new List<IncomingListItem>();
+
 		public IncomingPage()
 		{
 			InitializeComponent();
 
+			double width = App.Current.MainPage.Width;
+			double height = App.Current.MainPage.Height;
+
+			loadingIndicator.TranslationX = width / 2 - 10;
+			loadingIndicator.TranslationY = height / 2 - 50;
+
 			incomingListView.ItemSelected += OnItemSelected;
 
+			loadingIndicator.IsRunning = true;
+			ThreadStart threadStart = new ThreadStart(loadIncomingList);
+			Thread myThread = new Thread(threadStart);
+			myThread.Start();
+		}
+
+		void loadIncomingList()
+		{
+			
 			wordsList.AddRange(SqliteHelper.Instance.getIncomingList());
 
 			string strMeaning = "";
@@ -83,7 +100,12 @@ namespace LazzyBee
 				incomingListItems.Add(incomingItem);
 			}
 
-			incomingListView.ItemsSource = incomingListItems;
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				incomingListView.ItemsSource = incomingListItems;
+
+				loadingIndicator.IsRunning = false;
+			});
 		}
 
 		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -99,6 +121,34 @@ namespace LazzyBee
 			}
 
 			incomingListView.SelectedItem = null;
+		}
+
+		public void OnIgnore(object sender, EventArgs e)
+		{
+			var mi = ((MenuItem)sender);
+			//DisplayAlert("Ignore Context Action", mi.CommandParameter + " Ignore context action", "OK");
+			IncomingListItem incomingItem = (IncomingListItem)mi.CommandParameter;
+			WordInfo w = incomingItem.word;
+
+			w.queue = WordInfo.QUEUE_SUSPENDED.ToString();
+
+			SqliteHelper.Instance.updateWord(w);
+
+			incomingListItems.Remove(incomingItem);
+		}
+
+		public void OnDone(object sender, EventArgs e)
+		{
+			var mi = ((MenuItem)sender);
+			//DisplayAlert("Done Context Action", mi.CommandParameter + " Done context action", "OK");
+			IncomingListItem incomingItem = (IncomingListItem)mi.CommandParameter;
+			WordInfo w = incomingItem.word;
+
+			w.queue = WordInfo.QUEUE_DONE.ToString();
+
+			SqliteHelper.Instance.updateWord(w);
+
+			incomingListItems.Remove(incomingItem);
 		}
 	}
 }

@@ -4,40 +4,54 @@
 	x:Class="LazzyBee.IncomingPage"
 	Title="Incoming List">
 	<ContentPage.Content>
-		<StackLayout>
-            <ListView x:Name="incomingListView" SeparatorVisibility="Default">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="15,2,10,2" HeightRequest="44">
-                                <Label Grid.Row="0" Grid.Column="0" 
-									Text="{Binding Word}"
-									FontAttributes="Bold"
-									FontSize="16"
-									VerticalOptions="Start" />
-								
-								<Label Grid.Row="0" Grid.Column="1" 
-									Text="{Binding Pronounce}"
-									FontAttributes="None"
-									FontSize="14"
-									VerticalOptions="Start" />
-								
-								<Label Grid.Row="1" Grid.Column="0" 
-									Text="{Binding Meaning}"
-									FontAttributes="Italic"
-									FontSize="14"
-									VerticalOptions="End" />
-								
-								<Label Grid.Row="1" Grid.Column="1" 
-									Text="{Binding Level}"
-									FontAttributes="None"
-									FontSize="14"
-									VerticalOptions="End" />
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+		<RelativeLayout>
+			<StackLayout>
+	            <ListView x:Name="incomingListView" SeparatorVisibility="Default">
+	                <ListView.ItemTemplate>
+	                    <DataTemplate>
+	                        <ViewCell>
+								<ViewCell.ContextActions>
+									<MenuItem Clicked="OnDone" CommandParameter="{Binding .}"
+						               Text="Done" Icon="images/icons/ic_done.png" />
+									
+						            <MenuItem Clicked="OnIgnore" CommandParameter="{Binding .}"
+						               Text="Ignore" Icon="images/icons/ic_ignore.png"/>
+						        </ViewCell.ContextActions>
+	                            <Grid Padding="15,2,10,2" HeightRequest="44">
+	                                <Label Grid.Row="0" Grid.Column="0" 
+										Text="{Binding Word}"
+										FontAttributes="Bold"
+										FontSize="16"
+										VerticalOptions="Start" />
+									
+									<Label Grid.Row="0" Grid.Column="1" 
+										Text="{Binding Pronounce}"
+										FontAttributes="None"
+										FontSize="14"
+										VerticalOptions="Start" />
+									
+									<Label Grid.Row="1" Grid.Column="0" 
+										Text="{Binding Meaning}"
+										FontAttributes="Italic"
+										FontSize="14"
+										VerticalOptions="End" />
+									
+									<Label Grid.Row="1" Grid.Column="1" 
+										Text="{Binding Level}"
+										FontAttributes="None"
+										FontSize="14"
+										VerticalOptions="End" />
+	                            </Grid>
+	                        </ViewCell>
+	                    </DataTemplate>
+	                </ListView.ItemTemplate>
+	            </ListView>
+	        </StackLayout>
+			<ActivityIndicator x:Name="loadingIndicator" Color="Gray" IsRunning="true" Scale="2"
+				VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand" Opacity="0.5">
+			</ActivityIndicator>
+
+		</RelativeLayout>
 	</ContentPage.Content>
 </ContentPage>

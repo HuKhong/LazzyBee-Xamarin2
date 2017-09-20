@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
+using System.Threading;
 
 namespace LazzyBee.Main
 {
@@ -25,7 +26,9 @@ namespace LazzyBee.Main
 			btnMoreWords.BackgroundColor = CommonDefine.SECOND_COLOR;
 			btnMoreWords.TextColor = Color.White;
 
-			prepareWordsToStudyingQueue();
+			ThreadStart threadStart = new ThreadStart(prepareWordsToStudyingQueue);
+			Thread myThread = new Thread(threadStart);
+			myThread.Start();
         }
 
 		void btnStartLearningClicked(object sender, System.EventArgs e)

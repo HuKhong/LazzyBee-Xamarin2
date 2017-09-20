@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 using Xamarin.Forms;
 
 namespace LazzyBee
@@ -18,9 +19,10 @@ namespace LazzyBee
 		{
 			InitializeComponent();
 
+			loadSettingsContent();
 		}
 
-		protected override void OnAppearing()
+		void loadSettingsContent()
 		{
 			//daily target
 			int dailyTargetNum = Common.loadDailyTarget();

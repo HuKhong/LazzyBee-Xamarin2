@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
+using System.Threading;
 
 namespace LazzyBee
 {
@@ -12,11 +12,17 @@ namespace LazzyBee
 		{
 			InitializeComponent();
 
+			double width = App.Current.MainPage.Width;
+			double height = App.Current.MainPage.Height;
+
+			loadingIndicator.TranslationX = width / 2 - 10;
+			loadingIndicator.TranslationY = height / 2 - 50;
+
 			dictionaryListView.ItemSelected += OnItemSelected;
-
-			words = SqliteHelper.Instance.getAllWords();
-
-			dictionaryListView.ItemsSource = words;
+			loadingIndicator.IsRunning = true;
+			ThreadStart threadStart = new ThreadStart(loadingDataFromDB);
+			Thread myThread = new Thread(threadStart);
+			myThread.Start();
 		}
 
 		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -32,6 +38,17 @@ namespace LazzyBee
 			}
 
 			dictionaryListView.SelectedItem = null;
+		}
+
+		void loadingDataFromDB()
+		{
+			words = SqliteHelper.Instance.getAllWords();
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				dictionaryListView.ItemsSource = words;
+
+				loadingIndicator.IsRunning = false;
+			});
 		}
 	}
 }
