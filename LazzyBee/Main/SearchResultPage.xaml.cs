@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using Xamarin.Forms;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading;
-using System.Collections.ObjectModel;
+using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace LazzyBee
 {
-	public partial class IncomingPage : ContentPage
+	public partial class SearchResultPage : ContentPage
 	{
-		private List<WordInfo> wordsList = new List<WordInfo>();
-		public static ObservableCollection<IncomingListItem> incomingListItems { get; set; }
+		public List<WordInfo> wordsList;
+		public static ObservableCollection<IncomingListItem> resultItems { get; set; }
 
-		public IncomingPage()
+		public SearchResultPage()
 		{
-			incomingListItems = new ObservableCollection<IncomingListItem>();
+			resultItems = new ObservableCollection<IncomingListItem>();
 			InitializeComponent();
 
 			double width = App.Current.MainPage.Width;
@@ -24,18 +24,26 @@ namespace LazzyBee
 			loadingIndicator.TranslationX = width / 2 - 10;
 			loadingIndicator.TranslationY = height / 2 - 50;
 
-			incomingListView.ItemSelected += OnItemSelected;
+			resultListView.ItemSelected += OnItemSelected;
 
 			loadingIndicator.IsRunning = true;
-			ThreadStart threadStart = new ThreadStart(loadIncomingList);
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			ThreadStart threadStart = new ThreadStart(loadResultList);
 			Thread myThread = new Thread(threadStart);
 			myThread.Start();
 		}
 
-		void loadIncomingList()
+		void loadResultList()
 		{
-
-			wordsList.AddRange(SqliteHelper.Instance.getIncomingList());
+			if (wordsList == null)
+			{
+				return;
+			}
 
 			string strMeaning = "";
 			string package = "";
@@ -99,12 +107,12 @@ namespace LazzyBee
 				incomingItem.Level = string.Format("Level: {0}", word.level);
 				incomingItem.word = word;
 
-				incomingListItems.Add(incomingItem);
+				resultItems.Add(incomingItem);
 			}
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				incomingListView.ItemsSource = incomingListItems;
+				resultListView.ItemsSource = resultItems;
 
 				loadingIndicator.IsRunning = false;
 			});
@@ -122,42 +130,23 @@ namespace LazzyBee
 				Navigation.PushAsync(dictTabPage);
 			}
 
-			incomingListView.SelectedItem = null;
+			resultListView.SelectedItem = null;
 		}
 
-		public void OnIgnore(object sender, EventArgs e)
+		public void OnLearn(object sender, EventArgs e)
 		{
 			var mi = ((MenuItem)sender);
-			//DisplayAlert("Ignore Context Action", mi.CommandParameter + " Ignore context action", "OK");
+
 			IncomingListItem incomingItem = (IncomingListItem)mi.CommandParameter;
 			WordInfo w = incomingItem.word;
 
-			w.queue = WordInfo.QUEUE_SUSPENDED.ToString();
+			w.queue = WordInfo.QUEUE_AGAIN.ToString();
+			Algorithm.getInstance().updateWordProgressWithEaseOption(ref w, Algorithm.OPTION_AGAIN);
 
 			SqliteHelper.Instance.updateWord(w);
 
-			incomingListItems.Remove(incomingItem);
-
-			wordsList.Remove(incomingItem.word);
-			SqliteHelper.Instance.updateBufferWordList(wordsList);
-		}
-
-		public void OnDone(object sender, EventArgs e)
-		{
-			var mi = ((MenuItem)sender);
-			//DisplayAlert("Done Context Action", mi.CommandParameter + " Done context action", "OK");
-			IncomingListItem incomingItem = (IncomingListItem)mi.CommandParameter;
-			WordInfo w = incomingItem.word;
-
-			w.queue = WordInfo.QUEUE_DONE.ToString();
-
-			SqliteHelper.Instance.updateWord(w);
-
-			incomingListItems.Remove(incomingItem);
-
-			wordsList.Remove(incomingItem.word);
-			SqliteHelper.Instance.updateBufferWordList(wordsList);
-
+			XFToast.ShortMessage("Added to learn");
+			//need to remove this word from buffer and pickedword
 		}
 	}
 }

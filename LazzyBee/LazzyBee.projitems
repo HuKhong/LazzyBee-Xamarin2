@@ -47,6 +47,9 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Rear\VocabularyTestPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Main\SearchResultPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -106,6 +109,11 @@
       <DependentUpon>VocabularyTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\IBaseUrl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\SearchResultPage.xaml.cs">
+      <DependentUpon>SearchResultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Toast.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Main\" />

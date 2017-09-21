@@ -420,7 +420,7 @@ namespace LazzyBee
 					offset > CommonDefine.SECONDS_OF_HALFDAY)
 				{
 					Common.saveCompletedFlag(false);
-        		}
+				}
 
 				strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", PROGRESS_BUFFER_KEY);
 				systemDAOs = database.Query<SystemDAO>(strQuery);
@@ -467,7 +467,7 @@ namespace LazzyBee
 
 				value = JsonConvert.SerializeObject(dict);
 				strQuery = string.Format("UPDATE 'system' SET value = '{0}' " +
-				                         "where key = '{1}'", value, PROGRESS_PICKEDWORD_KEY);
+										 "where key = '{1}'", value, PROGRESS_PICKEDWORD_KEY);
 
 				database.Execute(strQuery);
 
@@ -489,7 +489,7 @@ namespace LazzyBee
 				{
 					strListID = _convertListStringToAString(pickedIDList);
 					strQuery = string.Format("UPDATE 'vocabulary'" +
-					                         " SET queue = {0} where id IN ({1})", WordInfo.QUEUE_NEW_WORD, strListID);
+											 " SET queue = {0} where id IN ({1})", WordInfo.QUEUE_NEW_WORD, strListID);
 					database.Execute(strQuery);
 				}
 			}
@@ -513,16 +513,22 @@ namespace LazzyBee
 			return _getCountOfWordByKey(PROGRESS_INREVIEW_KEY);
 		}
 
-		//update pickedword by wordArr
+		//update pickedword by wordInfoList
 		public void updatePickedWordList(List<WordInfo> wordInfoList)
 		{
 			_updateSystemTableForKey(wordInfoList, PROGRESS_PICKEDWORD_KEY);
 		}
 
-		//update inreview by wordArr
+		//update inreview by wordInfoList
 		public void updateInreviewWordList(List<WordInfo> wordInfoList)
 		{
 			_updateSystemTableForKey(wordInfoList, PROGRESS_INREVIEW_KEY);
+		}
+
+		//update buffer by wordInfoList
+		public void updateBufferWordList(List<WordInfo> wordInfoList)
+		{
+			_updateSystemTableForKey(wordInfoList, PROGRESS_BUFFER_KEY);
 		}
 
 		/******************** PRIVATE FUNCTIONS AREA ********************/
@@ -532,6 +538,8 @@ namespace LazzyBee
 			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", key);
 			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
 			string value = "";
+			int count = 0;
+
 			if (systemDAOs.Count > 0)
 			{
 				value = systemDAOs.ElementAt(0).value;
@@ -543,7 +551,7 @@ namespace LazzyBee
 				//JObject valueJsonObj = JObject.Parse(value);
 				var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 				var cards = valueJsonObj[DB_SYSTEM_KEY_CARDS];
-				int count = int.Parse((string)valueJsonObj[DB_SYSTEM_KEY_COUNT]);
+				count = int.Parse((string)valueJsonObj[DB_SYSTEM_KEY_COUNT]);
 				List<string> listCards = _convertStringToList(cards);
 
 				if (!key.Equals(PROGRESS_INREVIEW_KEY))
@@ -552,7 +560,7 @@ namespace LazzyBee
 				}
 			}
 
-			return 0;
+			return count;
 		}
 		/* get list of words from vocabulary by list of ids from system with key "inreview" */
 		private List<WordInfo> _getReviewListFromSystem()
@@ -570,7 +578,7 @@ namespace LazzyBee
 			{
 				var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 				string strWordIDList = valueJsonObj[DB_SYSTEM_KEY_CARDS];
-				if (strWordIDList.Length > 0) 
+				if (strWordIDList.Length > 0)
 				{
 					int oldDate = int.Parse(valueJsonObj[DB_SYSTEM_KEY_DATE].ToString());
 
@@ -593,7 +601,7 @@ namespace LazzyBee
 					{
 						//get if it is new. If review list is old, get review list from vocabulary table
 						strQuery = string.Format("SELECT * FROM 'vocabulary'" +
-						                         " where id IN ({0})", strWordIDList);
+												 " where id IN ({0})", strWordIDList);
 
 						wordDAOs = database.Query<WordDAO>(strQuery);
 
@@ -610,8 +618,8 @@ namespace LazzyBee
 		{
 			int totalWord = Common.loadTotalTarget();
 			string strQuery = string.Format("SELECT * FROM 'vocabulary'  " +
-						                    "where queue = {0} AND due <= {1} ORDER BY level LIMIT {2}", 
-						                    WordInfo.QUEUE_REVIEW, DateTimeHelper.getEndOfDayInSec(), totalWord);
+											"where queue = {0} AND due <= {1} ORDER BY level LIMIT {2}",
+											WordInfo.QUEUE_REVIEW, DateTimeHelper.getEndOfDayInSec(), totalWord);
 
 			List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
 
@@ -680,7 +688,7 @@ namespace LazzyBee
 
 		}
 
-		private string _convertListStringToAString(List<string>listString)
+		private string _convertListStringToAString(List<string> listString)
 		{
 			string joined = string.Join(",", listString);
 
@@ -714,12 +722,16 @@ namespace LazzyBee
 			//parse the result to get word-id list
 			var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 			string count = "0";
-			int oldDate = int.Parse(valueJsonObj[DB_SYSTEM_KEY_DATE].ToString());
 
 			Dictionary<string, string> dict = new Dictionary<string, string>();
 
 			dict.Add(DB_SYSTEM_KEY_CARDS, strListID);
-			dict.Add(DB_SYSTEM_KEY_DATE, oldDate.ToString());
+
+			if (!key.Equals(PROGRESS_BUFFER_KEY))
+			{
+				int oldDate = int.Parse(valueJsonObj[DB_SYSTEM_KEY_DATE].ToString());
+				dict.Add(DB_SYSTEM_KEY_DATE, oldDate.ToString());
+			}
 
 			if (key.Equals(PROGRESS_INREVIEW_KEY))
 			{

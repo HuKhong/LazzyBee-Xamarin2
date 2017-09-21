@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Threading;
+using System.Linq;
 
 namespace LazzyBee
 {
@@ -49,6 +50,31 @@ namespace LazzyBee
 
 				loadingIndicator.IsRunning = false;
 			});
+		}
+
+		void searchBtnPressedHandle(object sender, System.EventArgs e)
+		{
+			SearchResultPage resultPage = new SearchResultPage();
+
+			resultPage.wordsList = words.Where(i => i.question.Contains(searchBox.Text.ToLower())).ToList();;
+
+			Navigation.PushAsync(resultPage);
+		}
+
+		void searchbarTextChangedHandle(object sender, Xamarin.Forms.TextChangedEventArgs e)
+		{
+			dictionaryListView.BeginRefresh();
+
+			if (string.IsNullOrWhiteSpace(e.NewTextValue))
+			{
+				dictionaryListView.ItemsSource = words;
+			}
+			else
+			{
+				dictionaryListView.ItemsSource = words.Where(i => i.question.Contains(e.NewTextValue.ToLower()));
+			}
+
+			dictionaryListView.EndRefresh();
 		}
 	}
 }

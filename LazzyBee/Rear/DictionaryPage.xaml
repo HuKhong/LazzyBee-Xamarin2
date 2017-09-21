@@ -7,7 +7,9 @@
 		<RelativeLayout>
                 <StackLayout Orientation="Vertical" Spacing="0">
 				<SearchBar x:Name="searchBox"
-					Placeholder="Search" FontSize="16"/>
+					Placeholder="Search" FontSize="16" SearchButtonPressed="searchBtnPressedHandle"
+					TextChanged="searchbarTextChangedHandle"/>
+				
 				<ListView x:Name="dictionaryListView" SeparatorVisibility="Default">
 					<ListView.ItemTemplate>
 						<DataTemplate>

@@ -5,16 +5,18 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using LazzyBee.Main;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace LazzyBee
 {
 	public partial class MajorsListPage : ContentPage
 	{
-		private List<MajorObject> majorObjects = new List<MajorObject>();
+		public ObservableCollection<MajorObject> majorObjects { get; set; }
 		private MajorObject curMajor = null;
 
 		public MajorsListPage()
 		{
+			majorObjects = new ObservableCollection<MajorObject>();
 			InitializeComponent();
 
 			ThreadStart threadStart = new ThreadStart(loadMajorsContent);

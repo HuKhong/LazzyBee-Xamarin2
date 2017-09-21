@@ -72,7 +72,6 @@ namespace LazzyBee.Main
 					StudyPage stdPage = new StudyPage();
 					await Navigation.PushAsync(stdPage);
 				}
-
 			}
 			else
 			{
