@@ -146,6 +146,7 @@ namespace LazzyBee
 			SqliteHelper.Instance.updateWord(w);
 
 			XFToast.ShortMessage("Added to learn");
+
 			//need to remove this word from buffer and pickedword
 		}
 	}

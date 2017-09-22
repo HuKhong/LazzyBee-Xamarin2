@@ -93,6 +93,16 @@ namespace LazzyBee
 			}
 		}
 
+		public List<WordInfo> getAllWordsWithLimit(int limit)
+		{
+			lock (collisionLock)
+			{
+				string strQuery = string.Format("SELECT * FROM 'vocabulary' ORDER BY question LIMIT {0}", limit);
+				List<WordDAO> wordDAOs = database.Query<WordDAO>(strQuery);
+				return _convertListWordDAOToListWordInfo(wordDAOs);
+			}
+		}
+
 		public WordInfo getWordInformation(string word)
 		{
 			lock (collisionLock)

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Threading;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace LazzyBee
 {
 	public partial class DictionaryPage : ContentPage
 	{
-		private List<WordInfo> words;
+		public ObservableCollection<WordInfo> words { get; set; }
 		public DictionaryPage()
 		{
+			words = new ObservableCollection<WordInfo>();
 			InitializeComponent();
 
 			double width = App.Current.MainPage.Width;
@@ -43,7 +45,13 @@ namespace LazzyBee
 
 		void loadingDataFromDB()
 		{
-			words = SqliteHelper.Instance.getAllWords();
+			List<WordInfo> temps = SqliteHelper.Instance.getAllWords();
+
+			foreach (WordInfo w in temps)
+			{
+				words.Add(w);
+			}
+
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				dictionaryListView.ItemsSource = words;
