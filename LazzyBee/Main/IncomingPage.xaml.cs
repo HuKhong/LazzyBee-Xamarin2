@@ -79,7 +79,10 @@ namespace LazzyBee
 				}
 
 				//meaning
-				strMeaning = (string)dictSinglePackage["meaning"];
+				if (dictSinglePackage != null)
+				{
+					strMeaning = (string)dictSinglePackage["meaning"];
+				}
 
 				//remove <p>, keep <br>
 				if (strMeaning != null)

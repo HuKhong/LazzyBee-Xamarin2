@@ -4,38 +4,92 @@
     x:Class="LazzyBee.Main.HomePage"
     Title="Lazzy Bee">
 	<ContentPage.Content>
-        <StackLayout Orientation="Vertical">
-			<SearchBar x:Name="searchBox"
-				Placeholder="Dictionary" FontSize="16"/>
-            <Image Source="images/logos/big_logo.png" 
-					HeightRequest="188" WidthRequest="188"
-					TranslationY="20"/>
+		<RelativeLayout>
+	        <StackLayout Orientation="Vertical">
+				<SearchBar x:Name="searchBox"
+					Placeholder="Dictionary" FontSize="16"
+					SearchButtonPressed="searchBtnPressedHandle"
+					TextChanged="searchbarTextChangedHandle"/>
+				
+	            <Image Source="images/logos/big_logo.png" 
+						HeightRequest="188" WidthRequest="188"
+						TranslationY="20"/>
 
-			<Button x:Name="btnStartLearning"
-				Text="Start learning" FontSize="16"
-				TranslationY="20"
-				Margin="10"
-				BorderWidth="1"
-				BorderColor="Gray"
-				Clicked="btnStartLearningClicked"/>
-
-			<Grid Grid.Row="1" Grid.Column="2"
-				HorizontalOptions="Center"
-				Margin="10,0,10,10"
-				TranslationY="10">
-
-				<Button x:Name="btnIncomingList" Grid.Row="0" Grid.Column="0"
-					Text="Incoming list" FontSize="16" Margin="0,5,5,5"
+				<Button x:Name="btnStartLearning"
+					Text="Start learning" FontSize="16"
+					TranslationY="20"
+					Margin="10"
 					BorderWidth="1"
 					BorderColor="Gray"
-					Clicked="btnIncomingListClicked"/>
-					
-				<Button x:Name="btnMoreWords" Grid.Row="0" Grid.Column="1"
-					Text="More words" FontSize="16" Margin="0,5,0,5"
-					BorderWidth="1"
-					BorderColor="Gray"
-					Clicked="btnMoreWordsClicked"/>
-			</Grid>
-        </StackLayout>
+					Clicked="btnStartLearningClicked"/>
+
+				<Grid Grid.Row="1" Grid.Column="2"
+					HorizontalOptions="Center"
+					Margin="10,0,10,10"
+					TranslationY="10">
+
+					<Button x:Name="btnIncomingList" Grid.Row="0" Grid.Column="0"
+						Text="Incoming list" FontSize="16" Margin="0,5,5,5"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnIncomingListClicked"/>
+						
+					<Button x:Name="btnMoreWords" Grid.Row="0" Grid.Column="1"
+						Text="More words" FontSize="16" Margin="0,5,0,5"
+						BorderWidth="1"
+						BorderColor="Gray"
+						Clicked="btnMoreWordsClicked"/>
+				</Grid>
+	        </StackLayout>
+
+			<StackLayout HeightRequest="250"
+	 			RelativeLayout.YConstraint=
+	                 "{ConstraintExpression Type=RelativeToParent,
+	                                        Property=Y, 
+	                                        Constant=44}">
+	            <ListView x:Name="resultListView"
+					ItemsSource="{Binding words}"
+					SeparatorVisibility="Default"
+					RowHeight="50"
+					IsVisible="{Binding showHint}">
+	                <ListView.ItemTemplate>
+	                    <DataTemplate>
+	                        <ViewCell>
+								<ViewCell.ContextActions>
+									<MenuItem Clicked="OnLearn" CommandParameter="{Binding .}"
+						               Text="Learn" Icon="images/icons/ic_done.png"/>
+
+						        </ViewCell.ContextActions>
+	                            <Grid Padding="15,3,10,3" HeightRequest="44">
+	                                <Label Grid.Row="0" Grid.Column="0" 
+										Text="{Binding Word}"
+										FontAttributes="Bold"
+										FontSize="16"
+										VerticalOptions="Start" />
+									
+									<Label Grid.Row="0" Grid.Column="1" 
+										Text="{Binding Pronounce}"
+										FontAttributes="None"
+										FontSize="14"
+										VerticalOptions="Start" />
+									
+									<Label Grid.Row="1" Grid.Column="0" 
+										Text="{Binding Meaning}"
+										FontAttributes="Italic"
+										FontSize="14"
+										VerticalOptions="End" />
+									
+									<Label Grid.Row="1" Grid.Column="1" 
+										Text="{Binding Level}"
+										FontAttributes="None"
+										FontSize="14"
+										VerticalOptions="End" />
+	                            </Grid>
+	                        </ViewCell>
+	                    </DataTemplate>
+	                </ListView.ItemTemplate>
+	            </ListView>
+	        </StackLayout>
+		</RelativeLayout>
 	</ContentPage.Content>
 </ContentPage>
