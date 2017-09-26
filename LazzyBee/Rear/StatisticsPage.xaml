@@ -2,5 +2,137 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LazzyBee.StatisticsPage"
 	Title="Statistics">
 	<ContentPage.Content>
+		<StackLayout Orientation="Vertical" Padding="10">
+			<Label x:Name="lbTotal" Text="Total: 0 words" FontSize="16" HorizontalTextAlignment="Center"/>
+			<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv1Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col1up" BackgroundColor="#177A14" WidthRequest="20"
+							HeightRequest="50">
+							
+						</BoxView>
+
+						<BoxView x:Name="col1down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="150" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv1" Text="Lv1" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv2Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col2up" BackgroundColor="#D1D63A" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col2down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv2" Text="Lv2" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv3Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col3up" BackgroundColor="#349992" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col3down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv3" Text="Lv3" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv4Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col4up" BackgroundColor="#C4542B" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col4down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv4" Text="Lv4" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv5Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col5up" BackgroundColor="#912A38" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col5down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv5" Text="Lv5" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv6Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col6up" BackgroundColor="#8CBF91" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col6down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv" Text="Lv6" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv7Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col7up" BackgroundColor="#BA0000" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col7down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv7" Text="Lv7" FontSize="13"/>
+				</StackLayout>
+
+				<StackLayout Orientation="Vertical"  Margin="7" Spacing="2" HorizontalOptions="Center">
+					<Label x:Name="lbLv8Count" Text="600" FontSize="13" HorizontalTextAlignment="Center"/>
+					<AbsoluteLayout HorizontalOptions="Center">
+						<BoxView x:Name="col8up" BackgroundColor="#BA8A8D" WidthRequest="20"
+							HeightRequest="150">
+							
+						</BoxView>
+
+						<BoxView x:Name="col8down" BackgroundColor="Silver" WidthRequest="20"
+							HeightRequest="50" VerticalOptions="Start">
+							
+						</BoxView>
+					</AbsoluteLayout>
+					<Label x:Name="lbLv8" Text="Lv8" FontSize="13"/>
+				</StackLayout>
+			</StackLayout>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -313,7 +313,7 @@ public class HTMLHelper {
 				"           <br><br><br><br><center>{6}<font size='4' color='blue'><em style='margin-left: 10px'> {7} </em></font></center>" +    //%@ will be replaced by meaning
 				"       </div>" +
 				"   </div>" +
-				"   {7} " +     //%@ will be replaced by strNoteTag
+				"   {8} " +     //%@ will be replaced by strNoteTag
 
 				"   </body>" +
 				"</html>";

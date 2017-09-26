@@ -289,5 +289,13 @@ namespace LazzyBee.Main
 
 			//need to remove this word from buffer and pickedwo
 		}
+
+		void OnTapGestureRecognizerTapped(object sender, EventArgs args)
+		{
+			Debug.WriteLine("OnTapGestureRecognizerTapped");
+			searchBox.Unfocus();
+			showHint = false;
+			resultListView.IsVisible = showHint;
+		}
 	}
 }
