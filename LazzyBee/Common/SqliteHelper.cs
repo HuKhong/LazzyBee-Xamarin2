@@ -73,6 +73,8 @@ namespace LazzyBee
 		public const string PROGRESS_BUFFER_KEY = "buffer";
 		public const string PROGRESS_PICKEDWORD_KEY = "pickedword";
 
+		public const string COUNT_WORDS_KEY = "countwords";
+
 		public const string DATABASENAME = "english.db";
 		public const string DATABASENAME_NEW = "new_english.db";
 
@@ -539,6 +541,39 @@ namespace LazzyBee
 		public void updateBufferWordList(List<WordInfo> wordInfoList)
 		{
 			_updateSystemTableForKey(wordInfoList, PROGRESS_BUFFER_KEY);
+		}
+
+		public void saveCountWordByLevelToSystem(Dictionary<string, string> dict)
+		{
+			string strDict = JsonConvert.SerializeObject(dict);
+
+			string strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", strDict, COUNT_WORDS_KEY);
+
+			database.Execute(strQuery);
+		}
+
+		public Dictionary<string, string> loadCountWordByLevelFromSystem()
+		{
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", COUNT_WORDS_KEY);
+			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
+			string value = "";
+			int count = 0;
+
+			if (systemDAOs.Count > 0)
+			{
+				value = systemDAOs.ElementAt(0).value;
+			}
+
+			if (value != null)
+			{
+				//parse the result to get word-id list
+				//JObject valueJsonObj = JObject.Parse(value);
+				Dictionary<string, string> valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+
+				return valueJsonObj;
+			}
+
+			return null;
 		}
 
 		/******************** PRIVATE FUNCTIONS AREA ********************/

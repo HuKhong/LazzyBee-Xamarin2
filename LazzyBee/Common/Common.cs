@@ -11,19 +11,21 @@ namespace LazzyBee
 		}
 
 		/* save/load/remove settings */
-		private static void saveSettingValue(string key, string value) {
+		private static void saveSettingValue(string key, string value)
+		{
 			if (key != null && value != null &&
-			    key.Length > 0 && value.Length > 0)
+				key.Length > 0 && value.Length > 0)
 			{
 				Application.Current.Properties[key] = value;
 			}
 		}
 
-		private static string loadSettingValueByKey (string key) {
-    		if (Application.Current.Properties.ContainsKey(key))
+		private static string loadSettingValueByKey(string key)
+		{
+			if (Application.Current.Properties.ContainsKey(key))
 			{
-			    string value = Application.Current.Properties[key] as string;
-			    
+				string value = Application.Current.Properties[key] as string;
+
 				return value;
 			}
 
@@ -104,7 +106,7 @@ namespace LazzyBee
 			}
 			else
 			{
-                clearSettingValueByKey(CommonDefine.SELECTED_MAJOR_KEY);
+				clearSettingValueByKey(CommonDefine.SELECTED_MAJOR_KEY);
 			}
 		}
 
@@ -138,7 +140,7 @@ namespace LazzyBee
 		{
 			if (lv != null)
 			{
-                saveSettingValue(CommonDefine.SETTINGS_MY_LEVEL_KEY, lv);
+				saveSettingValue(CommonDefine.SETTINGS_MY_LEVEL_KEY, lv);
 			}
 		}
 
@@ -372,6 +374,49 @@ namespace LazzyBee
 		public static void saveCompletedFlag(bool flag)
 		{
 			saveSettingValue(CommonDefine.COMPLETED_FLAG_KEY, flag.ToString());
+		}
+
+		public static void saveStreak(int timestamp)
+		{
+			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
+
+			if (strStreak == null || strStreak.Length == 0)
+			{
+				strStreak = timestamp.ToString();
+			}
+			else
+			{
+				strStreak = string.Format("{0},{1}", strStreak, timestamp.ToString());
+			}
+
+			saveSettingValue(CommonDefine.STREAK_INFO_KEY, strStreak);
+		}
+
+		public static string loadStreak()
+		{
+			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
+
+			return strStreak;
+		}
+
+		public static int countStreak()
+		{
+			int streak = 0;
+			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
+
+			if (strStreak == null || strStreak.Length == 0)
+			{
+				//do nothing
+			}
+			else
+			{
+				string[] streakArr = strStreak.Split(',');
+				Array.Sort(streakArr);
+
+				//the last date in streak could be current date or yesterday
+			}
+
+			return streak;
 		}
 	}
 }

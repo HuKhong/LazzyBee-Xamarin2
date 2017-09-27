@@ -46,18 +46,38 @@ namespace LazzyBee.Main
 		{
 			words = SqliteHelper.Instance.getAllWords();
 
-			//foreach (WordInfo w in temps)
-			//{
-			//	words.Add(w);
-			//}
+			//add count by level to system
+			Dictionary<string, object> wordsGroupByLv = new Dictionary<string, object>();
+			Dictionary<string, string> dictCount = new Dictionary<string, string>();
 
-			//loadResultList(words);
+			foreach (WordInfo w in words)
+			{
+				object obj;
+				List<WordInfo> arr;
 
-			//Device.BeginInvokeOnMainThread(() =>
-			//{
-			//	resultListView.ItemsSource = resultItems;
+				if (wordsGroupByLv.TryGetValue(w.level, out obj) == false || obj == null)
+				{
+					arr = new List<WordInfo>();
+				}
+				else
+				{
+					arr = obj as List<WordInfo>;
+				}
 
-			//});
+
+				arr.Add(w);
+
+				wordsGroupByLv.Remove(w.level);
+				wordsGroupByLv.Add(w.level, arr);
+			}
+
+			foreach (string key in wordsGroupByLv.Keys)
+			{
+				List<WordInfo> arr = wordsGroupByLv[key] as List<WordInfo>;
+				dictCount.Add(key, arr.Count.ToString());
+			}
+
+			SqliteHelper.Instance.saveCountWordByLevelToSystem(dictCount);
 		}
 
 		void loadResultList(List<WordInfo> wordsList)
