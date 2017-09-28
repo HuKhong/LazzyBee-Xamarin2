@@ -8,7 +8,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Net;
 
-namespace LazzyBee.Main
+namespace LazzyBee
 {
 	public partial class HomePage : ContentPage
 	{
@@ -40,6 +40,13 @@ namespace LazzyBee.Main
 			ThreadStart threadStart = new ThreadStart(prepareWordsToStudyingQueue);
 			Thread myThread = new Thread(threadStart);
 			myThread.Start();
+
+			//handle CompletedDailyTarget message
+			MessagingCenter.Subscribe<HomePage>(this, "CompletedDailyTarget", (sender) =>
+			{
+				completedDailyTarget();
+			});
+
 		}
 
 		void loadingDataFromDB()
@@ -183,8 +190,17 @@ namespace LazzyBee.Main
 		void btnIncomingListClicked(object sender, System.EventArgs e)
 		{
 			Debug.WriteLine("btnIncomingListClicked");
-			IncomingPage incomingPage = new IncomingPage();
-			Navigation.PushAsync(incomingPage);
+			//IncomingPage incomingPage = new IncomingPage();
+			//Navigation.PushAsync(incomingPage);
+
+			//for test
+			NavigationPage incomingPage = new NavigationPage(new StreakCongratPage())
+			{
+				BarBackgroundColor = CommonDefine.MAIN_COLOR,
+				BarTextColor = Color.White
+			};
+			Navigation.PushModalAsync(incomingPage);
+
 		}
 
 		async void btnMoreWordsClicked(object sender, System.EventArgs e)
@@ -265,7 +281,7 @@ namespace LazzyBee.Main
 
 		void searchbarTextChangedHandle(object sender, Xamarin.Forms.TextChangedEventArgs e)
 		{
-			while (words == null || words.Count < 1) 
+			while (words == null || words.Count < 1)
 			{
 				return;
 			}
@@ -277,7 +293,7 @@ namespace LazzyBee.Main
 				showHint = false;
 				resultListView.IsVisible = showHint;
 
-                //loadResultList(words);
+				//loadResultList(words);
 				//resultListView.ItemsSource = resultItems;
 			}
 			else
@@ -316,6 +332,61 @@ namespace LazzyBee.Main
 			searchBox.Unfocus();
 			showHint = false;
 			resultListView.IsVisible = showHint;
+		}
+
+		void completedDailyTarget()
+		{
+			bool completedFlag = Common.loadCompletedFlag();
+			string alertContent = "";
+
+			if (completedFlag == false)
+			{
+				//in case user complete previous daily target in next day
+				//so need to compare current date with date in pickedword
+				int oldDate = SqliteHelper.Instance.getDateTimeInBuffer();
+				int curDate = DateTimeHelper.getBeginOfDayInSec();
+				int offset = 0;
+
+				if (curDate >= oldDate)
+				{
+					offset = curDate - oldDate;
+
+				}
+				else
+				{
+					offset = oldDate - curDate;
+				}
+
+				if (offset < CommonDefine.SECONDS_OF_DAY)
+				{
+					Common.saveCompletedFlag(true);
+
+					//save streak info
+					string strStreaks = Common.loadStreak();
+					string[] arrStreaks = strStreaks.Split(',');
+
+					if (arrStreaks.Count() > 0)
+					{
+						int lastStreak = arrStreaks[0];
+					}
+					else
+					{
+
+					}
+				}
+
+			}
+			else
+			{
+				int oldDate = SqliteHelper.Instance.getDateTimeInBuffer();
+				int curDate = DateTimeHelper.getBeginOfDayInSec();
+
+				if (curDate == oldDate)
+				{
+					alertContent = "Let your brain relax! See you tomorrow.";
+					DisplayAlert("Completed", alertContent, "OK");
+				}
+			}
 		}
 	}
 }

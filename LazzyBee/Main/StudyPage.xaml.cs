@@ -376,6 +376,8 @@ namespace LazzyBee
 
 				//        [[NSNotificationCenter defaultCenter]
 				//postNotificationName:@"completedDailyTarget" object:nil];
+				Navigation.PopAsync(true);
+				MessagingCenter.Send<StudyPage>(this, "CompletedDailyTarget");
 			}
 		}
 

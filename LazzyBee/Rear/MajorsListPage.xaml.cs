@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
-using LazzyBee.Main;
 using System.Threading;
 using System.Collections.ObjectModel;
 

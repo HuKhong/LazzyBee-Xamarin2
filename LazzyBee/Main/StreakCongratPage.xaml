@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="LazzyBee.StreakCongratPage"
+	Title="Daily Target Completed">
+	<ContentPage.Content>
+		<ScrollView Orientation="Vertical">
+		<!--	All		-->
+		<StackLayout HorizontalOptions="Center" Orientation="Vertical" VerticalOptions="Start" Padding="8">
+			
+			<!--	Ring Streak	-->
+			<RelativeLayout HorizontalOptions="Center" WidthRequest="200" HeightRequest="200">
+				<Image x:Name="imgCongratBee1" Source="images/logos/bee60.png" WidthRequest="60" HeightRequest="60"
+					RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+						                                        Property=Width,
+						                                        Factor=0.5,
+																Constant=-30}"
+					RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+	                                        Property=Y,
+											ElementName=imgCongratRing,
+	                                        Constant=50}"/>
+				
+				<Image x:Name="imgCongratRing" Source="images/others/streak_ring.png" WidthRequest="200" HeightRequest="200"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+						                                        Property=Width,
+						                                        Factor=0.5,
+																Constant=-100}"/>
+
+				<Label x:Name="lbCongratStreak" Text="0 day(s)" WidthRequest="80" FontSize="14" 
+					HorizontalTextAlignment="Center"
+					RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+						                                        Property=Width,
+						                                        Factor=0.5,
+																Constant=-40}"
+					RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+	                                        Property=Y,
+											ElementName=imgCongratBee1,
+	                                        Constant=70}"/>
+			</RelativeLayout>
+
+			<!--	days streak		-->
+			<StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+				<!--		day 1		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay1" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay1" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay1,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 2		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay2" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay2" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay2,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 3		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay3" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay3" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay3,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 4		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay4" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay4" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay4,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 5		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay5" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay5" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay5,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 6		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay6" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay6" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay6,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+
+				<!--		day 7		-->
+				<RelativeLayout HorizontalOptions="Center" WidthRequest="35" HeightRequest="35">
+					<Image x:Name="imgDay7" Source="images/others/day_ring_gray.png" WidthRequest="35" HeightRequest="35"/>
+
+					<Label x:Name="lbDay7" Text="Mon" FontSize="8" HorizontalTextAlignment="Center"
+						RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, 
+							                                        Property=Width,
+							                                        Factor=0.5,
+																	Constant=-8}"
+						RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,
+		                                        Property=Y,
+												ElementName=imgDay7,
+		                                        Constant=12}"/>
+				</RelativeLayout>
+			</StackLayout>
+
+			<!--	Congrat		-->
+			<StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+				<Image x:Name="imgCongratBee2" Source="images/logos/bee_rotate.png" WidthRequest="120" HeightRequest="120"/>
+
+				<Label x:Name="lbCongrat" Text="Congratulation! You have got 0 day streak." FontSize="14" 
+					HorizontalTextAlignment="Start" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="WordWrap"/>
+			</StackLayout>
+
+			<StackLayout Orientation="Vertical" WidthRequest="280" Spacing="0" HorizontalOptions="Center">
+				<Button x:Name="btnContinue"
+							Text="Continue" FontSize="16"
+							TranslationY="5"
+							WidthRequest="100"
+							Margin="10"
+							BorderWidth="1"
+							BorderColor="Gray"
+							Clicked="btnContinueClicked"/>
+			</StackLayout>
+		</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

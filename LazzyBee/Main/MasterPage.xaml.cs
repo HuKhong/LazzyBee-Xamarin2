@@ -2,7 +2,7 @@
 
 using Xamarin.Forms;
 
-namespace LazzyBee.Main
+namespace LazzyBee
 {
     public partial class MasterPage : ContentPage
     {

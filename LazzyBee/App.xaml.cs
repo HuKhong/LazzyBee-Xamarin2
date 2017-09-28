@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using LazzyBee.Main;
 
 namespace LazzyBee
 {

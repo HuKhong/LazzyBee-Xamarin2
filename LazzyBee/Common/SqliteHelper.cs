@@ -507,6 +507,30 @@ namespace LazzyBee
 			}
 		}
 
+		public int getDateTimeInBuffer()
+		{
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", PROGRESS_BUFFER_KEY);
+			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
+			string value = "";
+			int datetime = 0;
+
+			if (systemDAOs.Count > 0)
+			{
+				value = systemDAOs.ElementAt(0).value;
+			}
+
+			if (value != null)
+			{
+				//parse the result to get word-id list
+				//JObject valueJsonObj = JObject.Parse(value);
+				var valueJsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+				var strTimestamp = valueJsonObj[DB_SYSTEM_KEY_DATE];
+				datetime = int.Parse(strTimestamp);
+			}
+
+			return datetime;
+		}
+
 		public int getCountOfPickedWord()
 		{
 			//get word id from pickedword
