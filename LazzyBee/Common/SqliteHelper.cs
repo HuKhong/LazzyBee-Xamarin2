@@ -507,9 +507,9 @@ namespace LazzyBee
 			}
 		}
 
-		public int getDateTimeInBuffer()
+		public int getDateTimeInPickedword()
 		{
-			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", PROGRESS_BUFFER_KEY);
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", PROGRESS_PICKEDWORD_KEY);
 			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
 			string value = "";
 			int datetime = 0;

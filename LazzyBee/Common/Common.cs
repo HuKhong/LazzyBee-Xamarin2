@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -401,8 +402,12 @@ namespace LazzyBee
 
 		public static int countStreak()
 		{
-			int streak = 0;
 			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
+			int curDate = DateTimeHelper.getBeginOfDayInSec();
+			int count = 0;
+			int nextInd = 2;
+			int streakDate = 0;
+			int offset = 0;
 
 			if (strStreak == null || strStreak.Length == 0)
 			{
@@ -410,13 +415,80 @@ namespace LazzyBee
 			}
 			else
 			{
-				string[] streakArr = strStreak.Split(',');
-				Array.Sort(streakArr);
+				string[] arrStreaks = strStreak.Split(',');
+				Array.Sort(arrStreaks);
 
 				//the last date in streak could be current date or yesterday
+				int lastStreak = int.Parse(arrStreaks[0]);
+				if (curDate >= lastStreak)
+				{
+					offset = curDate - lastStreak;
+
+				}
+				else
+				{
+					offset = lastStreak - curDate;
+				}
+
+				if (offset < CommonDefine.SECONDS_OF_DAY + CommonDefine.SECONDS_OF_HALFDAY)
+				{
+					count++;
+				}
+				else
+				{
+					if (arrStreaks.Count() > 1)
+					{
+						streakDate = int.Parse(arrStreaks[1]);
+						if (curDate >= streakDate)
+						{
+							offset = curDate - streakDate;
+
+						}
+						else
+						{
+							offset = streakDate - curDate;
+						}
+
+						if (offset < CommonDefine.SECONDS_OF_DAY + CommonDefine.SECONDS_OF_HALFDAY)
+						{
+							count++;
+							nextInd = 2;
+
+						}
+						else
+						{
+							return count;
+						}
+
+					}
+					else
+					{
+						return count;
+					}
+				}
+
+				curDate = streakDate;
+
+				for (int i = nextInd; i < arrStreaks.Count(); i++)
+				{
+					streakDate = int.Parse(arrStreaks[i]);
+					offset = curDate - streakDate;
+
+					if (offset < CommonDefine.SECONDS_OF_DAY + CommonDefine.SECONDS_OF_HALFDAY)
+					{
+						count++;
+					}
+					else
+					{
+						break;
+					}
+
+					curDate = streakDate;
+
+				}
 			}
 
-			return streak;
+			return count;
 		}
 	}
 }

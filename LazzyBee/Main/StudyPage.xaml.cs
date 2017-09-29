@@ -147,11 +147,18 @@ namespace LazzyBee
 	            
 	            //[self showHideButtonsPanel:NO];
 	            
-	        } else {
-	            //[self.navigationController popViewControllerAnimated:YES];
-	            
-	            //[[NSNotificationCenter defaultCenter] postNotificationName:@"noWordToStudyToday" object:nil];
 	        }
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			if (wordInfo == null)
+			{
+				Navigation.PopAsync(true);
+				MessagingCenter.Send<StudyPage>(this, "NoWordToLearn");
+			}
 		}
 
 		/******************** PRIVATE FUNCTIONS AREA ********************/
@@ -372,10 +379,6 @@ namespace LazzyBee
 			}
 			else
 			{
-				//        [self.navigationController popViewControllerAnimated:YES];
-
-				//        [[NSNotificationCenter defaultCenter]
-				//postNotificationName:@"completedDailyTarget" object:nil];
 				Navigation.PopAsync(true);
 				MessagingCenter.Send<StudyPage>(this, "CompletedDailyTarget");
 			}
@@ -401,10 +404,8 @@ namespace LazzyBee
 			}
 			else
 			{
-				//        [self.navigationController popViewControllerAnimated:YES];
-
-				//        [[NSNotificationCenter defaultCenter]
-				//postNotificationName:@"completedDailyTarget" object:nil];
+				Navigation.PopAsync(true);
+				MessagingCenter.Send<StudyPage>(this, "CompletedDailyTarget");
 			}
 		}
 
@@ -428,10 +429,8 @@ namespace LazzyBee
 			}
 			else
 			{
-				//        [self.navigationController popViewControllerAnimated:YES];
-
-				//        [[NSNotificationCenter defaultCenter]
-				//postNotificationName:@"completedDailyTarget" object:nil];
+				Navigation.PopAsync(true);
+				MessagingCenter.Send<StudyPage>(this, "CompletedDailyTarget");
 			}
 		}
 
@@ -455,10 +454,8 @@ namespace LazzyBee
 			}
 			else
 			{
-				//        [self.navigationController popViewControllerAnimated:YES];
-
-				//        [[NSNotificationCenter defaultCenter]
-				//postNotificationName:@"completedDailyTarget" object:nil];
+				Navigation.PopAsync(true);
+				MessagingCenter.Send<StudyPage>(this, "CompletedDailyTarget");
 			}
 		}
 

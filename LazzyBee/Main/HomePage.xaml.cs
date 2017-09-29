@@ -42,9 +42,16 @@ namespace LazzyBee
 			myThread.Start();
 
 			//handle CompletedDailyTarget message
-			MessagingCenter.Subscribe<HomePage>(this, "CompletedDailyTarget", (sender) =>
+			MessagingCenter.Subscribe<StudyPage>(this, "CompletedDailyTarget", (sender) =>
 			{
 				completedDailyTarget();
+			});
+
+			MessagingCenter.Subscribe<StudyPage>(this, "NoWordToLearn", (sender) =>
+			{
+				string content = "All words are cleared.\nPlease come back tomorrow.\nClick \"More words\" if you really want to learn more.";
+
+				DisplayAlert("Oops!", content, "OK");
 			});
 
 		}
@@ -343,7 +350,7 @@ namespace LazzyBee
 			{
 				//in case user complete previous daily target in next day
 				//so need to compare current date with date in pickedword
-				int oldDate = SqliteHelper.Instance.getDateTimeInBuffer();
+				int oldDate = SqliteHelper.Instance.getDateTimeInPickedword();
 				int curDate = DateTimeHelper.getBeginOfDayInSec();
 				int offset = 0;
 
@@ -363,22 +370,53 @@ namespace LazzyBee
 
 					//save streak info
 					string strStreaks = Common.loadStreak();
-					string[] arrStreaks = strStreaks.Split(',');
 
-					if (arrStreaks.Count() > 0)
+					if (strStreaks == null)
 					{
-						int lastStreak = arrStreaks[0];
+						Common.saveStreak(curDate);
 					}
 					else
 					{
+						string[] arrStreaks = strStreaks.Split(',');
 
+						if (arrStreaks != null && arrStreaks.Count() > 0)
+						{
+							Array.Sort(arrStreaks);
+							int lastStreak = int.Parse(arrStreaks[0]);
+							if (curDate >= lastStreak)
+							{
+								offset = curDate - lastStreak;
+
+							}
+							else
+							{
+								offset = lastStreak - curDate;
+							}
+
+							if (offset > CommonDefine.SECONDS_OF_HALFDAY)
+							{
+								Common.saveStreak(curDate);
+							}
+						}
+						else
+						{
+							Common.saveStreak(curDate);
+						}
 					}
+
+					//show streak congrat
+					NavigationPage incomingPage = new NavigationPage(new StreakCongratPage())
+					{
+						BarBackgroundColor = CommonDefine.MAIN_COLOR,
+						BarTextColor = Color.White
+					};
+					Navigation.PushModalAsync(incomingPage);
 				}
 
 			}
 			else
 			{
-				int oldDate = SqliteHelper.Instance.getDateTimeInBuffer();
+				int oldDate = SqliteHelper.Instance.getDateTimeInPickedword();
 				int curDate = DateTimeHelper.getBeginOfDayInSec();
 
 				if (curDate == oldDate)
