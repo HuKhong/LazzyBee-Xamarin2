@@ -31,95 +31,94 @@ namespace LazzyBee
 			string strStreaks = Common.loadStreak();
 			int streakDay = 0;
 
-			if (strStreaks != null)
+			if (strStreaks == null)
 			{
-				string[] arrStreaks = strStreaks.Split(',');
+				strStreaks = "";
+			}
 
-				if (arrStreaks != null && arrStreaks.Count() > 0)
+			string[] arrStreaks = strStreaks.Split(',');
+			Array.Sort(arrStreaks);
+			int dayInInterval = DateTimeHelper.getBeginOfDayInSec();
+			int offset = 0;
+			bool status = false;
+			string imgPath = "";
+
+			for (int i = 0; i < 7; i++)
+			{
+				status = false;
+				for (int j = 0; j < 7; j++)
 				{
-					int dayInInterval = DateTimeHelper.getBeginOfDayInSec();
-					int offset = 0;
-					bool status = false;
-					string imgPath = "";
-
-					for (int i = 0; i < 7; i++)
+					if (j < arrStreaks.Count())
 					{
-						status = false;
-						for (int j = 0; j < 7; j++)
+						int.TryParse(arrStreaks[j], out streakDay);
+						if (dayInInterval >= streakDay)
 						{
-							if (j < arrStreaks.Count())
-							{
-								streakDay = int.Parse(arrStreaks[j]);
-								if (dayInInterval >= streakDay)
-								{
-									offset = dayInInterval - streakDay;
-								}
-								else
-								{
-									offset = streakDay - dayInInterval;
-								}
-
-								if (offset < CommonDefine.SECONDS_OF_HALFDAY)
-								{
-									status = true;
-									break;
-								}
-							}
-							else
-							{
-								break;
-							}
-						}
-
-						if (status == true)
-						{
-							imgPath = "images/others/day_ring.png";
+							offset = dayInInterval - streakDay;
 						}
 						else
 						{
-							imgPath = "images/others/day_ring_gray.png";
+							offset = streakDay - dayInInterval;
 						}
 
-						//day 7 (today)
-						if (i == 0)
+						if (offset < CommonDefine.SECONDS_OF_HALFDAY)
 						{
-							lbDay7.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay7.Source = imgPath;
-						} 
-						else if (i == 1)
-						{
-							lbDay6.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay6.Source = imgPath;
+							status = true;
+							break;
 						}
-						else if (i == 2)
-						{
-							lbDay5.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay5.Source = imgPath;
-						}
-						else if (i == 3)
-						{
-							lbDay4.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay4.Source = imgPath;
-						}
-						else if (i == 4)
-						{
-							lbDay3.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay3.Source = imgPath;
-						}
-						else if (i == 5)
-						{
-							lbDay2.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay2.Source = imgPath;
-						}
-						else if (i == 6)
-						{
-							lbDay1.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
-							imgDay1.Source = imgPath;
-						}
-
-						dayInInterval = dayInInterval - CommonDefine.SECONDS_OF_DAY;
+					}
+					else
+					{
+						break;
 					}
 				}
+
+				if (status == true)
+				{
+					imgPath = "images/others/day_ring.png";
+				}
+				else
+				{
+					imgPath = "images/others/day_ring_gray.png";
+				}
+
+				//day 7 (today)
+				if (i == 0)
+				{
+					lbDay7.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay7.Source = imgPath;
+				} 
+				else if (i == 1)
+				{
+					lbDay6.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay6.Source = imgPath;
+				}
+				else if (i == 2)
+				{
+					lbDay5.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay5.Source = imgPath;
+				}
+				else if (i == 3)
+				{
+					lbDay4.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay4.Source = imgPath;
+				}
+				else if (i == 4)
+				{
+					lbDay3.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay3.Source = imgPath;
+				}
+				else if (i == 5)
+				{
+					lbDay2.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay2.Source = imgPath;
+				}
+				else if (i == 6)
+				{
+					lbDay1.Text = DateTimeHelper.getDayOfWeek(dayInInterval);
+					imgDay1.Source = imgPath;
+				}
+
+				dayInInterval = dayInInterval - CommonDefine.SECONDS_OF_DAY;
 			}
 		}
 	}

@@ -36,7 +36,7 @@ public class DateTimeHelper {
 
 	public static string getDayOfWeek(int date) {
 		System.DateTime start 		= new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-		System.DateTime dateTime	= start.AddMilliseconds(date).ToLocalTime();
+		System.DateTime dateTime	= start.AddSeconds(date).ToLocalTime();
 
 		string res = dateTime.DayOfWeek.ToString();
 

@@ -405,7 +405,7 @@ namespace LazzyBee
 			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
 			int curDate = DateTimeHelper.getBeginOfDayInSec();
 			int count = 0;
-			int nextInd = 2;
+			int nextInd = 1;
 			int streakDate = 0;
 			int offset = 0;
 
@@ -434,8 +434,10 @@ namespace LazzyBee
 				{
 					count++;
 				}
+
 				else
 				{
+					/*
 					if (arrStreaks.Count() > 1)
 					{
 						streakDate = int.Parse(arrStreaks[1]);
@@ -459,11 +461,25 @@ namespace LazzyBee
 						{
 							return count;
 						}
-
 					}
 					else
 					{
 						return count;
+					}*/
+					curDate = curDate - CommonDefine.SECONDS_OF_DAY;
+					if (curDate >= lastStreak)
+					{
+						offset = curDate - lastStreak;
+
+					}
+					else
+					{
+						offset = lastStreak - curDate;
+					}
+
+					if (offset < CommonDefine.SECONDS_OF_DAY + CommonDefine.SECONDS_OF_HALFDAY)
+					{
+						count++;
 					}
 				}
 
