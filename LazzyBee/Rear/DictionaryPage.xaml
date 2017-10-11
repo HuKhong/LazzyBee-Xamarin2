@@ -26,11 +26,10 @@
 				</ListView>
 			</StackLayout>
 
-
-		       <ActivityIndicator x:Name="loadingIndicator" Color="Gray" IsRunning="true" Scale="2"
-					VerticalOptions="CenterAndExpand"
-	                HorizontalOptions="CenterAndExpand" Opacity="0.5">
-				</ActivityIndicator>
+	       	<ActivityIndicator x:Name="loadingIndicator" Color="Gray" IsRunning="true" Scale="2"
+				VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand" Opacity="0.5">
+			</ActivityIndicator>
 
 		</RelativeLayout>
 	</ContentPage.Content>

@@ -38,6 +38,7 @@ namespace LazzyBee
 
 			string[] arrStreaks = strStreaks.Split(',');
 			Array.Sort(arrStreaks);
+
 			int dayInInterval = DateTimeHelper.getBeginOfDayInSec();
 			int offset = 0;
 			bool status = false;
@@ -50,7 +51,7 @@ namespace LazzyBee
 				{
 					if (j < arrStreaks.Count())
 					{
-						int.TryParse(arrStreaks[j], out streakDay);
+						int.TryParse(arrStreaks[arrStreaks.Count() - 1 - j], out streakDay);
 						if (dayInInterval >= streakDay)
 						{
 							offset = dayInInterval - streakDay;

@@ -570,8 +570,17 @@ namespace LazzyBee
 		public void saveCountWordByLevelToSystem(Dictionary<string, string> dict)
 		{
 			string strDict = JsonConvert.SerializeObject(dict);
+			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", COUNT_WORDS_KEY);
+			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
 
-			string strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", strDict, COUNT_WORDS_KEY);
+			if (systemDAOs.Count > 0)
+			{
+				strQuery = string.Format("UPDATE 'system' SET value = '{0}' where key = '{1}'", strDict, COUNT_WORDS_KEY);
+			}
+			else
+			{
+				strQuery = string.Format("INSERT INTO 'system' (key, value) VALUES ('{0}', '{1}')", COUNT_WORDS_KEY, strDict);
+			}
 
 			database.Execute(strQuery);
 		}
@@ -581,7 +590,6 @@ namespace LazzyBee
 			string strQuery = string.Format("SELECT * from 'system' WHERE key = '{0}'", COUNT_WORDS_KEY);
 			List<SystemDAO> systemDAOs = database.Query<SystemDAO>(strQuery);
 			string value = "";
-			int count = 0;
 
 			if (systemDAOs.Count > 0)
 			{

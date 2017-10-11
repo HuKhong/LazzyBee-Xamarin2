@@ -405,7 +405,7 @@ namespace LazzyBee
 			string strStreak = loadSettingValueByKey(CommonDefine.STREAK_INFO_KEY);
 			int curDate = DateTimeHelper.getBeginOfDayInSec();
 			int count = 0;
-			int nextInd = 1;
+			int nextInd = 2;
 			int streakDate = 0;
 			int offset = 0;
 
@@ -419,7 +419,7 @@ namespace LazzyBee
 				Array.Sort(arrStreaks);
 
 				//the last date in streak could be current date or yesterday
-				int lastStreak = int.Parse(arrStreaks[0]);
+				int lastStreak = int.Parse(arrStreaks.Last());
 				if (curDate >= lastStreak)
 				{
 					offset = curDate - lastStreak;
@@ -481,11 +481,15 @@ namespace LazzyBee
 					{
 						count++;
 					}
+					else
+					{
+						return count;
+					}
 				}
 
 				curDate = streakDate;
 
-				for (int i = nextInd; i < arrStreaks.Count(); i++)
+				for (int i = arrStreaks.Count() - nextInd; i > 0; i--)
 				{
 					streakDate = int.Parse(arrStreaks[i]);
 					offset = curDate - streakDate;

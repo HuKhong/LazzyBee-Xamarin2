@@ -148,6 +148,17 @@ namespace LazzyBee
 	            //[self showHideButtonsPanel:NO];
 	            
 	        }
+
+			//add buttons to top
+			ToolbarItems.Add(new ToolbarItem("Search", "images/icons/ic_search_gray.png", () =>
+			{
+				//logic code goes here
+			}));
+
+			ToolbarItems.Add(new ToolbarItem("More", "images/icons/ic_more.png", () =>
+			{
+				//logic code goes here
+			}));
 		}
 
 		protected override void OnAppearing()

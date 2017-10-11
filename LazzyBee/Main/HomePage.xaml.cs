@@ -382,7 +382,7 @@ namespace LazzyBee
 						if (arrStreaks != null && arrStreaks.Count() > 0)
 						{
 							Array.Sort(arrStreaks);
-							int lastStreak = int.Parse(arrStreaks[0]);
+							int lastStreak = int.Parse(arrStreaks.Last());
 							if (curDate >= lastStreak)
 							{
 								offset = curDate - lastStreak;
